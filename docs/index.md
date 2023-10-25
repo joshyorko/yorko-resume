@@ -7,10 +7,12 @@
 ## 📍 Info
 
 ![Location](https://img.shields.io/badge/Location-Worcester,%20MA-blue)
-![GitHub Followers](https://img.shields.io/github/followers/joshyorko?style=social)
 ![Phone](https://img.shields.io/badge/Phone-%28260%29%20443--8425-green)
 ![Email](https://img.shields.io/badge/Email-joshua.yorko%40gmail.com-red)
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-View%20Profile-blue)](https://www.linkedin.com/in/joshua-yorko-560103a9/)
 [![GitHub](https://img.shields.io/badge/GitHub-View%20Profile-blue)](https://github.com/joshyorko)
+![GitHub Followers](https://img.shields.io/github/followers/joshyorko?style=social)
 
 ## 💼 Skills
 
