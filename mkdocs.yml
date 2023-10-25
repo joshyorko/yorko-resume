@@ -3,7 +3,4 @@ nav:
   - Home: 'index.md'
 theme:
   name: 'material'
-  palette:
-    scheme: preference
-    primary: 'black'
-    accent: 'black'
+
