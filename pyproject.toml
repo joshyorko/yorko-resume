@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "yorko-resume"
+version = "0.1.0"
+description = ""
+authors = ["jyorko <joshua.yorko@gainwelltechnologies.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+mkdocs = "^1.5.3"
+mkdocs-material = "^9.4.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry.scripts]
+serve = "yorko_resume.serve:main"
+start = "yorko_resume.main:main"
+

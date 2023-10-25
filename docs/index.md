@@ -1,0 +1,69 @@
+# Joshua Yorko
+
+33 Northboro Street, Worcester, MA, 01604  
+(260) 443-8425 | joshua.yorko@gmail.com  
+[GitHub](https://github.com/joshyorko)
+
+---
+
+## Summary
+
+Highly skilled Software Engineer with expertise in Site Reliability Engineering (SRE), Data Engineering, and Cloud Computing. Demonstrated proficiency in CI/CD pipelines, Kubernetes orchestration, and large language model integrations. Committed to achieving high availability, fault tolerance, and efficient resource utilization.
+
+---
+
+## Experience
+
+### Software Engineer  
+**Gainwell Technologies, Conway, AR**  
+June 2023 - Present
+- Spearheaded Site Reliability Engineering (SRE) initiatives, implementing monitoring, alerts, and service level objectives (SLOs) to achieve 99.99% uptime.
+- Designed CI/CD pipelines using GitHub Actions, automating build, test, and deployment stages to enhance deployment reliability and speed.
+- Deployed containerized applications via Kubernetes on AWS EKS, implementing auto-scaling and high availability.
+- Developed RESTful APIs with FastAPI and orchestrated their deployment on EKS through Terraform, achieving a self-healing, automated container environment.
+- Automated document text extraction in AWS S3 using Amazon Textract and AWS Lambda, feeding the extracted data into a centralized data lake.
+- Managed AWS infrastructure provisioning and compliance using Terraform, encompassing services like EC2, S3, RDS, Elastic Load Balancers, and VPC configurations.
+- Utilized Large Language Models via Amazon Bedrock for advanced data analytics and natural language understanding.
+
+### Senior Data Engineer  
+**Gainwell Technologies, Conway, AR**  
+June 2022 - March 2023
+- Engineered an enterprise-level data lake utilizing AWS Glue, Amazon S3, PySpark, Hadoop, Python, and PostgreSQL.
+- Seamlessly integrated the data lake with Amazon RDS instances via SQL views, and connected it to a Django frontend.
+- Automated data retrieval and management tasks using Python libraries like Requests, aiohttp, asyncio, Selenium, and Beautiful Soup.
+- Developed real-time, interactive dashboards in PowerBI to provide stakeholders with actionable insights derived from the data lake.
+- Created custom data visualizations and reports using Plotly and Django, enhancing stakeholder data interaction.
+- Hosted the web application on Amazon EC2, ensuring high availability and scalability.
+- Implemented security measures including SSL encryption and firewalls to protect sensitive data.
+- Conducted continuous monitoring of the web application and infrastructure to resolve issues, ensuring maximum reliability and minimal downtime.
+
+### Implementations Specialist  
+**Lambent Spaces, Boston, MA**  
+March 2021 – June 2022
+- Successfully led software implementations, configuring networks and systems to meet customer requirements.
+- Streamlined deployment processes through validation and optimization, achieving increased efficiency and customer satisfaction.
+- Collaborated with cross-functional teams, including project management, development, and data science, to enhance deployment workflows.
+- Authored ad hoc SQL and Python scripts for automation and troubleshooting.
+
+### Data Analyst (Desktop Support)  
+**CVS HEALTH, Cumberland, RI**  
+May 2019 – March 2021
+- Engineered multi-functional reports using Python pandas and Excel frameworks for the deployment of O365 Apps for Enterprise across 80k devices.
+- Generated business-focused reports in Dash/Plotly, SharePoint, and Excel.
+- Conducted data normalization from SCCM and Active Directory to facilitate analysis.
+- Performed rigorous unit and regression testing on developed reports and collaborated with various teams for Windows 10 Enterprise Migration.
+
+### Client Onboarding Specialist  
+**SPENCER TECHNOLOGIES, Medway, MA**  
+Jan 2017 – Apr 2019
+- Implemented the Smartsheet Request Management System, realizing annual cost savings of $16k and enhancing team efficiency.
+- Onboarded new business worth over $15 million, contributing to increased revenue and customer satisfaction.
+- Developed and executed project plans for multiple IT projects, leading teams through successful client launches.
+
+---
+
+## Education
+
+**B.A. in English**  
+Indiana State University  
+Aug 2006 – June 2008, Terre Haute, IN
