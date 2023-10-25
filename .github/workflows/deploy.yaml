@@ -14,5 +14,9 @@ jobs:
           python-version: 3.x
       - run: pip install poetry
       - run: poetry install
-      - run: poetry run mkdocs gh-deploy --force
-
+      - run: poetry run mkdocs build  # Build the site
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          publish_dir: ./site
