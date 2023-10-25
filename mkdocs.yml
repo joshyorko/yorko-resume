@@ -3,8 +3,8 @@ site_name: 'Joshua Yorko - Resume'
 site_description: 'Senior Backend/Data Engineer & Site Reliability Engineering Enthusiast'
 site_author: 'Joshua Yorko'
 site_url: 'https://joshyorko.github.io'
-repo_url: 'https://github.com/joshyorko'
-repo_name: 'Resume'
+repo_url: 'https://github.com/joshyorko/yorko-resume'
+repo_name: 'yorko-resume'
 edit_uri: ''
 
 # Navigation Configuration
