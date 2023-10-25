@@ -1,6 +1,51 @@
+# Project Information
 site_name: 'Joshua Yorko - Resume'
+site_description: 'Senior Backend/Data Engineer & Site Reliability Engineering Enthusiast'
+site_author: 'Joshua Yorko'
+site_url: 'https://joshyorko.github.io'
+repo_url: 'https://github.com/joshyorko'
+repo_name: 'Resume'
+edit_uri: ''
+
+# Navigation Configuration
 nav:
   - Home: 'index.md'
+
+# Theme Configuration
 theme:
   name: 'material'
+  logo: 'assets/images/logo.png' # Add a logo image inside /docs/assets/images/ and point it here
+  favicon: 'assets/images/favicon.ico' # Add a favicon image inside /docs/assets/images/ and point it here
+  
+  features:
+    - navigation.tabs
+    - navigation.instant
+  
+  palette:
+    primary: 'indigo'
+    accent: 'indigo'
+  
+  font:
+    text: 'Roboto'
+    code: 'Roboto Mono'
+  
+# Plugin Configuration
+plugins:
+  - search
+  - minify:
+      minify_html: true
+  - git-revision-date-localized:
+      type: timeago
 
+# Markdown Extensions
+markdown_extensions:
+  - toc:
+      permalink: true
+  - admonition
+  - codehilite:
+      guess_lang: false
+  - footnotes
+  - meta
+  - nl2br
+  - sane_lists
+  - smarty
