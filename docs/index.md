@@ -1,7 +1,8 @@
 # Joshua Yorko 👨‍💻
 
+
 <div style="text-align: center;">
-  <img src="./assets/images/logo.png" alt="Joshua Yorko's Logo" width="300" height="300"/>
+  <img src="./assets/images/logo2.png" alt="Joshua Yorko's Logo" width="500" height="500"/>
 </div>
 
 
