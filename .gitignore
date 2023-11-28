@@ -2,7 +2,7 @@
 *.py[cod]
 *.pyo
 *.pyd
-__pycache__
+yorko_resume/__pycache__
 *.so
 *.egg
 *.egg-info/
