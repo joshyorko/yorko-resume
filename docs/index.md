@@ -14,7 +14,7 @@
 [![GitHub](https://img.shields.io/badge/GitHub-View%20Profile-blue)](https://github.com/joshyorko)
 ![GitHub Followers](https://img.shields.io/github/followers/joshyorko?style=social)
 
-[Download my resume](assets/LaTeXTemplates_awesome-resume-cv_v1.3/resume.pdf)
+[Download my resume](assets/resume.pdf)
 
 ## 💼 Skills
 
