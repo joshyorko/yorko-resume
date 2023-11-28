@@ -54,7 +54,7 @@ Highly skilled **Software Engineer** specializing in **Site Reliability Engineer
 - 📊 Developed real-time dashboards in PowerBI and custom visualizations using Plotly and Django.
 - 🌐 Hosted the web application on Amazon EC2 for high availability and scalability.
 - 🔒 Implemented security features like SSL encryption and firewalls.
-- 🛠️ Continuously monitored the application and infrastructure to **minimize downtime** and **maximize reliability**.
+- 🛠️ Continuously monitored  applications and infrastructure to **minimize downtime** and **maximize reliability**.
 
 ### 💾 Implementations Specialist  
 **Lambent Spaces, Boston, MA**  
