@@ -2,7 +2,7 @@
 name = "yorko-resume"
 version = "0.1.0"
 description = ""
-authors = ["jyorko <joshua.yorko@gainwelltechnologies.com>"]
+authors = ["jyorko <joshua.yorko@gmail.com.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
