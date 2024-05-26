@@ -1,4 +1,6 @@
-# Joshua Yorko 👨‍💻
+<div style="text-align: center;">
+  <h1>Joshua Yorko</h1>
+</div>
 
 <div style="text-align: center;">
   <img src="./assets/images/logo2.png" alt="Joshua Yorko's Logo" width="400" height="400"/>
@@ -6,24 +8,17 @@
 
 ## 📍 Info
 
-![Location](https://img.shields.io/badge/Location-Worcester,%20MA-blue)
-![Phone](https://img.shields.io/badge/Phone-%28260%29%20443--8425-green)
-![Email](https://img.shields.io/badge/Email-joshua.yorko%40gmail.com-red)
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-View%20Profile-blue)](https://www.linkedin.com/in/joshua-yorko-560103a9/)
-[![GitHub](https://img.shields.io/badge/GitHub-View%20Profile-blue)](https://github.com/joshyorko)
-![GitHub Followers](https://img.shields.io/github/followers/joshyorko?style=social)
+| ![Location](https://img.shields.io/badge/Location-Worcester,%20MA-blue) | ![Phone](https://img.shields.io/badge/Phone-%28260%29%20443--8425-green) | ![Email](https://img.shields.io/badge/Email-joshua.yorko%40gmail.com-red) |
+| --- | --- | --- |
+| [![LinkedIn](https://img.shields.io/badge/LinkedIn-View%20Profile-blue)](https://www.linkedin.com/in/joshua-yorko-560103a9/) | [![GitHub](https://img.shields.io/badge/GitHub-View%20Profile-blue)](https://github.com/joshyorko) | ![GitHub Followers](https://img.shields.io/github/followers/joshyorko?style=social) |
 
 [Download my resume](assets/JoshYorkoResume.pdf)
 
 ## 💼 Skills
 
-🛠 ![SRE](https://img.shields.io/badge/SRE-Expert-blue)  
-🐍 ![Python](https://img.shields.io/badge/Python-Expert-yellow)  
-☸️ ![Kubernetes](https://img.shields.io/badge/Kubernetes-Advanced-orange)  
-🐳 ![Docker](https://img.shields.io/badge/Docker-Expert-blue)  
-☁️ ![AWS](https://img.shields.io/badge/Amazon_AWS-Expert-green)  
-🏗️ ![Terraform](https://img.shields.io/badge/Terraform-Advanced-orange)
+| 🛠 ![SRE](https://img.shields.io/badge/SRE-Expert-blue) | 🐍 ![Python](https://img.shields.io/badge/Python-Expert-yellow) | ☸️ ![Kubernetes](https://img.shields.io/badge/Kubernetes-Advanced-orange) | ☸️ ![Amazon EKS](https://img.shields.io/badge/Amazon_EKS-Advanced-orange) |
+| --- | --- | --- | --- |
+| ☁️ ![Rancher](https://img.shields.io/badge/Rancher-Expert-green) | 🐳 ![Docker](https://img.shields.io/badge/Docker-Expert-blue) | ☁️ ![AWS](https://img.shields.io/badge/Amazon_AWS-Expert-green) | 🏗️ ![Terraform](https://img.shields.io/badge/Terraform-Advanced-orange) |
 
 ---
 
