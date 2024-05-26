@@ -1,0 +1,12 @@
+name: yorko_resume
+
+services:
+  yorko_resume:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    command: poetry run mkdocs serve -a 0.0.0.0:8000
