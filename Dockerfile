@@ -7,7 +7,7 @@ ENV PYTHONUNBUFFERED=1
 
 # Install dependencies
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends build-essential \
+    && apt-get install -y --no-install-recommends build-essential git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -22,10 +22,13 @@ WORKDIR /app
 COPY pyproject.toml poetry.lock ./
 
 # Install dependencies using Poetry
-RUN poetry install --no-root --no-dev
+RUN poetry install
 
 # Copy the rest of the application code, excluding files in .dockerignore
 COPY . .
+
+# Set Git safe directory configuration
+RUN git config --global --add safe.directory /app
 
 # Expose port 8000 for the application
 EXPOSE 8000

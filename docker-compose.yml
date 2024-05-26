@@ -1,3 +1,5 @@
+name: yorko_resume
+
 services:
   yorko_resume:
     build:
