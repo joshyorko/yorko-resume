@@ -1,12 +1,13 @@
-name: yorko_resume
+name: yorko-resume
 
 services:
   yorko_resume:
+    image: ghcr.io/joshyorko/yorko-resume:main
+    container_name: yorko-resume
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
-    volumes:
-      - .:/app
+
     command: poetry run mkdocs serve -a 0.0.0.0:8000
