@@ -61,15 +61,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Get current timestamp
+        id: timestamp
+        run: echo "CURRENT_TIMESTAMP=$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
+
+      - name: Create unique tag name
+        id: create_tag
+        run: echo "TAG_NAME=${{ github.ref_name }}-${{ env.CURRENT_TIMESTAMP }}" >> $GITHUB_ENV
+
       - name: Create GitHub release
         id: create_release
         uses: actions/create-release@v1
         with:
-          tag_name: ${{ github.ref_name }} # Use ref_name to get the tag or branch name
-          release_name: Release ${{ github.ref_name }}
+          tag_name: ${{ env.TAG_NAME }} # Use the unique tag name
+          release_name: Release ${{ env.TAG_NAME }}
           body: |
             This is an automatic release for ${{ github.ref_name }}.
-            Docker image available at: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}.
+            Docker image available at: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }}.
           draft: false
           prerelease: false
         env:
