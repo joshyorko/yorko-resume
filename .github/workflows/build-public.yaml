@@ -54,6 +54,7 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
+    depends-on: build
     permissions:
       contents: write # Add this to ensure the token has write permissions
 
