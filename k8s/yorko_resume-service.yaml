@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.33.0 (3ce457399)
+  labels:
+    io.kompose.service: yorko-resume
+  name: yorko_resume
+  namespace: yorko-resume
+spec:
+  ports:
+    - name: "8000"
+      port: 8000
+      targetPort: 8000
+  selector:
+    io.kompose.service: yorko-resume
