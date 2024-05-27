@@ -9,9 +9,10 @@ metadata:
   name: yorko-resume
   namespace: yorko-resume
 spec:
+  type: LoadBalancer  # Set the service type to LoadBalancer
   ports:
-    - name: "8000"
-      port: 8000
+    - name: "http"
+      port: 80
       targetPort: 8000
   selector:
     io.kompose.service: yorko-resume
