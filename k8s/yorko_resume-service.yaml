@@ -6,7 +6,7 @@ metadata:
     kompose.version: 1.33.0 (3ce457399)
   labels:
     io.kompose.service: yorko-resume
-  name: yorko_resume
+  name: yorko-resume
   namespace: yorko-resume
 spec:
   ports:
