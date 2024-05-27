@@ -7,7 +7,6 @@ on:
     branches: [ "main" ]
     tags: [ 'v*.*.*' ]
 
-
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
@@ -55,6 +54,9 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Add this to ensure the token has write permissions
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -63,10 +65,10 @@ jobs:
         id: create_release
         uses: actions/create-release@v1
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ github.ref_name }} # Use ref_name to get the tag or branch name
+          release_name: Release ${{ github.ref_name }}
           body: |
-            This is an automatic release for ${{ github.ref }}.
+            This is an automatic release for ${{ github.ref_name }}.
           draft: false
           prerelease: false
         env:
