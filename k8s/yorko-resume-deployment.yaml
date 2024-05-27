@@ -9,7 +9,7 @@ metadata:
   name: yorko-resume
   namespace: yorko-resume
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       io.kompose.service: yorko-resume
@@ -31,6 +31,7 @@ spec:
             - -a
             - 0.0.0.0:8000
           image: ghcr.io/joshyorko/yorko-resume:main
+          imagePullPolicy: Always
           name: yorko-resume
           ports:
             - containerPort: 8000
