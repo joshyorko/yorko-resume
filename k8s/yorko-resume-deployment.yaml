@@ -9,7 +9,7 @@ metadata:
   name: yorko-resume
   namespace: yorko-resume
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       io.kompose.service: yorko-resume
