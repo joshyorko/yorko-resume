@@ -1,0 +1,240 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Developer CV
+% LaTeX Template
+% Version 1.0 (28/1/19)
+%
+% This template originates from:
+% http://www.LaTeXTemplates.com
+%
+% Authors:
+% Jan Vorisek (jan@vorisek.me)
+% Based on a template by Jan Küster (info@jankuester.com)
+% Modified for LaTeX Templates by Vel (vel@LaTeXTemplates.com)
+%
+% License:
+% The MIT License (see included LICENSE file)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[9pt]{developercv} % Default font size, values from 8-12pt are recommended
+\usepackage{xcolor}
+
+% Define new colors
+\definecolor{primary}{HTML}{008080} % Teal
+\definecolor{secondary}{HTML}{CCCCCC} % Light gray
+\definecolor{textcolor}{HTML}{333333} % Dark gray for text
+\definecolor{white}{HTML}{FFFFFF} % White for text
+
+% Set default text color
+\color{textcolor}
+
+% Redefine section title command
+\renewcommand{\cvsect}[1]{%
+    \vspace{\baselineskip} % Whitespace before the section title
+    \colorbox{primary}{\textcolor{white}{\MakeUppercase{\textbf{#1}}}}\\% Section title
+}
+
+% Redefine icon command
+\renewcommand{\icon}[3]{%
+    \vcenteredhbox{\colorbox{primary}{\makebox(#2, #2){\textcolor{white}{\large\csname fa#1\endcsname}}}}% Icon and box
+    \hspace{0.2cm}% Whitespace
+    \vcenteredhbox{\textcolor{primary}{#3}}% Text
+}
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	TITLE AND CONTACT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\begin{minipage}[t]{0.45\textwidth} % 45% of the page width for name
+    \vspace{-\baselineskip} % Required for vertically aligning minipages
+    
+    \colorbox{primary}{{\HUGE\textcolor{white}{\textbf{\MakeUppercase{Joshua}}}}} % First name
+    
+    \colorbox{primary}{{\HUGE\textcolor{white}{\textbf{\MakeUppercase{Yorko}}}}} % Last name
+    
+    \vspace{6pt}
+    
+    {\huge Site Reliability Engineer} % Career or current job title
+\end{minipage}
+\begin{minipage}[t]{0.275\textwidth} % 27.5% of the page width for the first row of icons
+    \vspace{-\baselineskip} % Required for vertically aligning minipages
+    
+    \icon{MapMarker}{12}{Worcester, MA}\\
+    \icon{Phone}{12}{(+1) 260-443-8425}\\
+    \icon{At}{12}{\href{mailto:joshua.yorko@gmail.com}{joshua.yorko@gmail.com}}\\    
+\end{minipage}
+\begin{minipage}[t]{0.275\textwidth} % 27.5% of the page width for the second row of icons
+    \vspace{-\baselineskip} % Required for vertically aligning minipages
+    
+    \icon{Globe}{12}{\href{https://github.com/joshyorko}{github.com/joshyorko}}\\
+    \icon{Linkedin}{12}{\href{https://www.linkedin.com/in/joshua-yorko-560103a9}{joshua-yorko-560103a9}}\\
+\end{minipage}
+
+\vspace{0.5cm}
+
+%----------------------------------------------------------------------------------------
+%    INTRODUCTION, SKILLS AND TECHNOLOGIES
+%----------------------------------------------------------------------------------------
+
+\cvsect{Who Am I?}
+
+\begin{minipage}[t]{0.4\textwidth} % 40% of the page width for the introduction text
+    \vspace{-\baselineskip} % Required for vertically aligning minipages
+    
+    Dedicated to mastering the complexities of backend engineering and SRE, ensuring robust and scalable solutions.
+\end{minipage}
+\hfill % Whitespace between
+\begin{minipage}[t]{0.5\textwidth} % 50% of the page for the skills bar chart
+    \vspace{-\baselineskip} % Required for vertically aligning minipages
+    \begin{barchart}{5.5}
+        \baritem{Python}{100}
+        \baritem{Bash}{100}
+        \baritem{SQL}{70}
+        \baritem{Scala}{60}
+        \baritem{JavaScript}{50}
+        \baritem{Kubernetes}{100}
+        \baritem{Docker}{100}
+        \baritem{Terraform}{90}
+        \baritem{AWS}{85}
+        \baritem{CI/CD}{100}
+        \baritem{GitOps}{85}
+    \end{barchart}
+\end{minipage}
+
+\begin{center}
+    \bubbles{5/Python, 6/Kubernetes, 4/Docker, 3/Terraform, 3/AWS}
+\end{center}
+
+%----------------------------------------------------------------------------------------
+%    EXPERIENCE
+%----------------------------------------------------------------------------------------
+
+\cvsect{Experience}
+
+\begin{entrylist}
+    \entry
+        { June 2023 -- Present}
+        { Site Reliability Engineer }
+        { Gainwell Technologies }
+        {
+        \begin{itemize}
+            \item Led SRE initiatives, achieving 99.99\% uptime through strategic implementation of monitoring systems, alerts, and SLOs, directly enhancing system reliability and client satisfaction.
+            \item Designed and executed CI/CD pipelines using GitHub Actions, streamlining deployment processes for enhanced efficiency.
+            \item Orchestrated containerized application deployment via Kubernetes on AWS EKS, optimizing for auto-scaling and high availability.
+            \item Developed RESTful APIs with FastAPI and managed their EKS deployment via Terraform, establishing a resilient container environment.
+            \item Automated text extraction in AWS S3 using Amazon Textract and AWS Lambda, centralizing data into a data lake for improved access and analysis.
+            \item Managed AWS infrastructure using Terraform, overseeing services such as EC2, S3, RDS, Elastic Load Balancers, and VPCs.
+            \item Integrated Large Language Models via Amazon Bedrock into data analytics processes for enhanced natural language understanding capabilities.
+        \end{itemize}
+        \texttt{GitHub Actions}\slashsep\texttt{Kubernetes}\slashsep\texttt{AWS EKS}\slashsep\texttt{FastAPI}\slashsep\texttt{Terraform}\slashsep\texttt{Amazon Textract}\slashsep\texttt{AWS Lambda}\slashsep\texttt{Amazon Bedrock}
+        }
+    \entry
+        { June 2022 -- Mar 2023}
+        { Software Engineer}
+        { Gainwell Technologies, Conway, AR (REMOTE)}
+        {
+        \begin{itemize}
+            \item Architected an enterprise-level data lake utilizing AWS Glue, Amazon S3, PySpark, Hadoop, Python, and PostgreSQL, significantly boosting data processing efficiency.
+            \item Integrated the data lake with Amazon RDS via SQL views for a Django frontend, enabling seamless data access and manipulation.
+            \item Automated complex data retrieval using Python libraries (Requests, aiohttp, asyncio, Selenium, Beautiful Soup), enhancing data acquisition speed and reliability.
+            \item Developed real-time dashboards in PowerBI and custom visualizations using Plotly and Django, delivering insightful data analytics to stakeholders.
+            \item Ensured high availability and scalability of web applications hosted on Amazon EC2.
+            \item Implemented robust security measures, including SSL encryption and firewalls, to safeguard data and applications.
+            \item Proactively monitored applications and infrastructure, minimizing downtime and maximizing operational reliability.
+        \end{itemize}
+        \texttt{AWS Glue}\slashsep\texttt{Amazon S3}\slashsep\texttt{PySpark}\slashsep\texttt{Hadoop}\slashsep\texttt{Python}\slashsep\texttt{PostgreSQL}\slashsep\texttt{Amazon RDS}\slashsep\texttt{Django}\slashsep\texttt{PowerBI}\slashsep\texttt{Plotly}\slashsep\texttt{Amazon EC2}
+        }
+    \entry
+        { Mar 2021 -- Oct 2022 }
+        { Implementations Specialist}
+        {Lambent Spaces, Boston, MA (REMOTE)}
+        {
+        \begin{itemize}
+            \item Directed software implementations, ensuring customer requirements were met through effective network and system configurations.
+            \item Optimized deployment processes, resulting in heightened efficiency and improved customer satisfaction.
+            \item Fostered collaboration with cross-functional teams to refine deployment workflows and procedures.
+            \item Authored and utilized SQL and Python scripts for automation and efficient problem resolution.
+        \end{itemize}
+        \texttt{SQL}\slashsep\texttt{Python}\slashsep\texttt{Pandas}\slashsep\texttt{Scala}\slashsep\texttt{JavaScript}\slashsep\texttt{Kubernetes}\slashsep\texttt{Docker}\slashsep\texttt{Terraform}\slashsep\texttt{AWS}\slashsep\texttt{CI/CD}\slashsep\texttt{Gitlab}
+        }
+    \entry
+        {May 2019 -- Mar 2021}
+        { Data Analyst}
+        {CVS Health}
+        {
+        \begin{itemize}
+            \item Designed and deployed O365 Apps for Enterprise across 80k devices, leveraging Python and Excel for efficient reporting and achieving a 30\% increase in deployment efficiency.
+            \item Created and maintained business-focused reports using Dash/Plotly, SharePoint, and Excel, driving informed decision-making processes.
+            \item Conducted extensive data normalization from SCCM and Active Directory, ensuring data accuracy and consistency.
+            \item Played a pivotal role in Windows 10 Enterprise Migration, focusing on rigorous testing and quality assurance of developed reports.
+        \end{itemize}
+        \texttt{Python}\slashsep\texttt{Excel}\slashsep\texttt{Dash}\slashsep\texttt{Plotly}\slashsep\texttt{SharePoint}\slashsep\texttt{SCCM}\slashsep\texttt{Active Directory}
+        }
+    \entry
+        {Jan 2017 -- Apr 2019}
+        { Client Onboarding Specialist}
+        {Spencer Technologies}
+        {
+        \begin{itemize}
+            \item Implemented the Smartsheet Request Management System, resulting in annual cost savings of 16k.
+            \item Successfully onboarded new business ventures worth over 15 million, enhancing company growth and market presence.
+            \item Developed and executed project plans for multiple IT projects, leading teams to successful and timely client launches.
+        \end{itemize}
+        \texttt{Smartsheet}
+        }
+\end{entrylist}
+
+%----------------------------------------------------------------------------------------
+%    EDUCATION
+%----------------------------------------------------------------------------------------
+
+\cvsect{Education}
+
+\begin{entrylist}
+    \entry
+        {Aug 2006 -- June 2008}
+        { B.A. in English}
+        {Indiana State University, Terre Haute, IN}
+        {}
+\end{entrylist}
+
+%----------------------------------------------------------------------------------------
+%    ADDITIONAL INFORMATION
+%----------------------------------------------------------------------------------------
+
+\begin{minipage}[t]{0.3\textwidth}
+    \vspace{-\baselineskip} % Required for vertically aligning minipages
+
+    \cvsect{Languages}
+    
+    \textbf{English} - native\\
+    \textbf{German} - proficient
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.3\textwidth}
+    \vspace{-\baselineskip} % Required for vertically aligning minipages
+    
+    \cvsect{Hobbies}
+    
+    I love reading science fiction, hiking, and experimenting with home automation.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.3\textwidth}
+    \vspace{-\baselineskip} % Required for vertically aligning minipages
+    
+    \cvsect{Non profit}
+    
+    I help organize community coding workshops and mentor aspiring developers.
+\end{minipage}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
