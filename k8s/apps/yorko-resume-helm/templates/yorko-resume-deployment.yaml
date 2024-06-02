@@ -2,11 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -c
+    kompose.cmd: kompose convert
     kompose.version: 1.33.0 (3ce457399)
   labels:
     io.kompose.service: yorko-resume
-  name: yorko-resume-app
+  name: yorko-resume
   namespace: yorko-resume
 spec:
   replicas: {{ .Values.replicaSets }}
@@ -16,7 +16,7 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -c
+        kompose.cmd: kompose convert
         kompose.version: 1.33.0 (3ce457399)
       labels:
         io.kompose.network/yorko-resume-default: "true"
@@ -31,7 +31,7 @@ spec:
             - -a
             - 0.0.0.0:8000
           image: ghcr.io/joshyorko/yorko-resume:main
-          imagePullPolicy: {{ .Values.pullPolicy}}
+          imagePullPolicy: {{ .Values.pullPolicy }}
           name: yorko-resume
           ports:
             - containerPort: 8000
