@@ -8,6 +8,7 @@ metadata:
     io.kompose.service: yorko-resume
   name: yorko_resume
 spec:
+  type: LoadBalancer  # Updated line
   ports:
     - name: "8000"
       port: 8000
