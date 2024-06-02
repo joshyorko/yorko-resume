@@ -2,17 +2,15 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
-    kompose.cmd: kompose convert
+    kompose.cmd: kompose convert -c
     kompose.version: 1.33.0 (3ce457399)
   labels:
     io.kompose.service: yorko-resume
-  name: yorko-resume
-  namespace: yorko-resume
+  name: yorko_resume
 spec:
-  type: LoadBalancer  # Set the service type to LoadBalancer
   ports:
-    - name: "http"
-      port: 80
+    - name: "8000"
+      port: 8000
       targetPort: 8000
   selector:
     io.kompose.service: yorko-resume

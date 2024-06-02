@@ -1,7 +1,7 @@
 name: yorko-resume
 
 services:
-  yorko_resume:
+  yorko-resume:
     image: ghcr.io/joshyorko/yorko-resume:main
     container_name: yorko-resume
     build:

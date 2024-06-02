@@ -1,0 +1,2 @@
+replicaSets: 2
+pullPolicy: Always
