@@ -1,2 +1,2 @@
-replicaSets: 2
+replicaSets: 1
 pullPolicy: Always
