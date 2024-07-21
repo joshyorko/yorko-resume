@@ -1,8 +1,7 @@
 name: Docker
 
 on:
-  schedule:
-    - cron: '30 18 * * *'
+  workflow_dispatch:
   push:
     branches: [ "main" ]
     tags: [ 'v*.*.*' ]
