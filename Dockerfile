@@ -22,7 +22,7 @@ WORKDIR /app
 COPY pyproject.toml poetry.lock ./
 
 # Install dependencies using Poetry
-RUN poetry install
+RUN poetry install --no-root
 
 # Copy the rest of the application code, excluding files in .dockerignore
 COPY . .
