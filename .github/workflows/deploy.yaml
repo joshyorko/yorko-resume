@@ -1,10 +1,10 @@
 name: Deploy MkDocs to GitHub Pages 
 on:
   workflow_dispatch:
-  #push:
-  #  branches:
-  #    - documentation-staging
-  #    - main
+  push:
+    branches:
+      - documentation-staging
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
