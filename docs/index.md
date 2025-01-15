@@ -6,13 +6,6 @@
   <img src="./assets/images/logo2.png" alt="Joshua Yorko's Logo" width="400" height="400"/>
 </div>
 
-**Joshua Yorko**  
-SiTE RELiABLiTY ENGiNEER · SOFTWARE ENGiNEER  
-Worcester, MA  
-(+1) 260-443-8425 | joshua.yorko@gmail.com | [joshyorko](https://github.com/joshyorko) | [LinkedIn](https://www.linkedin.com/in/joshua-yorko-560103a9)  
-
-“Site Reliability Engineer and Kubernetes Specialist dedicated to enhancing system resilience and operational excellence.”
-
 ## 📍 Info
 
 | ![Location](https://img.shields.io/badge/Location-Worcester,%20MA-blue) | ![Phone](https://img.shields.io/badge/Phone-%28260%29%20443--8425-green) | ![Email](https://img.shields.io/badge/Email-joshua.yorko%40gmail.com-red) |
