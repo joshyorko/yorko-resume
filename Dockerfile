@@ -18,11 +18,12 @@ RUN pip install --upgrade pip \
 # Set work directory
 WORKDIR /app
 
-# Copy only the necessary files to install dependencies
-COPY pyproject.toml poetry.lock ./
+# Copy poetry files AND README.md before installing dependencies
+COPY pyproject.toml poetry.lock README.md ./
 
 # Install dependencies using Poetry
-RUN poetry install --no-root
+RUN poetry config virtualenvs.create false \
+    && poetry install --no-root
 
 # Copy the rest of the application code, excluding files in .dockerignore
 COPY . .
@@ -33,6 +34,5 @@ RUN git config --global --add safe.directory /app
 # Expose port 8000 for the application
 EXPOSE 8000
 
-# Set the entrypoint to Poetry to run the application
-ENTRYPOINT ["poetry", "run"]
-CMD ["serve"]
+# Run the serve command directly since we disabled virtualenv creation
+CMD ["python", "-m", "yorko_resume.serve"]
