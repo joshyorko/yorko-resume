@@ -1,7 +1,7 @@
 // .devcontainer/devcontainer.json
 {
     "name": "Universal Dev Container",
-    "image": "mcr.microsoft.com/devcontainers/universal:focal",
+    "image": "ghcr.io/joshyorko/ror",
     "customizations": {
         "vscode": {
             "settings": {
