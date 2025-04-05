@@ -18,12 +18,12 @@ RUN pip install --upgrade pip \
 # Set work directory
 WORKDIR /app
 
-# Copy poetry files AND README.md before installing dependencies
-COPY pyproject.toml poetry.lock README.md ./
+# Copy poetry files
+COPY pyproject.toml poetry.lock ./
 
 # Install dependencies using Poetry
 RUN poetry config virtualenvs.create false \
-    && poetry install --no-root
+    && poetry install
 
 # Copy the rest of the application code, excluding files in .dockerignore
 COPY . .
