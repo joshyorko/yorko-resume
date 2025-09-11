@@ -6,7 +6,7 @@
   <img src="./assets/images/logo2.png" alt="Joshua Yorko's Logo" width="400" height="400"/>
 </div>
 
-## 📍 Info
+## Professional Information
 
 | ![Location](https://img.shields.io/badge/Location-Worcester,%20MA-blue) | ![Phone](https://img.shields.io/badge/Phone-%28260%29%20443--8425-green) | ![Email](https://img.shields.io/badge/Email-joshua.yorko%40gmail.com-red) |
 | --- | --- | --- |
@@ -14,7 +14,7 @@
 
 [Download my resume](assets/JoshYorkoResume.pdf)
 
-## 💼 Skills
+## Skills
 
 | 🛠 **Programming Languages** | Infrastructure & DevOps | Data Engineering |
 | --- | --- | --- |
@@ -30,15 +30,15 @@
 
 ---
 
-## 📄 Summary
+## Summary
 
 Highly skilled **Site Reliability Engineer** and **Software Engineer** specializing in **SRE**, **Data Engineering**, and **Cloud Computing**. Proven experience in **CI/CD pipelines**, **Kubernetes orchestration**, and **large language model integrations**. Committed to **high availability**, **fault tolerance**, and **efficient resource utilization**.
 
 ---
 
-## 👨‍💼 Experience
+## Experience
 
-### 🚀 SOFTWARE ENGiNEER/SRE  
+### SOFTWARE ENGINEER / SRE  
 **Gainwell Technologies, Conway, AR**  
 *June 2023 ‑ Present*
 - Designed and executed CI/CD pipelines using GitHub Actions, streamlining deployment processes for enhanced efficiency.
@@ -50,7 +50,7 @@ Highly skilled **Site Reliability Engineer** and **Software Engineer** specializ
 - Built a microservice images API on FastAPI and Kubernetes to transform deprecated Dental DataClearingHouse APIs into a usable API for frontend UI, delivering clear JSON responses via a custom CDN with PostgreSQL and S3 object store.
 - Built an open data lakehouse on EKS with Dremio and Nessie, transforming raw data from an IBM 3270 mainframe into an Apache Iceberg data lake and feeding a Python‑based work distribution algorithm for dental adjudicators.
 
-### 📊 SENiOR DATA ENGiNEER/SOFTWARE ENGiNEER  
+### SENIOR DATA ENGINEER / SOFTWARE ENGINEER  
 **Gainwell Technologies, Conway, AR**  
 *June 2022 ‑ March 2023*
 - Architected an enterprise‑level data lake utilizing AWS Glue, Amazon S3, PySpark, Hadoop, Python, and PostgreSQL, significantly boosting data processing efficiency.
@@ -61,7 +61,7 @@ Highly skilled **Site Reliability Engineer** and **Software Engineer** specializ
 - Implemented robust security measures, including SSL encryption and firewalls, to safeguard data and applications.
 - Proactively monitored applications and infrastructure, minimizing downtime and maximizing operational reliability.
 
-### 🛠️ IMPLEMENTATiONS SPECiALiST  
+### IMPLEMENTATIONS SPECIALIST  
 **Lambent Spaces, Boston, MA**  
 *March 2021 – October 2022*
 - Directed software implementations, ensuring customer requirements were met through effective network and system configurations.
@@ -69,7 +69,7 @@ Highly skilled **Site Reliability Engineer** and **Software Engineer** specializ
 - Fostered collaboration with cross‑functional teams to refine deployment workflows and procedures.
 - Authored and utilized SQL and Python scripts for automation and efficient problem resolution.
 
-### 📈 DATA ANALYST (DESKTOP SUPPORT)  
+### DATA ANALYST (DESKTOP SUPPORT)  
 **CVS HEALTH, Cumberland, RI**  
 *May 2019 – March 2021*
 - Designed and deployed O365 Apps for Enterprise across 80k devices, leveraging Python and Excel for efficient reporting and achieving a 30% increase in deployment efficiency.
@@ -77,7 +77,7 @@ Highly skilled **Site Reliability Engineer** and **Software Engineer** specializ
 - Conducted extensive data normalization from SCCM and Active Directory, ensuring data accuracy and consistency.
 - Played a pivotal role in Windows 10 Enterprise Migration, focusing on rigorous testing and quality assurance of developed reports.
 
-### 📋 CLiENT ONBOARDiNG SPECiALiST  
+### CLIENT ONBOARDING SPECIALIST  
 **SPENCER TECHNOLOGIES, Medway, MA**  
 *Jan 2017 – Apr 2019*
 - Implemented the Smartsheet Request Management System, resulting in annual cost savings of $16k.
@@ -86,7 +86,7 @@ Highly skilled **Site Reliability Engineer** and **Software Engineer** specializ
 
 ---
 
-## 🎓 Education
+## Education
 
 **B.A. in English**  
 **Indiana State University**  
