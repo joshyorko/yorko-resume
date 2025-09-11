@@ -5,7 +5,7 @@ site_author: 'Joshua Yorko'
 site_url: 'https://joshyorko.github.io'
 repo_url: 'https://github.com/joshyorko/yorko-resume'
 repo_name: 'yorko-resume'
-edit_uri: ''
+edit_uri: 'edit/main/docs/'
 
 # Navigation Configuration
 nav:
@@ -67,11 +67,10 @@ theme:
 plugins:
   - search
   - minify:
-    minify_html: true
+      minify_html: true
   - git-revision-date-localized:
-    type: timeago
+      type: timeago
   - glightbox
-  - tags
   # - social  # Uncomment if social cards plugin added to dependencies
 
 # Markdown Extensions
