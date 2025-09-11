@@ -21,7 +21,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %----------------------------------------------------------------------------------------
-%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%       PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
 \documentclass[11pt, a4paper]{awesome-cv} % A4 paper size by default, use 'letterpaper' for US letter
@@ -31,7 +31,8 @@
 \fontdir[fonts/] % Specify the location of the included fonts
 
 % Color for highlights
-\colorlet{awesome}{awesome-red} % Default colors include: awesome-emerald, awesome-skyblue, awesome-red, awesome-pink, awesome-orange, awesome-nephritis, awesome-concrete, awesome-darknight
+\colorlet{awesome}{awesome-red} % Default colors include: awesome-emerald, awesome-skyblue, awesome-red, awesome-pink,
+% awesome-orange, awesome-nephritis, awesome-concrete, awesome-darknight
 %\definecolor{awesome}{HTML}{CA63A8} % Uncomment if you would like to specify your own color
 
 % Colors for text - uncomment and modify
@@ -43,8 +44,8 @@
 \renewcommand{\acvHeaderSocialSep}{\quad\textbar\quad} % If you would like to change the social information separator from a pipe (|) to something else
 
 %----------------------------------------------------------------------------------------
-%	PERSONAL INFORMATION
-%	Comment any of the lines below if they are not required
+%       PERSONAL INFORMATION
+%       Comment any of the lines below if they are not required
 %----------------------------------------------------------------------------------------
 
 \name{Joshua}{Yorko}
@@ -69,21 +70,18 @@
 \makecvheader % Print the header
 
 %----------------------------------------------------------------------------------------
-%	CV/RESUME CONTENT
-%	Each section is imported separately, open each file in turn to modify content
+%   CV/RESUME CONTENT
+%   Each section is imported separately, open each file in turn to modify content
 %----------------------------------------------------------------------------------------
 
 \input{cv-sections/skills.tex}
 \input{cv-sections/experience.tex}
 \input{cv-sections/education.tex}
 
-% \newpage % Force a new page for looks
-
-% \input{cv-sections/extracurricular.tex}
-% \input{cv-sections/honors.tex}
-%\input{cv-sections/presentation.tex}
-%\input{cv-sections/writing.tex}
-%\input{cv-sections/committees.tex}
+% Additional sections for specialised projects and contributions
+\input{cv-sections/rpa_automation_projects.tex}
+\input{cv-sections/cloud_containerized_robotics.tex}
+\input{cv-sections/open_source_contributions.tex}
 
 %----------------------------------------------------------------------------------------
 
