@@ -1,23 +1,53 @@
-name: Deploy MkDocs to GitHub Pages 
+name: Legacy MkDocs Deploy (Poetry) 
+
 on:
   workflow_dispatch:
   push:
     branches:
       - documentation-staging
-      - main
+
+# Restrict token permissions explicitly
+permissions:
+  contents: write  # required for pushing to gh-pages
+
+concurrency:
+  group: legacy-docs-deploy
+  cancel-in-progress: true
+
 jobs:
   deploy:
+    if: github.ref != 'refs/heads/main'  # Avoid competing with new docs.yml on main
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          python-version: 3.x
-      - run: pip install poetry
-      - run: poetry install
-      - run: poetry run mkdocs build  # Build the site
-      - name: Deploy
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Install deps
+        run: poetry install --no-interaction --no-root
+
+      - name: Build docs
+        run: poetry run mkdocs build --strict
+
+      - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
           publish_dir: ./site
+          force_orphan: true
+          user_name: github-actions[bot]
+          user_email: 41898282+github-actions[bot]@users.noreply.github.com
+
+      - name: Post summary
+        run: |
+          echo "Legacy deploy completed to gh-pages branch." >> $GITHUB_STEP_SUMMARY
