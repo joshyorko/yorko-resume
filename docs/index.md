@@ -18,7 +18,7 @@
 
 | 🛠 **Programming Languages** | Infrastructure & DevOps | Data Engineering |
 | --- | --- | --- |
-| Python (Expert), Bash, SQL, JavaScript, TypeScript | Terraform, AWS, GCP, CI/CD (GitHub Actions), Rancher, GitOps | Python, Apache Iceberg, DuckDB, Spark, Dremio, Nessie |
+| Python, Bash, SQL, JavaScript, TypeScript | Terraform, AWS, GCP, CI/CD (GitHub Actions), Rancher, GitOps | Python, Apache Iceberg, DuckDB, Spark, Dremio, Nessie |
 
 | **API Development** | **Virtualization & Containerization** | **GitOps** |
 | --- | --- | --- |

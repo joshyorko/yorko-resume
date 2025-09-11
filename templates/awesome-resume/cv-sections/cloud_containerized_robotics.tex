@@ -1,22 +1,31 @@
 %----------------------------------------------------------------------------------------
-%   Cloud & Containerized Robotics
+%   SECTION TITLE
 %----------------------------------------------------------------------------------------
 
 \cvsection{Cloud \& Containerized Robotics}
 
+%----------------------------------------------------------------------------------------
+%   SECTION CONTENT
+%----------------------------------------------------------------------------------------
+
 \begin{cventries}
+
+%------------------------------------------------
+
 \cventry
 {Kubernetes \& DevContainers} % Title
 {} % Organization
 {} % Location
-{2023 – Present} % Date(s)
-{
+{June 2023 -- Present} % Date(s)
+{ % Description(s) of tasks/responsibilities
 \begin{cvitems}
-\item {Built custom \texttt{arc-runner} Docker images with prebuilt holotree environments to enable rapid scale-out of robotics workloads on Kubernetes, improving deployment speed by 60\%.}
-\item {Leveraged devcontainers (\texttt{room-of-requirement}) to create reproducible development and execution environments across local and cloud infrastructure.}
-\item {Integrated Docker with RCC Remote for seamless remote execution and debugging of Robocorp robots.}
-\item {Implemented scalable architecture using GitHub Actions self-hosted ARC runner sets, eliminating the need for Redis queues by adopting file adapters and file sharding.}
-\item {Designed matrix job sharding strategies to distribute workloads efficiently across multiple GitHub runners.}
+\item {Built custom \textbf{ARC (Actions Runner Controller)} Docker images with prebuilt Holotree envs for rapid scale-out on Kubernetes, improving deployment speed by \textasciitilde60\%.}
+\item {Standardized reproducible environments with \textbf{Dev Containers} across local and cloud infrastructure.}
+\item {Integrated Docker with \textbf{RCC Remote} for seamless remote execution and debugging of robots.}
+\item {Scaled via self-hosted ARC runner sets; adopted file adapters + file sharding; designed matrix job sharding to spread load across runners.}
 \end{cvitems}
 }
+
+%------------------------------------------------
+
 \end{cventries}

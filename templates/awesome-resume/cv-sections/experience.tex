@@ -13,21 +13,27 @@
 %------------------------------------------------
 
 \cventry
-{Software Engineer/SRE} % Job title
+{Software Engineer — Platform \& Reliability} % Job title (updated)
 {Gainwell Technologies, Conway, AR} % Organization
 {} % Location
-{June 2023 - Present} % Date(s)
+{June 2023 -- Present} % Dates
 { % Description(s) of tasks/responsibilities
-\begin{cvitems}
-\item {Designed and executed CI/CD pipelines using GitHub Actions, streamlining deployment processes for enhanced efficiency.}
-\item {Orchestrated containerized application deployment via Kubernetes on AWS EKS, optimizing for auto-scaling and high availability.}
-\item {Developed RESTful APIs with FastAPI and managed their EKS deployment via Terraform, establishing a resilient container environment.}
-\item {Automated text extraction in AWS S3 using Amazon Textract and AWS Lambda, centralizing data into a data lake for improved access and analysis.}
-\item {Managed AWS infrastructure using Terraform, overseeing services such as EC2, S3, RDS, Elastic Load Balancers, and VPCs.}
-\item {Integrated Large Language Models via Amazon Bedrock into data analytics processes for enhanced natural language understanding capabilities.}
-\item {Built a microservice images API on FastAPI and Kubernetes to transform deprecated Dental DataClearingHouse APIs into a usable API for frontend UI, delivering clear JSON responses via a custom CDN with PostgreSQL and S3 object store.}
-\item {Built an open data lakehouse on EKS with Dremio and Nessie, transforming raw data from an IBM3270 mainframe into an Apache Iceberg data lake and feeding a Python-based work distribution algorithm for dental adjudicators.}
-\end{cvitems}
+	\begin{cvitems}
+		% RPA / Orchestration (lead with outcomes)
+		\item {Migrated legacy UiPath automations to Python robots using Robocorp RCC and Sema4AI Action Server, delivering a fully open-source RPA solution under strict cost constraints.}
+		\item {Designed producer–consumer robots with prebuilt RCC Holotree environments; cut cold-start by \textasciitilde70\% and raised parallel throughput via deterministic env bootstraps.}
+		\item {Built Playwright-powered web-automation robots and custom ARC (Actions Runner Controller) runner images to enable rapid Kubernetes scale-out for high-concurrency runs.}
+		\item {Operated multi-account fleets of self-hosted GitHub Actions ARC runner sets to execute Robocorp RPA workloads reliably; implemented file-sharded work items and matrix job sharding (no Redis).}
+		% Cloud / Platform (retain core cloud achievements)
+		\item {Designed and executed CI/CD pipelines with GitHub Actions to streamline deployments.}
+		\item {Orchestrated containerized application delivery on AWS EKS with auto-scaling and HA.}
+		\item {Developed RESTful services with FastAPI and deployed via Terraform on EKS.}
+		\item {Automated text extraction with AWS Textract/Lambda into an S3 data lake.}
+		\item {Managed AWS infrastructure with Terraform (EC2, S3, RDS, ELB, VPC).}
+		\item {Integrated LLMs via Amazon Bedrock into analytics workflows.}
+		\item {Built a microservice images API (FastAPI on Kubernetes) to replace deprecated Dental DataClearingHouse endpoints, served via CDN with PostgreSQL and S3.}
+		\item {Delivered an open data lakehouse on EKS with Dremio + Nessie; transformed IBM3270 data into Apache Iceberg and fed a Python-based adjudication work-distribution algorithm.}
+	\end{cvitems}
 }
 
 %------------------------------------------------    
