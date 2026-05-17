@@ -18,37 +18,46 @@
 
 | 🛠 **Programming Languages** | Infrastructure & DevOps | Data Engineering |
 | --- | --- | --- |
-| Python, Bash, SQL, JavaScript, TypeScript | Terraform, AWS, GCP, CI/CD (GitHub Actions), Rancher, GitOps | Python, Apache Iceberg, DuckDB, Spark, Dremio, Nessie |
+| Python, Ruby/Rails, SQL, JavaScript/TypeScript, Bash, Go | Kubernetes, Rancher, k3s, Docker, Dev Containers, AWS ECS/Fargate, EKS, Argo CD/GitOps | PostgreSQL, SQL Server, MongoDB, SQLite, DuckDB, pandas, Spark, Iceberg, Dremio, Nessie |
 
-| **API Development** | **Virtualization & Containerization** | **GitOps** |
+| **Backend & APIs** | **AI & LLM Systems** | **Automation & RPA** |
 | --- | --- | --- |
-| FastAPI, Django API Integration & Management, Microservices Architecture | EC2, Harvester HCI (SUSE), Proxmox, Docker, Kubernetes, K3s, RKE2, EKS | ArgoCD, Flux, Fleet |
+| FastAPI, Rails, Django, REST APIs, PostgreSQL services, integrations, runbooks | RAG, embeddings, vector search, tool-using agents, Amazon Bedrock, Claude/Titan integrations | Robocorp/RCC, UiPath ecosystem, Playwright, API-first automation, CI/CD robots |
 
-| **Full Stack Development** | **Artificial Intelligence** |  |
+| **DevOps & Supply Chain** |  |  |
 | --- | --- | --- |
-| Django, HTML/CSS, JavaScript, React, Next.js, PostgreSQL, Tailwind, Pocketbase | OpenAI API, AWS BEDROCK, Anthropic, Langchain, Ollama, Llama3 |  |
+| GitHub Actions, Terraform, Helm, SBOMs, Cosign/signing, multi-arch containers |  |  |
 
 ---
 
 ## Summary
 
-Highly skilled **Site Reliability Engineer** and **Software Engineer** specializing in **SRE**, **Data Engineering**, and **Cloud Computing**. Proven experience in **CI/CD pipelines**, **Kubernetes orchestration**, and **large language model integrations**. Committed to **high availability**, **fault tolerance**, and **efficient resource utilization**.
+Advisor-level application developer and senior backend/platform engineer specializing in **AI-enabled automation**, **production APIs**, **data pipelines**, **Kubernetes/cloud-native delivery**, and **enterprise process modernization**. Turns messy business workflows into reliable systems, operational tooling, RAG-style analysis workflows, and measurable toil reduction without overclaiming pilot-stage work.
 
 ---
 
 ## Experience
 
-### SOFTWARE ENGINEER / SRE  
+### ADVISOR APPLICATION DEVELOPER — BACKEND, DATA & PLATFORM ENGINEERING
 **Gainwell Technologies, Conway, AR**  
 *June 2023 ‑ Present*
-- Designed and executed CI/CD pipelines using GitHub Actions, streamlining deployment processes for enhanced efficiency.
-- Orchestrated containerized application deployment via Kubernetes on AWS EKS, optimizing for auto‑scaling and high availability.
-- Developed RESTful APIs with FastAPI and managed their EKS deployment via Terraform, establishing a resilient container environment.
-- Automated text extraction in AWS S3 using Amazon Textract and AWS Lambda, centralizing data into a data lake for improved access and analysis.
-- Managed AWS infrastructure using Terraform, overseeing services such as EC2, S3, RDS, Elastic Load Balancers, and VPCs.
-- Integrated Large Language Models via Amazon Bedrock into data analytics processes for enhanced natural language understanding capabilities.
-- Built a microservice images API on FastAPI and Kubernetes to transform deprecated Dental DataClearingHouse APIs into a usable API for frontend UI, delivering clear JSON responses via a custom CDN with PostgreSQL and S3 object store.
-- Built an open data lakehouse on EKS with Dremio and Nessie, transforming raw data from an IBM 3270 mainframe into an Apache Iceberg data lake and feeding a Python‑based work distribution algorithm for dental adjudicators.
+- Promoted into an advisor-level application development role focused on production internal systems, backend APIs, data pipelines, platform automation, and business-team operational tooling.
+- Designed, built, and maintained the Images API, a production service used daily by dental adjudicators to retrieve claim images from legacy clearinghouse sources; improved reliability, maintainability, and process visibility for [daily users] and [daily image volume].
+- Built Gabby Call Intents analysis workflows over embedded IVR call transcripts, using RAG-style retrieval, similarity search, and multi-turn tool-using agents to surface containment-breakdown insights for operations teams.
+- Aggregated operational reports and SQL data pipelines to support adjudicator workload balancing, load visibility, and process reporting across [team/process scope].
+- Modernized automation around the UiPath/RPA ecosystem with Python, Playwright, API-first integrations, runbooks, SOPs, and monitoring concepts to reduce manual toil by [manual hours reduced].
+- Prototyped Kubernetes/GitHub Actions runner patterns for scalable automation workloads, including custom runner images, deterministic environments, and CI/CD robot execution concepts.
+- Integrated LLMs through Amazon Bedrock-style workflows for analytics and triage use cases while keeping production claims about pilots and proposals explicitly bounded.
+- Delivered cloud-native services and data platforms with FastAPI, PostgreSQL, S3, Terraform, Docker, Kubernetes/EKS concepts, Dremio, Nessie, Apache Iceberg, and Python work-distribution algorithms.
+
+## Selected Projects
+
+### AI AUTOMATION & PLATFORM SYSTEMS
+**Selected open-source and personal technical work**
+*June 2023 ‑ Present*
+- **joshyorko/rcc:** Apache-2.0 community fork of Robocorp RCC; builds and releases RCC binaries and demonstrates runtime/tooling depth for reproducible automation environments.
+- **yorko-io/control-room:** self-hostable Robocorp-style orchestration platform for work item queues, assets, RCC/Holotree integration, Kubernetes/Helm runtime concepts, and operator-style delivery.
+- **Fizzy/Symphony/Codex orchestration:** board-driven agent workflows, worktrees, spec-first automation, and operational handoffs for multi-agent engineering work.
 
 ### SENIOR DATA ENGINEER / SOFTWARE ENGINEER  
 **Gainwell Technologies, Conway, AR**  

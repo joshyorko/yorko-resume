@@ -13,26 +13,20 @@
 %------------------------------------------------
 
 \cventry
-{Software Engineer — Platform \& Reliability} % Job title (updated)
+{Advisor Application Developer — Backend, Data \& Platform Engineering} % Job title (updated)
 {Gainwell Technologies, Conway, AR} % Organization
 {} % Location
 {June 2023 -- Present} % Dates
 { % Description(s) of tasks/responsibilities
 	\begin{cvitems}
-		% RPA / Orchestration (lead with outcomes)
-		\item {Migrated legacy UiPath automations to Python robots using Robocorp RCC and Sema4AI Action Server, delivering a fully open-source RPA solution under strict cost constraints.}
-		\item {Designed producer–consumer robots with prebuilt RCC Holotree environments; cut cold-start by \textasciitilde70\% and raised parallel throughput via deterministic env bootstraps.}
-		\item {Built Playwright-powered web-automation robots and custom ARC (Actions Runner Controller) runner images to enable rapid Kubernetes scale-out for high-concurrency runs.}
-		\item {Operated multi-account fleets of self-hosted GitHub Actions ARC runner sets to execute Robocorp RPA workloads reliably; implemented file-sharded work items and matrix job sharding (no Redis).}
-		% Cloud / Platform (retain core cloud achievements)
-		\item {Designed and executed CI/CD pipelines with GitHub Actions to streamline deployments.}
-		\item {Orchestrated containerized application delivery on AWS EKS with auto-scaling and HA.}
-		\item {Developed RESTful services with FastAPI and deployed via Terraform on EKS.}
-		\item {Automated text extraction with AWS Textract/Lambda into an S3 data lake.}
-		\item {Managed AWS infrastructure with Terraform (EC2, S3, RDS, ELB, VPC).}
-		\item {Integrated LLMs via Amazon Bedrock into analytics workflows.}
-		\item {Built a microservice images API (FastAPI on Kubernetes) to replace deprecated Dental DataClearingHouse endpoints, served via CDN with PostgreSQL and S3.}
-		\item {Delivered an open data lakehouse on EKS with Dremio + Nessie; transformed IBM3270 data into Apache Iceberg and fed a Python-based adjudication work-distribution algorithm.}
+		\item {Promoted into an advisor-level application development role focused on production internal systems, backend APIs, data pipelines, platform automation, and business-team operational tooling.}
+		\item {Designed, built, and maintained the Images API, a production service used daily by dental adjudicators to retrieve claim images from legacy clearinghouse sources; improved reliability, maintainability, and process visibility for [daily users] and [daily image volume].}
+		\item {Built Gabby Call Intents analysis workflows over embedded IVR call transcripts, using RAG-style retrieval, similarity search, and multi-turn tool-using agents to surface containment-breakdown insights for operations teams.}
+		\item {Aggregated operational reports and SQL data pipelines to support adjudicator workload balancing, load visibility, and process reporting across [team/process scope].}
+		\item {Modernized automation around the UiPath/RPA ecosystem with Python, Playwright, API-first integrations, runbooks, SOPs, and monitoring concepts to reduce manual toil by [manual hours reduced].}
+		\item {Prototyped Kubernetes/GitHub Actions runner patterns for scalable automation workloads, including custom runner images, deterministic environments, and CI/CD robot execution concepts.}
+		\item {Integrated LLMs through Amazon Bedrock-style workflows for analytics and triage use cases while keeping production claims about pilots and proposals explicitly bounded.}
+		\item {Delivered cloud-native services and data platforms with FastAPI, PostgreSQL, S3, Terraform, Docker, Kubernetes/EKS concepts, Dremio, Nessie, Apache Iceberg, and Python work-distribution algorithms.}
 	\end{cvitems}
 }
 
