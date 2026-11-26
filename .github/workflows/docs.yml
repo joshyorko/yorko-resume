@@ -31,20 +31,25 @@ jobs:
     runs-on: ubuntu-latest
     environment: github-pages-compatibility
     concurrency: github-pages-compatibility
-    permissions:
-      contents: write
     steps:
       - name: Confirm operator enablement
         env:
           ENABLED: ${{ vars.PAGES_COMPATIBILITY_PUBLISH_ENABLED }}
         run: test "$ENABLED" = true
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
       - uses: actions/download-artifact@v4
         with:
           name: github-pages-compatibility
           path: ${{ runner.temp }}/pages
       - uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          deploy_key: ${{ secrets.PAGES_COMPATIBILITY_DEPLOY_KEY }}
           publish_dir: ${{ runner.temp }}/pages
           publish_branch: gh-pages
+      - name: Verify published homepage and résumé
+        run: node portfolio/compat/check-live.mjs "$RUNNER_TEMP/pages"
