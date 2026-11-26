@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Josh Yorko</title>
+<meta name="description" content="Josh Yorko's tools for building, shipping, running and securing software, the agent skills that go with them, and dated field notes.">
+<link rel="preload" href="../../prototype/fonts/familjen.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../prototype/fonts/newsreader-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="mark" href="index.html" aria-label="Josh Yorko, home"><span class="glyph" aria-hidden="true">jy</span>Josh Yorko</a>
+    <nav aria-label="Primary">
+      <a class="wide-only" href="#index">Software</a>
+      <a href="skills.html">Skills</a>
+      <a href="notes.html">Notes</a>
+      <a class="wide-only" href="influences.html">Influences</a>
+      <a href="https://github.com/joshyorko/yorko-resume/blob/631481871d22d7b053c1aae23a84cc7d14d04b09/docs/assets/JoshYorkoResume.pdf">Résumé</a>
+    </nav>
+  </header>
+
+  <div class="hero-grid">
+    <section class="intro">
+      <!-- DRAFT statement built from the owner's own brief. Josh to confirm wording. -->
+      <h1 class="thesis">I work on how software gets built, shipped, run and secured, and how to let coding agents in <span class="voice">without giving up</span> determinism, provenance or human control.</h1>
+      <p class="who">This is where I keep what I build, the agent skills that go with it, and dated notes on what changed.</p>
+      <p class="plain-links">
+        <a href="https://github.com/joshyorko/yorko-resume/blob/631481871d22d7b053c1aae23a84cc7d14d04b09/docs/assets/JoshYorkoResume.pdf">Résumé<span class="mono">PDF</span></a>
+        <a href="https://github.com/joshyorko">GitHub</a>
+        <a class="in" href="notes.html">Field notes</a>
+      </p>
+    </section>
+
+    <section class="needs" aria-labelledby="needs-h">
+      <h2 id="needs-h">I need to…</h2>
+      <ol>
+        <li><a href="https://github.com/joshyorko/rcc"><span class="need">reproduce an automation environment</span><span class="tool"><span><span class="arrow">→ </span><b>rcc</b> 18.19.11</span><span class="from"><i>continues</i>robocorp/rcc</span></span></a></li>
+        <li><a href="https://github.com/joshyorko/actions"><span class="need">serve Python functions to agents over MCP</span><span class="tool"><span><span class="arrow">→ </span><b>actions-runtime</b> 1.1.1</span><span class="from"><i>fork of</i>actions-sema4ai</span></span></a></li>
+        <li><a href="skills.html#g-37signals"><span class="need">give my agent Rails and product judgment</span><span class="tool"><span><span class="arrow">→ </span><b>37signals skills</b> 0.1.0</span><span class="from"><i>cites</i>public 37signals writing</span></span></a></li>
+        <li><a href="https://github.com/joshyorko/josh-room"><span class="need">save and restore an encrypted workspace</span><span class="tool"><span><span class="arrow">→ </span><b>josh-room</b> + jat</span><span class="from"><i>mine</i></span></span></a></li>
+        <li><a href="https://github.com/joshyorko/codex-memoryd"><span class="need">give a coding agent local memory</span><span class="tool"><span><span class="arrow">→ </span><b>memoryd</b> 0.1.0</span><span class="from"><i>mine</i></span></span></a></li>
+        <li><a href="https://github.com/joshyorko/codex-action-server"><span class="need">drive Codex through typed MCP tools</span><span class="tool"><span><span class="arrow">→ </span><b>codex-action-server</b></span><span class="from"><i>mine</i></span></span></a></li>
+        <li><a href="https://github.com/joshyorko/dudley-os"><span class="need">boot my workstation from an image</span><span class="tool"><span><span class="arrow">→ </span><b>dudley-os</b> bootc</span><span class="from"><i>built on</i>Project Bluefin</span></span></a></li>
+      </ol>
+    </section>
+  </div>
+</div>
+
+<div class="wrap">
+  <section class="shelf" id="skills" aria-labelledby="skills-h">
+    <div class="shelf-grid">
+      <div>
+        <div class="sec-head">
+          <h2 id="skills-h">Agent plugins and skills</h2>
+          <p>A skill is a set of instructions a coding agent loads when the job matches. Four plugins, 22 skills, one public repo, with manifests for Codex, Claude Code and Hermes.</p>
+        </div>
+        <div class="install">
+          <code><span class="p">$ </span>curl -fsSL https://raw.githubusercontent.com/joshyorko/plugins/main/install.sh | bash</code>
+          <button class="copy" data-copy="curl -fsSL https://raw.githubusercontent.com/joshyorko/plugins/main/install.sh | bash">Copy</button>
+        </div>
+        <p class="install-note">Codex bootstrap for macOS and Linux. Windows and pinned installs are in the <a class="voice" href="https://github.com/joshyorko/plugins#quick-start">README</a>.</p>
+      </div>
+
+      <div>
+        <article class="plugin" id="p-37signals">
+          <h3>37signals <span class="pin">0.1.0 · 10 skills</span></h3>
+          <p class="trigger"><span class="lead">Use when</span> a Rails, Hotwire or product decision needs judgment grounded in public 37signals and Basecamp writing.</p>
+          <p class="from"><i>community-made</i>not official</p>
+          <ul class="tokens">
+            <li><a href="skills.html#37signals-shape-up">37signals-shape-up</a></li>
+            <li><a href="skills.html#37signals-scope-judgment">37signals-scope-judgment</a></li>
+            <li><a href="skills.html#37signals-hotwire">37signals-hotwire</a></li>
+            <li><a href="skills.html#dhh-rails-judgment">dhh-rails-judgment</a></li>
+            <li><a class="more" href="skills.html#g-37signals">+6 more</a></li>
+          </ul>
+        </article>
+
+        <article class="plugin" id="p-rcc">
+          <h3>RCC Automation <span class="pin">0.6.1 · 9 skills</span></h3>
+          <p class="trigger"><span class="lead">Use when</span> you're building robots, work-item queues or Action Server packages on RCC.</p>
+          <p class="from"><i>drives</i>the rcc CLI, scaffolds on request</p>
+          <ul class="tokens">
+            <li><a href="skills.html#rcc">rcc</a></li>
+            <li><a href="skills.html#rcc-robots">rcc-robots</a></li>
+            <li><a href="skills.html#action-server">action-server</a></li>
+            <li><a href="skills.html#verify-rcc">verify-rcc</a></li>
+            <li><a class="more" href="skills.html#g-rcc">+5 more</a></li>
+          </ul>
+        </article>
+
+        <article class="plugin" id="p-fizzy">
+          <h3>Fizzy <span class="pin">0.1.2 · 1 skill</span></h3>
+          <p class="trigger"><span class="lead">Use when</span> an agent should work Fizzy boards, cards and comments.</p>
+          <p class="from"><i>wraps</i>basecamp/fizzy-cli</p>
+          <ul class="tokens"><li><a href="skills.html#fizzy">fizzy</a></li></ul>
+        </article>
+
+        <article class="plugin" id="p-luna">
+          <h3>Luna Factory <span class="pin">0.2.1 · 2 skills</span></h3>
+          <p class="trigger"><span class="lead">Use when</span> a large objective splits into independent workstreams for native Codex workers.</p>
+          <p class="from"><i>mine</i>Rust + MCP Apps, opt-in</p>
+          <ul class="tokens"><li><a href="skills.html#luna-factory">luna-factory</a></li><li><a href="skills.html#setup">setup</a></li></ul>
+        </article>
+
+        <div class="shelf-foot">
+          <span class="pin">catalog pinned to plugins@e24cd59</span>
+          <a class="go" href="skills.html">All 22 skills →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section class="sec split after-shelf home-notes" aria-labelledby="notes-h">
+    <div class="sec-head">
+      <h2 id="notes-h">Field notes</h2>
+      <p>What changed, dated, with a link to the evidence.</p>
+    </div>
+    <div>
+      <div class="log">
+        <article class="entry"><time datetime="2026-11-24">Nov 24</time><div><span class="kind">merged</span><h3><a href="https://github.com/joshyorko/plugins/commit/e24cd596ef41e9294ad770d2b613bf77b42a8a68">RCC plugin rejects unsupported bootstrapper requests</a></h3><p class="ev">joshyorko/plugins #112</p></div></article>
+        <article class="entry"><time datetime="2026-11-23">Nov 23</time><div><span class="kind">merged</span><h3><a href="https://github.com/joshyorko/josh-all-the-things/pull/43">Preserve OCI capture identity and verify live digest pull references</a></h3><p class="ev">joshyorko/josh-all-the-things #43</p></div></article>
+        <article class="entry"><time datetime="2026-11-17">Nov 17</time><div><span class="kind">upstream</span><h3><a href="https://github.com/hauler-dev/hauler/pull/928">Use the selected Docker context for local image imports</a></h3><p class="ev">hauler-dev/hauler #928</p></div></article>
+      </div>
+      <a class="more-link" href="notes.html">All field notes →</a>
+    </div>
+  </section>
+
+  <section class="sec" id="index" aria-labelledby="index-h">
+    <div class="sec-head"><h2 id="index-h">Everything else</h2></div>
+    <div class="dest">
+      <a href="#software"><b>Software</b><span>Each tool, the problem it solves, its source, and whose it is.</span></a>
+      <a href="#systems"><b>Systems</b><span>The bootc images, devcontainers and packages my machines run on.</span></a>
+      <a href="#lab"><b>Agent Lab</b><span>Small experiments that run in your browser. No accounts, no paid models.</span></a>
+      <a href="influences.html"><b>Influences</b><span>People, projects and ideas behind the work, linked to where they show up.</span></a>
+      <a href="skills.html"><b>Plugins and skills</b><span>All 22 skills, searchable by the job you have.</span></a>
+      <a href="https://github.com/joshyorko/yorko-resume/blob/631481871d22d7b053c1aae23a84cc7d14d04b09/docs/assets/JoshYorkoResume.pdf"><b>Résumé</b><span>Experience, skills and education, as a PDF.</span></a>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>Josh Yorko · static pages, no backend</span>
+    <span><a href="https://github.com/joshyorko">github.com/joshyorko</a></span>
+  </footer>
+</div>
+
+<script>
+  document.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = "Copied"; }
+    catch { b.textContent = "Select and copy"; }
+    setTimeout(() => (b.textContent = "Copy"), 1600);
+  }));
+</script>
+</body>
+</html>

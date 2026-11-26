@@ -1,5 +1,7 @@
 # Trigger index: an art direction for joshyorko's site
 
+> **Revision 2** (owner's supplemental direction) is in [`v2/`](v2/). It reframes the site as an engineering home, not a portfolio. Round 1 below is kept unchanged as evidence at commit `e23d33f`, with its files in `prototype/` and `screens/`.
+
 Candidate from claude-opus-5.5 in the PStack Arena, dated 2026-11-25. This is a throwaway design prototype for the operator to judge. It is not production code and has no visual approval.
 
 ## The idea
@@ -94,3 +96,72 @@ To reproduce, run `cd prototype && ./render.sh`. Then open `prototype/index.html
 PStack 0.15.48 (`poteto-mode` and its `worker.md`, `arena`, `principle-experience-first`, `principle-exhaust-the-design-space`, `principle-attack-the-premise`, `playbooks/prototype.md`). Anthropic's public `frontend-design` SKILL.md, read as guidance; no text is reproduced. Josh's `37signals-product-design` and `37signals-scope-judgment`. t3.gg and davis7.sh, both live and from source. Both rejected designs at 390 and 1440. `portfolio/data/catalog.json` and `work.mjs` at `6314818`, and the joshyorko/plugins README and Luna Factory README.
 
 The reference sites suggested three things: lead with resources, keep one personal mark, and add almost no chrome. Nothing from their branding, layout or assets is used.
+
+---
+
+## Revision 2: provenance, field notes, influences
+
+### Evaluation of round 1 against the new goal
+Kept, because it already serves "useful engineering destination":
+- **The "I need to…" index.** It starts from the visitor's job and ends at real software. That is the subject, systems, not frontend.
+- **The plugin shelf and the searchable skills interior.** Skills stay first-class.
+- **The calm native-dark tokens** and the three-face type system. No change to palette or fonts.
+
+Wrong for the new goal:
+- **The thesis was invented flourish.** "Runs the same way twice" was my line, not Josh's.
+- **The framing was a hiring portfolio.** An employer line, a filled résumé button, and a "see who built all this" row.
+- **Nothing said whose each thing was.** For someone whose work is provenance, that is the main gap.
+- **Nothing dated.** Engineers had no reason to come back.
+- **The homepage carried everything.** Work, Systems and Elsewhere were all on it.
+
+### What changed
+1. **Provenance is now the signature.** Each row reads *job → tool ← relation*. The relations are *continues robocorp/rcc*, *fork of actions-sema4ai*, *built on Project Bluefin*, *wraps basecamp/fizzy-cli*, *community-made* and *mine*. The site practises what the work is about: you can see where each thing came from.
+2. **A stricter type grammar.**
+   - Italic serif is a human job or relation.
+   - Mono is an artifact you can fetch.
+   - Sans is for names and prose.
+3. **A smaller, plain statement.** It is built from the owner's own words, with no employer and no hero CTA. The résumé is a plain link and stays in the nav, so the recruiter path is still one tap.
+4. **A slimmer homepage.** It holds the statement, the index, the skills shelf, three latest field notes, and one "Everything else" list. Work and Systems move off the homepage into Software and Systems pages.
+5. **Field Notes (new interior).** It is a chronological log built only from public GitHub releases, merges and repo-creation dates, fetched 2026-11-25.
+   - Each entry has a kind (*release*, *merged*, *upstream*, *new repo*) and an evidence link.
+   - Kind filters show counts.
+   - Year markers are set in the italic voice.
+   - One entry is a clearly labelled **"Outline for Josh to write · draft · not published"**. Nothing is ghostwritten.
+6. **Influences (new interior).**
+   - **People** come from Josh's own list. Each gets a factual one-liner and, only where a public repo shows it, *shows up in* links.
+   - **Built on** credits the upstream projects (Robocorp RCC, Robot Framework, Bluefin, bootc, Omarchy, fizzy-cli, Hauler, Devsy).
+   - A draft box says the "why" for each person is Josh's to write.
+
+### How a visitor benefits
+- **Recruiter:** reads what Josh works on in one sentence, then taps Résumé (nav or the first link).
+- **Engineer:** finds a tool by job, sees at a glance whether it is Josh's, a fork or a continuation, and copies the install command. They come back to Field Notes for what shipped.
+- **Upstream maintainers:** get visible credit instead of a lineage buried in READMEs.
+
+### Not validated
+- **The statement wording** is a draft from Josh's brief, marked in the HTML source. He must confirm it.
+- **"Juha"** has no surname here because I could not verify one.
+- **The Hemingway, ThePrimeagen and Fireship descriptors** paraphrase the owner's brief. They have no "shows up in" link because no public repo shows one.
+- **Field Notes dates** are GitHub event dates. "New repo" is not a project start date, and the page says so.
+- **Not built:** the Software, Systems and Agent Lab pages, the 2024 notes year, and any real write-up. Index links to those pages are placeholders.
+- **Not tested:** real devices, screen readers, and contrast measurement. All captures come from headless Chrome.
+
+### Files (revision 2)
+- `v2/prototype/`
+  - `index.html`: home
+  - `notes.html`: Field Notes
+  - `influences.html`
+  - `skills.tmpl.html` → `skills.html`
+  - `site.css`
+  - `render.sh`
+  - Fonts load from `../../prototype/fonts/`.
+- `v2/screens/`
+  - `home-390`, `home-360`, `home-1440`, `home-390-full`
+  - `notes-390`, `notes-1440`, `notes-390-upstream` (filter on), `notes-390-full`
+  - `influences-390`, `influences-390-full`
+  - `skills-390`
+- Refinement pass, from my own captures:
+  - The italic phrase made the thesis line spacing uneven.
+  - The thesis was still hero-sized on desktop.
+  - The "New repo" note collided with the 2026 year marker.
+  - The plugin provenance lines wrapped badly.
+  - Section headings on the Influences page sat too tight against the first entry.

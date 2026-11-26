@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Field notes · Josh Yorko</title>
+<meta name="description" content="Dated changes to Josh Yorko's software, each linked to public evidence.">
+<link rel="preload" href="../../prototype/fonts/familjen.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../prototype/fonts/newsreader-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="mark" href="index.html" aria-label="Josh Yorko, home"><span class="glyph" aria-hidden="true">jy</span>Josh Yorko</a>
+    <nav aria-label="Primary">
+      <a class="wide-only" href="index.html#index">Software</a>
+      <a href="skills.html">Skills</a>
+      <a href="notes.html" aria-current="page">Notes</a>
+      <a class="wide-only" href="influences.html">Influences</a>
+      <a href="https://github.com/joshyorko/yorko-resume/blob/631481871d22d7b053c1aae23a84cc7d14d04b09/docs/assets/JoshYorkoResume.pdf">Résumé</a>
+    </nav>
+  </header>
+
+  <div class="notes-grid">
+    <div class="notes-head">
+      <div class="page-head">
+        <h1>Field notes</h1>
+        <p>What changed in the work, newest first. Every entry links to the release, pull request or commit it came from.</p>
+      </div>
+      <div class="chips" role="group" aria-label="Filter notes" id="chips">
+        <button aria-pressed="true" data-k="all">All</button>
+        <button aria-pressed="false" data-k="release">Releases</button>
+        <button aria-pressed="false" data-k="merged">Merged</button>
+        <button aria-pressed="false" data-k="upstream">Upstream</button>
+        <button aria-pressed="false" data-k="new repo">New repos</button>
+      </div>
+      <p class="basis">“New repo” is the day the repository appeared on GitHub, not the day the idea started.</p>
+    </div>
+
+    <div class="log" id="log">
+      <h2 class="year">2026</h2>
+        <article class="entry" data-kind="merged"><time datetime="2026-11-24">Nov 24</time><div><span class="kind">merged</span><h3><a href="https://github.com/joshyorko/plugins/commit/e24cd596ef41e9294ad770d2b613bf77b42a8a68">RCC plugin rejects unsupported bootstrapper requests</a></h3><p class="ev">joshyorko/plugins #112</p></div></article>
+        <article class="entry" data-kind="merged"><time datetime="2026-11-23">Nov 23</time><div><span class="kind">merged</span><h3><a href="https://github.com/joshyorko/josh-all-the-things/pull/43">Preserve OCI capture identity and verify live digest pull references</a></h3><p class="ev">joshyorko/josh-all-the-things #43</p></div></article>
+        <article class="entry" data-kind="upstream"><time datetime="2026-11-17">Nov 17</time><div><span class="kind">upstream</span><h3><a href="https://github.com/hauler-dev/hauler/pull/928">Use the selected Docker context for local image imports</a></h3><p>Merged upstream into Hauler.</p><p class="ev">hauler-dev/hauler #928</p></div></article>
+        <article class="entry" data-kind="release"><time datetime="2026-11-13">Nov 13</time><div><span class="kind">release</span><h3><a href="https://github.com/joshyorko/actions/releases/tag/actions-runtime-1.1.1">Actions Runtime 1.1.1</a></h3><p class="ev">joshyorko/actions · actions-runtime-1.1.1</p></div></article>
+        <article class="entry" data-kind="release"><time datetime="2026-11-10">Nov 10</time><div><span class="kind">release</span><h3><a href="https://github.com/joshyorko/rcc/releases/tag/v18.19.11">RCC v18.19.11</a></h3><p>The fourth patch release in six days.</p><p class="ev">joshyorko/rcc · v18.19.8 → v18.19.11</p></div></article>
+        <div class="entry" data-kind="draft"><span></span><div class="draft" style="grid-column:2;margin-top:0">
+          <p class="label">Outline for Josh to write <span>draft · not published</span></p>
+          <ul>
+            <li>What v18.19.8 through v18.19.11 each fixed, from the release notes.</li>
+            <li>Which failure showed up first, and how it was caught.</li>
+            <li>What changed in the release check afterwards, if anything.</li>
+          </ul>
+        </div></div>
+        <article class="entry" data-kind="merged"><time datetime="2026-11-05">Nov 5</time><div><span class="kind">merged</span><h3><a href="https://github.com/joshyorko/codex-action-server/pull/30">Repair native plugin reads and qualify the full Codex 0.166 surface</a></h3><p class="ev">joshyorko/codex-action-server #30</p></div></article>
+        <article class="entry" data-kind="upstream"><time datetime="2026-11-02">Nov 2</time><div><span class="kind">upstream</span><h3><a href="https://github.com/devsy-org/devsy-provider-harvester">Harvester provider now lives under Devsy</a></h3><p>I created it; Devsy maintains it. My copy is archived.</p><p class="ev">devsy-org/devsy-provider-harvester</p></div></article>
+        <article class="entry" data-kind="release"><time datetime="2026-10-09">Oct 9</time><div><span class="kind">release</span><h3><a href="https://github.com/joshyorko/plugins/releases/tag/v0.2.1">Plugins v0.2.0 and v0.2.1, same day</a></h3><p class="ev">joshyorko/plugins</p></div></article>
+        <article class="entry" data-kind="new repo"><time datetime="2026-10-02">Oct 2</time><div><span class="kind">new repo</span><h3><a href="https://github.com/joshyorko/codex-action-server">codex-action-server</a></h3><p>Typed MCP control for the native Codex app-server.</p></div></article>
+        <article class="entry" data-kind="new repo"><time datetime="2026-09-30">Sep 30</time><div><span class="kind">new repo</span><h3><a href="https://github.com/joshyorko/mcp-tunnel-kit">mcp-tunnel-kit</a></h3><p>Session-aware MCP tunnel tooling.</p></div></article>
+        <article class="entry" data-kind="release"><time datetime="2026-09-29">Sep 29</time><div><span class="kind">release</span><h3><a href="https://github.com/joshyorko/codex-memoryd/releases/tag/v0.1.0">MemoryD v0.1.0</a></h3><p>First release.</p><p class="ev">joshyorko/codex-memoryd</p></div></article>
+        <article class="entry" data-kind="upstream"><time datetime="2026-09-13">Sep 13</time><div><span class="kind">upstream</span><h3><a href="https://github.com/projectbluefin/contribute/pull/489">Gate queue issue implementation on fresh explicit admission</a></h3><p class="ev">projectbluefin/contribute #489</p></div></article>
+        <article class="entry" data-kind="upstream"><time datetime="2026-08-27">Aug 27</time><div><span class="kind">upstream</span><h3><a href="https://github.com/projectbluefin/contribute/pull/350">Present exact-head re-review deltas</a></h3><p class="ev">projectbluefin/contribute #350</p></div></article>
+        <article class="entry" data-kind="new repo"><time datetime="2026-08-24">Aug 24</time><div><span class="kind">new repo</span><h3><a href="https://github.com/joshyorko/josh-room">josh-room</a></h3><p>Encrypted development-workspace snapshot CLI.</p></div></article>
+        <article class="entry" data-kind="upstream"><time datetime="2026-08-11">Aug 11</time><div><span class="kind">upstream</span><h3><a href="https://github.com/projectbluefin/contribute/pull/191">Make every GitHub mutation use one exact-head ActionPlan</a></h3><p class="ev">projectbluefin/contribute #191</p></div></article>
+        <article class="entry" data-kind="new repo"><time datetime="2026-08-06">Aug 6</time><div><span class="kind">new repo</span><h3><a href="https://github.com/joshyorko/josh-all-the-things">josh-all-the-things</a></h3><p class="ev">joshyorko/josh-all-the-things</p></div></article>
+        <article class="entry" data-kind="new repo"><time datetime="2026-06-06">Jun 6</time><div><span class="kind">new repo</span><h3><a href="https://github.com/joshyorko/codex-memoryd">codex-memoryd</a></h3><p class="ev">joshyorko/codex-memoryd</p></div></article>
+        <article class="entry" data-kind="new repo"><time datetime="2026-03-23">Mar 23</time><div><span class="kind">new repo</span><h3><a href="https://github.com/joshyorko/dudley-os">dudley-os</a></h3><p>A bootc desktop image built on Project Bluefin.</p></div></article>
+        <article class="entry" data-kind="new repo"><time datetime="2026-03-22">Mar 22</time><div><span class="kind">new repo</span><h3><a href="https://github.com/joshyorko/omarchy-bootc">omarchy-bootc</a></h3><p>Omarchy, rebuilt as an Arch-based bootc image.</p></div></article>
+        <article class="entry" data-kind="new repo"><time datetime="2026-02-03">Feb 3</time><div><span class="kind">new repo</span><h3><a href="https://github.com/joshyorko/plugins">plugins</a></h3><p class="ev">joshyorko/plugins</p></div></article>
+        <article class="entry" data-kind="new repo"><time datetime="2026-01-02">Jan 2</time><div><span class="kind">new repo</span><h3><a href="https://github.com/joshyorko/homebrew-tools">homebrew-tools</a></h3><p class="ev">joshyorko/homebrew-tools</p></div></article>
+      <h2 class="year">2025</h2>
+        <article class="entry" data-kind="new repo"><time datetime="2025-09-05">Sep 5</time><div><span class="kind">new repo</span><h3><a href="https://github.com/joshyorko/rcc">rcc, continued</a></h3><p>Robocorp created RCC. This repo is its independently maintained continuation.</p><p class="ev">joshyorko/rcc</p></div></article>
+        <article class="entry" data-kind="new repo"><time datetime="2025-03-15">Mar 15</time><div><span class="kind">new repo</span><h3><a href="https://github.com/joshyorko/actions">actions, forked</a></h3><p class="ev">fork of tonnitommi/actions-sema4ai</p></div></article>
+        <article class="entry" data-kind="new repo"><time datetime="2025-02-08">Feb 8</time><div><span class="kind">new repo</span><h3><a href="https://github.com/joshyorko/room-of-requirement">room-of-requirement</a></h3><p>Homebrew-first devcontainer images.</p></div></article>
+      <h2 class="year">2023</h2>
+        <article class="entry" data-kind="new repo"><time datetime="2023-10-25">Oct 25</time><div><span class="kind">new repo</span><h3><a href="https://github.com/joshyorko/yorko-resume">yorko-resume</a></h3><p>The source of this site.</p></div></article>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <span class="pin">dates from GitHub releases, merges and repo creation · fetched 2026-11-25</span>
+    <span><a href="https://github.com/joshyorko">github.com/joshyorko</a></span>
+  </footer>
+</div>
+<script>
+  const chips = document.querySelectorAll("#chips button");
+  const counts = {};
+  document.querySelectorAll("#log .entry").forEach((e) => { counts[e.dataset.kind] = (counts[e.dataset.kind] || 0) + 1; });
+  chips.forEach((b) => {
+    const k = b.dataset.k;
+    if (k !== "all") b.insertAdjacentHTML("beforeend", `<b>${counts[k] || 0}</b>`);
+    b.addEventListener("click", () => {
+      chips.forEach((c) => c.setAttribute("aria-pressed", String(c === b)));
+      document.querySelectorAll("#log .entry").forEach((e) => { e.hidden = k !== "all" && e.dataset.kind !== k; });
+      document.querySelectorAll("#log .year").forEach((y) => {
+        let n = y.nextElementSibling, any = false;
+        while (n && !n.classList.contains("year")) { if (!n.hidden) any = true; n = n.nextElementSibling; }
+        y.hidden = !any;
+      });
+    });
+  });
+  const f = new URLSearchParams(location.search).get("k");
+  if (f) document.querySelector(`#chips button[data-k="${f}"]`)?.click();
+</script>
+</body>
+</html>
