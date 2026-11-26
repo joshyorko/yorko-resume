@@ -4,6 +4,14 @@
     "coldRequests": 9,
     "warmReloadRequests": 9,
     "geometryHit": "Foundry",
+    "keyboardToFocusMs": [
+      136.50246900000002,
+      50.83320999999978,
+      13.581617000000278,
+      22.184660999999778,
+      21.263836999999967,
+      37.564302000000225
+    ],
     "axe": [],
     "errors": []
   },
@@ -11,7 +19,15 @@
     "width": 390,
     "coldRequests": 9,
     "warmReloadRequests": 9,
-    "geometryHit": "Foundry",
+    "geometryHit": "Memory core",
+    "keyboardToFocusMs": [
+      37.778581999999915,
+      27.78063800000018,
+      12.827846999999565,
+      15.007469000000128,
+      23.471136999999544,
+      9.008280000000013
+    ],
     "axe": [],
     "errors": []
   }

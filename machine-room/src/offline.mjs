@@ -2,6 +2,7 @@ const $=id=>document.getElementById(id);
 const version=document.documentElement.dataset.build,receipts=[];
 const workerURL=new URL('sw-'+version+'.js',document.baseURI);
 function refresh(){
+ $('connection').textContent=navigator.serviceWorker?.controller?.scriptURL===workerURL.href?'Offline controller active':navigator.onLine?'Online':'Offline';
  const entries=performance.getEntriesByType('resource');
  const last=entries.at(-1);
  $('runtime').textContent=[
@@ -17,6 +18,7 @@ function refresh(){
 addEventListener('machine-receipt',e=>{
  receipts.unshift(e.detail);receipts.splice(6);refresh()
 });
+refresh();
 for(const name of ['online','offline'])addEventListener(name,refresh);
 $('inspect-runtime').ontoggle=refresh;$('refresh-runtime').onclick=refresh;
 $('prepare').onclick=async()=>{

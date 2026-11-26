@@ -2,8 +2,10 @@
   {
     "width": 390,
     "coldRequests": 7,
-    "verifiedCacheEntries": 34,
+    "verifiedCacheEntries": 40,
     "offlineSQLiteRows": 3,
+    "portableActionMs": 0,
+    "sessionExport": "machine-room-browser-session.v1",
     "offlinePolicy": "accepted",
     "offlineWebGL": true,
     "externalRequests": 0
@@ -11,8 +13,10 @@
   {
     "width": 1440,
     "coldRequests": 7,
-    "verifiedCacheEntries": 34,
+    "verifiedCacheEntries": 40,
     "offlineSQLiteRows": 3,
+    "portableActionMs": 0.10000000149011612,
+    "sessionExport": "machine-room-browser-session.v1",
     "offlinePolicy": "accepted",
     "offlineWebGL": true,
     "externalRequests": 0

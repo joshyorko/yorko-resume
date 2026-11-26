@@ -11,11 +11,11 @@ try{for(const width of [1440,390]){
  await page.addScriptTag({path:'node_modules/axe-core/axe.min.js'});const axe=await page.evaluate(async()=> (await window.axe.run()).violations.map(v=>v.id));assert.deepEqual(axe,[]);
  // Hit the rendered geometry with real input. Probe the lower machines before distant bays.
  const rect=await page.locator('canvas').boundingBox();let hit;
- for(const [x,y] of [[.23,.53],[.62,.55],[.48,.61],[.34,.52],[.72,.46],[.55,.52],[.24,.66],[.33,.62],[.39,.48],[.17,.6]]){
+ for(const [x,y] of [[.20,.70],[.78,.54],[.23,.58],[.52,.34],[.23,.53],[.62,.55],[.48,.61],[.34,.52],[.72,.46],[.55,.52],[.24,.66],[.33,.62],[.39,.48],[.17,.6]]){
   if(width===390)await page.touchscreen.tap(rect.x+x*rect.width,rect.y+y*rect.height);else await page.mouse.click(rect.x+x*rect.width,rect.y+y*rect.height);
-  if(await page.locator('#inspection').isVisible()){hit=await page.locator('#station').innerText();break}
- }assert(hit,'No geometry selected');
- const visit=async id=>{await page.locator('[data-id="'+id+'"]').focus();await page.keyboard.press('Enter');await page.waitForFunction(id=>document.activeElement?.id==='station'&&location.hash==='#'+id,id)};
+  if(await page.locator('#inspection').waitFor({state:'visible',timeout:200}).then(()=>true,()=>false)){hit=await page.locator('#station').innerText();break}
+ }assert(hit,'No geometry selected at '+width);
+ const interaction=[];const visit=async id=>{const start=performance.now();await page.locator('[data-id="'+id+'"]').focus();await page.keyboard.press('Enter');await page.waitForFunction(id=>document.activeElement?.id==='station'&&location.hash==='#'+id,id);interaction.push(performance.now()-start)};
  const click=label=>page.getByRole('button',{name:label,exact:true}).click(),output=()=>page.locator('#experiment pre').innerText();
  await click('← Return to hall');await visit('review');await click('Submit claim');assert.match(await output(),/Claim accepted/);await click('Submit claim');assert.match(await output(),/Duplicate claim refused/);await page.screenshot({path:'proof/review-'+width+'.png'});
  await click('Reset scenario');await page.getByLabel('Requested revision').selectOption('18');await click('Submit claim');assert.match(await output(),/Revision mismatch/);
@@ -26,7 +26,7 @@ try{for(const width of [1440,390]){
  await visit('actions');await click('Dispatch sample');await click('Simulate crash');await page.reload();await click('Recover artifact');assert.match(await output(),/"sum": 37/);
  await visit('room');await click('runtime.json');await page.getByLabel('Snapshot').selectOption('rev-01');assert.match(await output(),/3.11/);
  await visit('transport');await click('Verify and reconstruct');assert.match(await output(),/"verified": true/);await page.getByLabel('Transfer').selectOption('Corrupt final byte');await click('Verify and reconstruct');assert.match(await output(),/"verified": false/);
- assert.deepEqual(errors,[]);report.push({width,coldRequests:cold,warmReloadRequests:warm,geometryHit:hit,axe,errors});await page.close()
+ assert.deepEqual(errors,[]);report.push({width,coldRequests:cold,warmReloadRequests:warm,geometryHit:hit,keyboardToFocusMs:interaction,axe,errors});await page.close()
 }
 const plain=await browser.newPage({javaScriptEnabled:false});await plain.goto(base);for(const a of await plain.locator('a[href^="stations/"]').evaluateAll(links=>[...new Set(links.map(a=>a.href))])){await plain.goto(a);assert(await plain.locator('h1').isVisible());assert(await plain.getByText('Public evidence',{exact:true}).isVisible())}
 await plain.goto(base+'infrastructure/');

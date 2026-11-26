@@ -5,10 +5,10 @@ import * as T from './three.js';
 export function mountScene(host,pick){
  const r=new T.WebGLRenderer({antialias:true,alpha:false,powerPreference:'low-power'}),s=new T.Scene(),cam=new T.PerspectiveCamera(49,1,.15,180);
  r.setPixelRatio(Math.min(devicePixelRatio,1.4));r.outputColorSpace=T.SRGBColorSpace;r.shadowMap.enabled=true;r.shadowMap.type=T.PCFSoftShadowMap;r.shadowMap.autoUpdate=false;r.shadowMap.needsUpdate=true;r.toneMapping=T.ACESFilmicToneMapping;r.toneMappingExposure=1.05;host.append(r.domElement);
- s.background=new T.Color(0x758387);s.fog=new T.FogExp2(0x758387,.014);
+ s.background=new T.Color(0x253039);s.fog=new T.FogExp2(0x253039,.014);
  const positions={rcc:[-7,8],actions:[-7,-4],review:[6,3],room:[-7,-17],memory:[6,-9],transport:[6,-23]};
  const cube=new T.BoxGeometry(),drum=new T.CylinderGeometry(.5,.5,1,32),ring=new T.TorusGeometry(1,.095,10,48);
- const batches=new Map(), palette={cast:0x879091,iron:0x333f40,rust:0xb6471c,steel:0x9aa8a0,black:0x202a2a,light:0xffeec6,glass:0xff7a26};
+ const batches=new Map(), palette={cast:0x505b65,iron:0x333f40,rust:0xb6471c,steel:0x9aa8a0,black:0x202a2a,light:0xffeec6,glass:0xff7a26};
  const finishes=Object.fromEntries(Object.entries(palette).map(([k,c])=>{
   const m=new T.MeshStandardMaterial({color:c,roughness:.78,metalness:k==='steel'?.48:.1,emissive:['light','glass'].includes(k)?c:0,emissiveIntensity:1.3});
   m.onBeforeCompile=sh=>{sh.vertexShader='varying vec3 grainPos;\n'+sh.vertexShader.replace('#include <project_vertex>','#include <project_vertex>\ngrainPos=(modelMatrix*instanceMatrix*vec4(transformed,1.)).xyz;');sh.fragmentShader='varying vec3 grainPos;\n'+sh.fragmentShader.replace('#include <color_fragment>','#include <color_fragment>\nfloat speck=fract(sin(dot(floor(grainPos*35.),vec3(12.1,71.7,23.3)))*4375.4);diffuseColor.rgb*=0.9+0.13*speck+0.035*sin(grainPos.y*33.);')};return [k,m]}));
@@ -42,7 +42,7 @@ export function mountScene(host,pick){
   }else{for(let i=0;i<3;i++){box('iron',0,.99+i*1.18,0,5.3,1.1,2.8);for(let j=0;j<11;j++)box('rust',j*.46-2.3,.99+i*1.18,1.42,.1,.97,.08)}}
  }
  const meshes=[];for(const {g,m,items} of batches.values()){const mesh=new T.InstancedMesh(g,m,items.length);items.forEach((v,i)=>mesh.setMatrixAt(i,v.matrix));mesh.castShadow=m!==finishes.light;mesh.receiveShadow=true;mesh.userData.ids=items.map(v=>v.id);s.add(mesh);meshes.push(mesh)}
- s.add(new T.HemisphereLight(0xd5e1ed,0x283439,1.02));const sun=new T.DirectionalLight(0xffe2ab,4.3);sun.position.set(-22,21,1);sun.target.position.set(0,0,-6);s.add(sun,sun.target);sun.castShadow=true;Object.assign(sun.shadow.camera,{left:-32,right:32,top:30,bottom:-30,near:.1,far:85});sun.shadow.camera.updateProjectionMatrix();sun.shadow.mapSize.set(2048,2048);sun.shadow.bias=-.0003;
+ s.add(new T.HemisphereLight(0xb9cad9,0x151e26,.82));const sun=new T.DirectionalLight(0xd8e9ff,2.4);sun.position.set(-22,21,1);sun.target.position.set(0,0,-6);s.add(sun,sun.target);sun.castShadow=true;Object.assign(sun.shadow.camera,{left:-32,right:32,top:30,bottom:-30,near:.1,far:85});sun.shadow.camera.updateProjectionMatrix();sun.shadow.mapSize.set(2048,2048);sun.shadow.bias=-.0003;
  // Contact pools ground the masses without continuously rendering shadow maps.
  const tex=document.createElement('canvas');tex.width=tex.height=64;const ctx=tex.getContext('2d'),grad=ctx.createRadialGradient(32,32,5,32,32,32);grad.addColorStop(0,'rgba(14,23,22,.85)');grad.addColorStop(1,'rgba(14,23,22,0)');ctx.fillStyle=grad;ctx.fillRect(0,0,64,64);
  const sm=new T.MeshBasicMaterial({map:new T.CanvasTexture(tex),transparent:true,depthWrite:false});
@@ -54,7 +54,7 @@ export function mountScene(host,pick){
  }
  const look=new T.Vector3(),v=(x,y,z)=>new T.Vector3(x,y,z);let active=null,raf=0;
  function view(key){
-  const mobile=host.clientWidth<600;if(!key)return mobile?[v(1.1,6.8,25),v(-2,2.8,-5)]:[v(3.7,6.4,22),v(-1,3,-8)];
+  const mobile=host.clientWidth<600;if(!key)return mobile?[v(2.2,3.8,17),v(5.9,4.7,3)]:[v(2.4,4.6,19),v(-.8,4.5,-2)];
   const [x,z]=positions[key];return [v(x+ (x<0?5:-5),5.2,z+(mobile?12:9)),v(x,3,z)]
  }
  function draw(){if(document.hidden)return;cam.lookAt(look);r.render(s,cam)}

@@ -37,3 +37,11 @@ Use Prepare offline on the home page while connected. The scoped service worker 
 With the loopback server running, set PREVIEW_URL to its root URL including the trailing slash and run `node verify-offline.mjs`. See proof/offline.json. The explicit renderer and WASM actions are covered by the browser checks. decision.mjs implements the deterministic exact-ID backend for decision.d.ts. No model inference is wired.
 
 The checkout includes a self-contained deployment archive at machine-room/preview/machine-room-static.zip. Extract it into an empty directory; it contains wrangler.jsonc and dist/. Use an already authorized Workers deployment client. Check that the configured preview name is unused before first publication. Deploy as Workers Static Assets with no main module, bindings, custom domains or routes. With an authorized Wrangler CLI in the extracted directory, use `wrangler deploy --config wrangler.jsonc`. Verify the returned workers.dev URL externally, the crawlable robots.txt, noindex headers and offline reload before sharing it as a phone preview.
+
+## Mobile instrument revision
+
+Explore uses a render of the actual hall until the visitor starts WebGL. Test the Airlock opens the workbench directly. Use the station selector to change experiments and Evidence to search all public projects. The portal keeps the public JSON, HTML project records and résumé available without JavaScript.
+
+Actions exposes the Actions Core-generated schema and runs the bounded manifest checker in WASM. MemoryD inspects one synthetic archive and exports the tab's chronological receipts as JSON. Both also retain their previous local experiments. Native references and limits are linked in each workbench. Routing remains deterministic.
+
+Browser captures in proof/before and proof/after cover 360, 390, 411, 1440 and landscape widths. Independent review prompted a dedicated Airlock camera for phones, station access above offline setup, and a selection cue when WebGL starts. proof/checks.json includes input-to-focus timings from automation. proof/frame-sample.json samples a single software-rendered desktop transition with recording overhead. proof/offline.json covers disconnected WASM, SQLite, fixture inspection and session export.
