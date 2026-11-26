@@ -1,7 +1,4 @@
-// Homepage facts and draft copy.
-// Career history came from Josh on 2026-11-26. Project facts come from GitHub releases, merged pull requests
-// and repository creation dates. The older résumé PDF is not linked: its education line is wrong.
-// Everything in `draft` is first-person copy waiting for Josh's approval. The build labels it on the page.
+// Career history and project evidence supplied for the portfolio.
 const gh = path => 'https://github.com/' + path;
 
 export const links = {
@@ -13,14 +10,13 @@ export const links = {
 
 export const install = 'curl -fsSL https://raw.githubusercontent.com/joshyorko/plugins/main/install.sh | bash';
 
-export const draft = {
-  role: 'I build backend, data and AI systems for healthcare, and open-source tools that make computing more portable and reproducible.',
+export const bio = {
+  role: 'Josh builds backend, data and AI systems for healthcare and maintains open-source tools for portable, reproducible computing.',
   story: [
-    'I spent seven years working as a certified nursing assistant after high school.',
-    'When I was preparing to become a father, I wanted to build a different future, so I moved into customer service at Spencer Technologies. I worked my way into client onboarding, then into data and automation at CVS Health.',
-    'From there came software implementations, data engineering, and eventually building production backend and AI systems at Gainwell.',
-    'Outside work, I maintain and contribute to open-source software, and I experiment with making computing more portable, reproducible and useful.',
-    'I like finding out what computers can do, even when the experiment has no obvious practical reason.',
+    'Josh spent seven years working as a certified nursing assistant after high school.',
+    'He moved into customer service at Spencer Technologies, then into client onboarding and data and automation at CVS Health.',
+    'From there came software implementations, data engineering, and eventually production backend and AI systems at Gainwell.',
+    'Outside work, he maintains open-source software and experiments with how to make computing more portable and reproducible.',
   ],
 };
 

@@ -5,7 +5,7 @@ import { artifactName, buildRelay } from './relay/build.mjs';
 import { resumeBody } from './resume/resume.mjs';
 import { jumpDialog, jumpTrigger } from './jump-markup.mjs';
 import { projects, systems } from './data/work.mjs';
-import { draft, install, links as site, notes, path, questions, relations, upstream, work } from './data/site.mjs';
+import { bio, install, links as site, notes, path, questions, relations, upstream, work } from './data/site.mjs';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
 const output = join(root, 'dist');
@@ -76,10 +76,8 @@ const esc = value => String(value).replace(/[&<>"']/g, char => ({
 }[char]));
 const link = (label, url) => `<a href="${esc(url)}">${esc(label)}</a>`;
 const links = entries => `<p class="links">${entries.map(([label, url]) => link(label, url)).join(' ')}</p>`;
-const draftText = (text, tag = 'p', cls = '') => `<${tag} class="draft${cls ? ' ' + cls : ''}">${esc(text)}</${tag}>`;
 const date = iso => new Date(iso + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 const css = await read('site.css') + '\n' + await read('jump.css') + '\n' + await read('resume/resume.css');
-const draftLegend = '<p class="draft-legend"><span class="draft-key">Draft</span> marks first-person copy that Josh has not approved yet.</p>';
 
 function page({ title, description, route = '', content, script = '' }) {
   const home = route === '';
@@ -104,7 +102,7 @@ ${routes.map(([path, name]) => `<a href="/${path}"${route === path ? ' aria-curr
 ${jumpTrigger}
 </header>
 <main id="main" class="${home ? 'home' : 'shell'}" tabindex="-1">${content}</main>
-<footer class="site-footer"><p>${link('GitHub', site.github)} ${link('Résumé', '/resume/')} ${link('Computer', '/computer/')}</p>${draftLegend}</footer>
+<footer class="site-footer"><p>${link('GitHub', site.github)} ${link('Résumé', '/resume/')} ${link('Computer', '/computer/')}</p></footer>
 ${jumpDialog}
 </body>
 </html>
@@ -127,28 +125,24 @@ const homeContent = `<div class="split">
 <section class="person" aria-labelledby="who">
 <p class="label">The person</p>
 <h1 id="who">Josh Yorko</h1>
-${draftText(draft.role, 'p', 'role')}
+<p class="role">${esc(bio.role)}</p>
 <ol class="path" aria-label="Career path">
 ${path.map(([years, what, where]) => `<li><span class="years">${esc(years)}</span><span class="what">${esc(what)}${where ? `<span class="where">${esc(where)}</span>` : ''}</span></li>`).join('\n')}
 </ol>
 <p class="actions"><a class="button" href="${resumePath}" download>Download Résumé</a> <a class="button quiet" href="/resume/">Read Résumé</a> <a class="button quiet" href="${esc(site.github)}">GitHub</a> <a class="button quiet" href="#story">How I got here <span aria-hidden="true">↓</span></a></p>
 </section>
 <section class="machine" aria-labelledby="machine-title">
-<p class="label">The computer</p>
-<h2 id="machine-title">Get the parcel there once.</h2>
-<p class="machine-intro">Replay a broken delivery. A local agent proposes a repair and a verifier tests it before any change sticks.</p>
+<p class="label">Open source</p>
+<h2 id="machine-title">What I build and maintain</h2>
+<p class="machine-intro">I work on reproducible automation, portable development environments, and reliable tools for agents.</p>
 <div class="slots">
-<a class="slot primary" href="${relayPath}"><b>Open Parcel Relay</b><span>Pick a dispatch incident and watch the repair.</span></a>
-<a class="slot" href="${relayPath}" download><b>Download offline computer</b><span>One HTML file with the model and runtime · ${relayKB} KiB</span></a>
+<a class="slot primary" href="/projects/"><b>Projects</b><span>RCC, Actions Runtime, Josh Room, and upstream contributions.</span></a>
+<a class="slot" href="/plugins/"><b>Plugins &amp; Skills</b><span>Browse the public marketplace and its ${skillCount} skills.</span></a>
+<a class="slot" href="/computer/"><b>Browser experiments</b><span>Parcel Relay, the archived SQL workspace, and Machine Room.</span></a>
 </div>
-<ul class="works" aria-label="Parcel Relay features">
-<li>CPU inference in WebAssembly</li>
-<li>Save the running simulation as HTML</li>
-</ul>
 </section>
 </div>
-${chapter('story', '01', 'How I got here', draft.story.map(text => draftText(text)).join('\n'),
-  '<p>A draft in Josh’s voice, from his own account, waiting for his edit.</p>')}
+${chapter('story', '01', 'How I got here', bio.story.map(text => "<p>" + esc(text) + "</p>").join('\n'))}
 ${chapter('work', '02', 'Work in healthcare', `<p>At Gainwell Technologies since 2022, first in data engineering and now on backend, platform, automation and AI-agent work.</p>
 <dl class="work">${work.map(([term, text]) => `<dt>${esc(term)}</dt><dd>${esc(text)}</dd>`).join('')}</dl>`,
   '<p>Described in public terms only. No internal names, data, or numbers.</p>')}
@@ -223,10 +217,10 @@ ${notes.map(([iso, kind, text, ref, url]) => `<li><p class="small"><time datetim
 <section class="section" aria-labelledby="earlier"><h2 id="earlier">Earlier portfolio experiments</h2>
 <p>The archived Machine Room candidate contains the original synthetic SQLite/WASM, artifact, and browser test evidence at the rollback revision.</p>
 ${links([['Archive and harness', archive], ['Archived checks', archive.replace('/tree/', '/blob/') + '/proof/checks.json']])}</section>`],
-  ['computer/', 'Computer', 'An offline agent simulation you can run and keep as one HTML file.',
+  ['computer/', 'Computer', 'Experiments in portable, local computing.',
     `<section class="section" aria-labelledby="relay-title">
 <h2 id="relay-title">Parcel Relay</h2>
-<p>A parcel arrived twice, got stuck in dispatch, or went missing. Replay the incident, watch a local model select a proposed repair, and see what an independent verifier finds.</p>
+<p>An experimental parcel simulator. A small classifier running in WebAssembly proposes one of three permitted repairs, then a separate verifier checks the simulated result.</p>
 <p class="actions"><a class="button" href="${relayPath}">Open Parcel Relay</a> <a class="button quiet" href="${relayPath}" download>Download offline HTML · ${relayKB} KiB</a></p>
 <p class="small">The download opens directly from disk. Its CPU model, tools and simulation are embedded. Save a run to carry its state with you.</p>
 </section>

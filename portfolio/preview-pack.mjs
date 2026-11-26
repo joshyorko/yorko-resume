@@ -6,10 +6,12 @@ import { fileURLToPath } from 'node:url';
 
 const revision = process.argv[2];
 if (!/^[0-9a-f]{40}$/.test(revision ?? '')) throw new Error('Pass the full candidate commit');
+const production = process.argv[3] === '--production';
 const dist = new URL('./dist/', import.meta.url);
 const headerFile = await readFile(new URL('_headers', dist), 'utf8');
 const globalHeaders = Object.fromEntries(headerFile.split('\n/site.css')[0]
   .split('\n').slice(1).filter(Boolean).map(line => line.trim().split(/: (.*)/s).slice(0, 2)));
+if (production) delete globalHeaders['X-Robots-Tag'];
 const mime = {
   '.html': 'text/html; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8',
   '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
