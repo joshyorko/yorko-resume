@@ -30,3 +30,5 @@ After owner approval, verify the selected build, update the single approved PDF 
 R applies the summary and named projects in [review-content.json](review-content.json) to the approved [content.json](content.json). A through H and the public HTML use the approved base. After owner approval, incorporate the staged summary and entries into the shared content and adapt the HTML renderer to the new named entries. Regenerate and verify the selected PDF before replacing the single public source. Promotion is a separate change.
 
 S is the current review-only candidate. Its project wording is in `clean-projects.json` and its additional destinations are in `clean-links.json`. Approving S requires a separate promotion of the review copy into the shared public content and a verified PDF replacement.
+
+The current application candidate is T.pdf. See [hiring and evidence notes](HIRING-REVIEW.md).

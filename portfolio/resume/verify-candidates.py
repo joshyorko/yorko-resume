@@ -54,13 +54,15 @@ def experience(design):
         bullets = job["bullets"]
         if index == 0 and design in ("A", "H", "R", "S"):
             bullets = [bullets[i] for i in (4, 1, 5, 6, 0, 2, 3)]
+        if index == 0 and design == "T":
+            bullets = [bullets[i] for i in (2, 0, 3, 4, 1, 5, 6)]
         if index == 0 and design == "C":
             bullets = [bullets[4], *bullets[:4], *bullets[5:]]
         result.extend(bullets)
     return result
 
 
-for name in ("A", "B", "C", "H", "R", "S"):
+for name in ("A", "B", "C", "H", "R", "S", "T"):
     work = experience(name)
     featured = ["OPEN-SOURCE ENGINEERING", *sum(projects[:2], [])]
     more = sum(projects[2:], [])
@@ -80,6 +82,16 @@ for name in ("A", "B", "C", "H", "R", "S"):
         entries = [re.sub(r"\[([^\]]+)\|\d+\]", r"\1", entry)
                    for heading, group in groups for entry in [heading, *group]]
         expected = header[:-1] + [review["summary"]] + work + skills + [featured[0], *entries]
+    elif name == "T":
+        platform = json.loads(Path(__file__).with_name("platform-review.json").read_text())
+        registry = [url for _, url in links[3:]] + [project["url"] for project in review["originalProjects"]]
+        registry += json.loads(Path(__file__).with_name("clean-links.json").read_text())
+        project_text = [entry for heading, group in platform["projects"] for entry in [heading, *group]]
+        targets = [int(target) for entry in project_text for target in re.findall(r"\|([0-9]+)\]", entry)]
+        expected_links = links[:3] + [(None, registry[target]) for target in targets]
+        assert len(expected_links) == len({url for _, url in expected_links}) == 15
+        entries = [re.sub(r"\[([^\]]+)\|\d+\]", r"\1", entry) for entry in project_text]
+        expected = [header[0], platform["title"], *header[2:-1], platform["summary"]] + work + skills + [featured[0], *entries]
     elif name == "C":
         expected = header + featured + work + ["MORE OPEN-SOURCE ENGINEERING"] + more + skills
     elif name == "H":
@@ -88,7 +100,7 @@ for name in ("A", "B", "C", "H", "R", "S"):
         expected = header + work + featured + more + skills
     pdf = Path(sys.argv[1]) / f"{name}.pdf"
     reader = PdfReader(pdf)
-    assert len(reader.pages) == (2 if name == "S" else 1), name
+    assert len(reader.pages) == (2 if name in ("S", "T") else 1), name
     page = reader.pages[0]
     assert all((float(p.mediabox.width), float(p.mediabox.height)) == (612, 792) for p in reader.pages)
     assert reader.metadata.author == content["name"]
@@ -96,7 +108,10 @@ for name in ("A", "B", "C", "H", "R", "S"):
 
     poppler = ("-raw",) if name in ("H", "R", "S") else ()
     require_ordered(run("pdftotext", *poppler, str(pdf), "-"), expected, f"{name}/Poppler")
-    if name in ("H", "R", "S"):
+    if name == "T":
+        require_ordered(run("pdftotext", "-raw", str(pdf), "-"), expected, f"{name}/raw")
+        require_ordered(run("pdftotext", "-layout", str(pdf), "-"), expected, f"{name}/layout")
+    if name in ("H", "R", "S", "T"):
         require_ordered("\n".join(p.extract_text(extraction_mode="layout") for p in reader.pages), expected, f"{name}/pypdf")
     layout = LAParams(boxes_flow=None, char_margin=55) if name in ("H", "R", "S") else None
     require_ordered(extract_text(pdf, laparams=layout), expected, f"{name}/pdfminer")

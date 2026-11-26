@@ -1,3 +1,4 @@
+import platform from './platform-review.json' with { type: 'json' };
 import cleanLinks from './clean-links.json' with { type: 'json' };
 import cleanProjects from './clean-projects.json' with { type: 'json' };
 import { execFileSync } from 'node:child_process';
@@ -59,7 +60,7 @@ const earlierJobs = style => earlier.map(item =>
 
 const projectUrls = [...content.projects.flatMap(project => project.links.map(([, url]) => url)),
   ...review.originalProjects.map(project => project.url), ...cleanLinks];
-const cleanEntries = cleanProjects.flatMap(([heading, entries]) => [
+const projectEntries = groups => groups.flatMap(([heading, entries]) => [
   command('workgroup', tex(heading)),
   ...entries.map(entry => {
     const parts = entry.split(/(\[[^\]]+\|\d+\])/);
@@ -95,7 +96,11 @@ const compositions = {
   S: [sections.experience, job(current, 'datedrow'), command('workgroup', 'QA and integration'),
     work([4, 1, 5, 6], 'achievement'), command('workgroup', 'Healthcare systems'),
     work([0, 2, 3], 'achievement'), earlierJobs('datedrow'),
-    sections.skills, stackedSkills, '\\newpage', sections.projects, ...cleanEntries],
+    sections.skills, stackedSkills, '\\newpage', sections.projects, ...projectEntries(cleanProjects)],
+  T: [sections.experience, job(current, 'row'), command('workgroup', 'Production backend services'),
+    work([2, 0, 3], 'achievement'), command('workgroup', 'Distributed execution and AI evaluation'),
+    work([4, 1, 5, 6], 'achievement'), earlierJobs('row'), sections.skills, stackedSkills,
+    '\\newpage\\thispagestyle{resumereview}', sections.projects, ...projectEntries(platform.projects)],
   C: [sections.projects, projects('evidenceproject', 0, 2), sections.experience,
     job(current, 'row'), work(focused.slice(0, 1), 'lead'), work(focused.slice(1), 'achievement'),
     earlierJobs('row'), command('sectiontitle', 'MORE OPEN-SOURCE ENGINEERING'),
@@ -104,12 +109,17 @@ const compositions = {
 
 const template = readFileSync(new URL('./layout.tex', import.meta.url), 'utf8');
 for (const [id, composition] of Object.entries(compositions)) {
-  const style = readFileSync(new URL('./layout-' + (['R', 'S'].includes(id) ? 'H' : id) + '.tex', import.meta.url), 'utf8');
-  const source = template.replace('%%STYLE%%', () => ['R', 'S'].includes(id) ? style + '\n' + readFileSync(new URL('./layout-' + id + '.tex', import.meta.url), 'utf8') : style)
+  const style = readFileSync(new URL('./layout-' + (['R', 'S', 'T'].includes(id) ? 'H' : id) + '.tex', import.meta.url), 'utf8');
+  const overrides = id === 'T' ? 'S' : id;
+  const additionalStyle = ['R', 'S', 'T'].includes(id)
+    ? readFileSync(new URL('./layout-' + overrides + '.tex', import.meta.url), 'utf8')
+    : '';
+  const styleForPage = id === 'T' ? additionalStyle + '\n' + readFileSync(new URL('./layout-T.tex', import.meta.url), 'utf8') : additionalStyle;
+  const source = template.replace('%%STYLE%%', () => additionalStyle ? style + '\n' + styleForPage : style)
     .replace('%%NAME%%', () => tex(content.name))
-    .replace('%%TITLE%%', () => tex(content.title))
+    .replace('%%TITLE%%', () => tex(id === 'T' ? platform.title : content.title))
     .replace('%%CONTACT%%', () => tex(content.contactText) + ' \\separator ' + links(content.contactLinks))
-    .replace('%%SUMMARY%%', () => tex(['R', 'S'].includes(id) ? review.summary : content.summary))
+    .replace('%%SUMMARY%%', () => tex(id === 'T' ? platform.summary : ['R', 'S'].includes(id) ? review.summary : content.summary))
     .replace('%%BODY%%', () => composition.join('\n'));
   writeFileSync(resolve(output, id + '.tex'), source);
   execFileSync(engine, ['--untrusted', '--bundle', 'https://relay.fullyjustified.net/default_bundle_v33.tar', '--keep-logs', id + '.tex'], {

@@ -40,12 +40,13 @@ jobs:
           node portfolio/resume/candidates.mjs "$out" > "$out/latex-build.log" 2>&1
           python portfolio/resume/verify-candidates.py "$out" | tee "$out/verification.txt"
           node portfolio/resume/candidates.mjs "$RUNNER_TEMP/resume-repeat" > "$RUNNER_TEMP/resume-repeat.log" 2>&1
-          for candidate in A B C H R S; do
+          for candidate in A B C H R S T; do
             cmp "$out/$candidate.pdf" "$RUNNER_TEMP/resume-repeat/$candidate.pdf"
           done
-          echo 'Six byte-identical repeat builds' | tee -a "$out/verification.txt"
+          echo 'Seven byte-identical repeat builds' | tee -a "$out/verification.txt"
           python portfolio/resume/render-review.py "$out"
           cp portfolio/resume/DESIGN-REVIEW.md "$out/"
+          cp portfolio/resume/HIRING-REVIEW.md "$out/"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -56,3 +57,4 @@ jobs:
             ${{ runner.temp }}/resume-review/latex-build.log
             ${{ runner.temp }}/resume-review/verification.txt
             ${{ runner.temp }}/resume-review/DESIGN-REVIEW.md
+            ${{ runner.temp }}/resume-review/HIRING-REVIEW.md
