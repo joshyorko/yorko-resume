@@ -12,6 +12,8 @@ Open http://127.0.0.1:8000/. The dependency-free build needs Node 22 or newer. T
 
 [360 px](proof/home-360.png) · [390 px](proof/home-390.png) · [411 px](proof/home-411.png) · [1440 px](proof/home-1440.png) · [Plugins](proof/plugins-390.png) · [Skill search](proof/skills-390.png) · [Lab](proof/lab-390.png)
 
+The refinement blends the artwork into a viewport-wide horizon and places the navigation on that same field. The interior pages use the same light and type. [Before on phone](https://github.com/joshyorko/yorko-resume/blob/1495b23d9595d64612565be67079c036f081baf7/portfolio/proof/home-390.png) · [Before on desktop](https://github.com/joshyorko/yorko-resume/blob/1495b23d9595d64612565be67079c036f081baf7/portfolio/proof/home-1440.png)
+
 The homepage pairs two direct tasks with a single orbital illustration. The complete site navigation lives in the document. ImageGen produced the original illustration for this project. The two WebP encodes are the only new visual assets. The page uses system fonts and static art, with no animation, GPU scene, or homepage JavaScript.
 
 The Neon and Opus arena revisions informed the provenance links and dated notes. First-class routes, public catalog sources, offline Actions and MemoryD work, and the earlier design evidence come from [PR #52’s baseline](https://github.com/joshyorko/yorko-resume/tree/631481871d22d7b053c1aae23a84cc7d14d04b09/portfolio).

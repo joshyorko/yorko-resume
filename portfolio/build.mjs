@@ -51,11 +51,11 @@ function page({ title, description, route = '', content, script = '', showNav = 
 <link rel="stylesheet" href="/site.css">
 ${script ? `<script type="module" src="${script}"></script>` : ''}
 </head>
-<body>
+<body${route === '' ? ' class="home-page"' : ' class="interior"'}>
 <a class="skip" href="#main">Skip to content</a>
 ${showNav ? `<header class="shell site-header"><nav aria-label="Main">
 <a class="identity" href="/" ${route === '' ? 'aria-current="page"' : ''}>${route === '' ? 'Home' : 'Josh Yorko'}</a>
-${routes.map(([path, name]) => `<a href="/${path}"${route === path ? ' aria-current="page"' : ''}>${name}</a>`).join('\n')}
+${routes.map(([path, name]) => `<a href="/${path}"${route === path ? ' aria-current="page"' : route === 'skills/' && path === 'plugins/' ? ' aria-current="location"' : ''}>${name}</a>`).join('\n')}
 </nav></header>` : ''}
 <main id="main" class="${route === '' ? 'home-shell' : 'shell'}" tabindex="-1">${content}</main>
 <footer class="shell site-footer"><a href="https://github.com/joshyorko">GitHub</a></footer>
@@ -69,19 +69,19 @@ const title = (name, intro) => `<h1>${esc(name)}</h1><p class="intro">${esc(intr
 const home = `<div class="orbit">
 <div class="orbit-intro">
 <h1>Josh Yorko</h1>
-<p class="orbit-summary">Software engineer building reproducible environments, portable workspaces, and tools for coding agents.</p>
-<p class="orbit-links"><a href="/skills/">Search the skill catalog <span aria-hidden="true">→</span></a><a href="/lab/#actions-check">Run a local proof <span aria-hidden="true">→</span></a></p>
+<p class="orbit-summary">Software engineer building reproducible environments, portable workspaces, and coding-agent tools.</p>
+<p class="orbit-links"><a href="/skills/">Search skills <span aria-hidden="true">→</span></a><a href="/lab/#actions-check">Run a local proof <span aria-hidden="true">→</span></a></p>
 </div>
 <picture class="orbital-art">
 <img src="/media/orbit-small.webp" srcset="/media/orbit-small.webp 568w, /media/orbit.webp 1120w"
 sizes="(min-width: 53rem) 54vw, calc(100vw - 2.75rem)" width="1120" height="747" alt="" fetchpriority="high">
 </picture>
-</div>
 <nav class="home-nav" aria-label="Main">
 <ul>
 ${routes.map(([path, label]) => `<li><a href="/${path}">${label}</a></li>`).join('\n')}
 </ul>
 </nav>
+</div>
 <section class="selected" aria-labelledby="selected">
 <h2 id="selected">Selected software</h2>
 <ul>

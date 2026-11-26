@@ -55,7 +55,7 @@ try {
     report.navigation.push(label);
   }
   await noJS.goto(base);
-  await noJS.getByRole('link', { name: 'Search the skill catalog' }).click();
+  await noJS.getByRole('link', { name: 'Search skills' }).click();
   assert.equal(await noJS.locator('.skill:visible').count(), 22);
   assert.equal(await noJS.locator('#skill-controls').isVisible(), false);
   await noJS.getByRole('link', { name: '37signals-product-design', exact: true }).waitFor();
@@ -83,12 +83,16 @@ try {
     return route.abort();
   });
   const routes = ['/', '/plugins/', '/skills/', '/projects/', '/systems/', '/notes/', '/resume/', '/lab/'];
-  for (const [width, height] of [[360, 800], [390, 844], [411, 891], [1440, 900]]) {
+  for (const [width, height] of [[360, 800], [390, 844], [411, 891], [850, 900], [1440, 900]]) {
     await page.setViewportSize({ width, height });
     for (const route of routes) {
       const response = await page.goto(base + route);
       assert.equal(response.status(), 200);
       assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), width + ' ' + route);
+      if ((route === '/notes/' || route === '/lab/' || route === '/plugins/') && (width === 390 || width === 1440)) {
+        const label = route.replaceAll('/', '');
+        await page.screenshot({ path: fileURLToPath(new URL(`${label}-top-${width}.png`, proof)) });
+      }
       if (route === '/') {
         await page.screenshot({ path: fileURLToPath(new URL(`home-${width}.png`, proof)) });
 
@@ -183,6 +187,7 @@ try {
   await constrained.goto(base);
   assert(await constrained.getByRole('heading', { name: 'Josh Yorko' }).isVisible());
   assert.equal(await constrained.evaluate(() => document.getAnimations().length), 0);
+  await constrained.screenshot({ path: fileURLToPath(new URL('art-blocked-390.png', proof)) });
   await constrained.getByRole('navigation').getByRole('link', { name: 'Plugins & Skills' }).click();
   assert.equal(new URL(constrained.url()).pathname, '/plugins/');
   report.constrainedFallback = { width: 390, cpuSlowdown: 4, latencyMs: 150, artBlocked: true };

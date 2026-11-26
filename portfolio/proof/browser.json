@@ -3,6 +3,7 @@
     360,
     390,
     411,
+    850,
     1440
   ],
   "axeViolations": {
@@ -28,13 +29,13 @@
       "cold": [
         {
           "path": "/",
-          "transferSize": 2279,
-          "encodedBodySize": 1979
+          "transferSize": 2281,
+          "encodedBodySize": 1981
         },
         {
           "path": "/site.css",
-          "transferSize": 6118,
-          "encodedBodySize": 5818
+          "transferSize": 7937,
+          "encodedBodySize": 7637
         },
         {
           "path": "/media/orbit-small.webp",
@@ -46,12 +47,12 @@
         {
           "path": "/",
           "transferSize": 300,
-          "encodedBodySize": 1979
+          "encodedBodySize": 1981
         },
         {
           "path": "/site.css",
           "transferSize": 0,
-          "encodedBodySize": 5818
+          "encodedBodySize": 7637
         },
         {
           "path": "/media/orbit-small.webp",
@@ -64,13 +65,13 @@
       "cold": [
         {
           "path": "/",
-          "transferSize": 2279,
-          "encodedBodySize": 1979
+          "transferSize": 2281,
+          "encodedBodySize": 1981
         },
         {
           "path": "/site.css",
-          "transferSize": 6118,
-          "encodedBodySize": 5818
+          "transferSize": 7937,
+          "encodedBodySize": 7637
         },
         {
           "path": "/media/orbit.webp",
@@ -82,12 +83,12 @@
         {
           "path": "/",
           "transferSize": 300,
-          "encodedBodySize": 1979
+          "encodedBodySize": 1981
         },
         {
           "path": "/site.css",
           "transferSize": 0,
-          "encodedBodySize": 5818
+          "encodedBodySize": 7637
         },
         {
           "path": "/media/orbit.webp",
@@ -101,7 +102,7 @@
   "offline": {
     "runs": 2,
     "reloadClearedReceipts": true,
-    "sha256": "0c8bb420ec02a2d568e05a59652eb6c9402dc4bfb1e0939bdef176b3d6a62982"
+    "sha256": "d3d602d0642531d680179d5498ad41f315794c50a101e59f34d122423b31cf44"
   },
   "constrainedFallback": {
     "width": 390,
