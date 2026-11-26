@@ -4,8 +4,8 @@ const repo = (name, path = name) => [name, owner + path];
 export const projects = [
   ['rcc', 'RCC', 'Build reproducible environments for automation projects. I maintain this distribution and its environment artifact tooling.',
     [repo('Source', 'rcc'), repo('v18.19.11 release', 'rcc/releases/tag/v18.19.11')]],
-  ['actions', 'Actions Runtime', 'Expose Python actions over HTTP or MCP. My work is in the fork of Robocorp Actions.',
-    [repo('Fork', 'actions'), repo('Runtime 1.1.1', 'actions/releases/tag/actions-runtime-1.1.1')]],
+  ['actions', 'Actions Runtime', 'Expose Python actions over HTTP or MCP. My work is in the fork of tonnitommi/actions-sema4ai.',
+    [repo('Fork', 'actions'), ['Parent repository', 'https://github.com/tonnitommi/actions-sema4ai'], repo('Runtime 1.1.1', 'actions/releases/tag/actions-runtime-1.1.1')]],
   ['josh-room', 'Josh Room and JAT', 'Save and restore encrypted workspace snapshots. Josh All The Things provides the capture and restore tooling.',
     [repo('Josh Room', 'josh-room'), repo('JAT', 'josh-all-the-things'), repo('JAT capture identity', 'josh-all-the-things/pull/43')]],
   ['memoryd', 'MemoryD', 'Durable local recall for coding agents, with exportable records and evidence.',

@@ -1,0 +1,35 @@
+name: Verify orbital portfolio
+
+on:
+  push:
+    branches: [preview-v2]
+    paths: [portfolio/**, .github/workflows/portfolio-verify.yml]
+  pull_request:
+    branches: [main]
+    paths: [portfolio/**, .github/workflows/portfolio-verify.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    defaults:
+      run:
+        working-directory: portfolio
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: portfolio/package-lock.json
+      - run: npm ci
+      - run: npm run verify
+        env:
+          PROOF_DIR: ${{ runner.temp }}/portfolio-proof
+      - uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-browser-proof
+          path: ${{ runner.temp }}/portfolio-proof/

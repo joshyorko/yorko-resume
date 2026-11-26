@@ -8,13 +8,12 @@ import { chromium } from 'playwright-core';
 
 const require = createRequire(import.meta.url);
 const here = fileURLToPath(new URL('.', import.meta.url));
-const proof = new URL('proof/', import.meta.url);
+const proof = process.env.PROOF_DIR ? pathToFileURL(process.env.PROOF_DIR.replace(/\/?$/, '/')) : new URL('proof/', import.meta.url);
 const headers = Object.fromEntries((await readFile(here + 'dist/_headers', 'utf8'))
   .split('\n').filter(line => line.startsWith('  ') && !line.includes('Cache-Control'))
   .map(line => line.trim().split(/: (.*)/s).slice(0, 2)));
-const mime = { html: 'text/html; charset=utf-8', mjs: 'text/javascript', css: 'text/css' };
+const mime = { html: 'text/html; charset=utf-8', mjs: 'text/javascript', css: 'text/css', webp: 'image/webp' };
 const server = createServer(async (req, res) => {
-  const compared = ['/comparison/', '/comparison.css', '/editorial/'].includes(req.url);
   const pathname = new URL(req.url, 'http://localhost').pathname;
   if (!/^\/[\w/.-]*$/.test(pathname) || pathname.startsWith('/.')) {
     res.writeHead(404).end();
@@ -22,17 +21,17 @@ const server = createServer(async (req, res) => {
   }
   const file = pathname.endsWith('/') ? pathname + 'index.html' : pathname;
   try {
-    const buffer = await readFile(here + (compared ? 'dist-compare' : 'dist') + file);
+    const buffer = await readFile(here + 'dist' + file);
     const etag = '"' + createHash('sha256').update(buffer).digest('hex') + '"';
     res.setHeader('ETag', etag);
-    res.setHeader('Cache-Control', file === '/site.css' ? 'public, max-age=300' : 'no-cache');
+    res.setHeader('Cache-Control', file === '/site.css' || file.endsWith('.webp') ? 'public, max-age=300' : 'no-cache');
     if (req.headers['if-none-match'] === etag) {
       res.writeHead(304).end();
       return;
     }
     res.writeHead(200, { ...headers, 'Content-Type': mime[file.split('.').pop()] || 'text/plain' }).end(buffer);
   } catch {
-    res.writeHead(404).end();
+    res.writeHead(404, { ...headers, 'Content-Type': mime.html }).end(await readFile(here + 'dist/404.html'));
   }
 });
 await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
@@ -47,7 +46,7 @@ try {
   const noJS = await plain.newPage();
   for (const [label, path] of [
     ['Plugins & Skills', '/plugins/'], ['Projects', '/projects/'], ['Systems', '/systems/'],
-    ['Notes & Proof', '/notes/'], ['Résumé', '/resume/'],
+    ['Field Notes', '/notes/'], ['Agent Lab', '/lab/'], ['Résumé', '/resume/'],
   ]) {
     await noJS.goto(base);
     await noJS.getByRole('navigation').getByRole('link', { name: label, exact: true }).click();
@@ -63,6 +62,13 @@ try {
   await noJS.goto(base);
   await noJS.getByRole('link', { name: 'RCC', exact: true }).click();
   assert.equal(new URL(noJS.url()).hash, '#rcc');
+  await noJS.locator('#rcc').waitFor();
+  await noJS.goBack();
+  assert.equal(new URL(noJS.url()).pathname, '/');
+  const missing = await noJS.goto(base + '/unknown/');
+  assert.equal(missing.status(), 404);
+  await noJS.getByRole('link', { name: 'Return to the homepage' }).click();
+  assert.equal(new URL(noJS.url()).pathname, '/');
   await plain.close();
 
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
@@ -85,12 +91,7 @@ try {
       assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), width + ' ' + route);
       if (route === '/') {
         await page.screenshot({ path: fileURLToPath(new URL(`home-${width}.png`, proof)) });
-        if (width === 390 || width === 1440) {
-          await page.goto(base + '/editorial/');
-          await page.screenshot({ path: fileURLToPath(new URL(`editorial-${width}.png`, proof)) });
-          await page.goto(base + '/comparison/');
-          await page.screenshot({ path: fileURLToPath(new URL(`directory-${width}.png`, proof)) });
-        }
+
       }
     }
     report.viewports.push(width);
@@ -121,7 +122,7 @@ try {
   assert.match(await page.getByRole('status').textContent(), /No matching skills/);
   await search.fill('');
   assert.equal(await page.locator('.skill:visible').count(), 22);
-  await page.getByRole('navigation').getByRole('link', { name: 'Notes & Proof' }).click();
+  await page.getByRole('navigation').getByRole('link', { name: 'Field Notes' }).click();
   await page.getByRole('link', { name: 'Open Agent Lab' }).click();
 
   async function checkLab(tab) {
@@ -172,16 +173,40 @@ try {
   assert.deepEqual(errors, []);
   assert.deepEqual(external, []);
 
-  const coldPage = await browser.newPage();
-  for (const state of ['cold', 'warm']) {
-    if (state === 'cold') await coldPage.goto(base);
-    else await coldPage.reload();
-    report.transfer[state] = await coldPage.evaluate(() =>
-      performance.getEntriesByType('navigation').concat(performance.getEntriesByType('resource'))
-        .map(({ name, transferSize, encodedBodySize }) => ({
-          path: new URL(name).pathname, transferSize, encodedBodySize,
-        })));
-    assert.equal(report.transfer[state].length, 2);
+  const constrained = await browser.newPage({ reducedMotion: 'reduce', viewport: { width: 390, height: 844 } });
+  const cdp = await constrained.context().newCDPSession(constrained);
+  await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
+  await cdp.send('Network.emulateNetworkConditions', {
+    offline: false, latency: 150, downloadThroughput: 50_000, uploadThroughput: 20_000,
+  });
+  await constrained.route('**/media/*.webp', route => route.abort());
+  await constrained.goto(base);
+  assert(await constrained.getByRole('heading', { name: 'Josh Yorko' }).isVisible());
+  assert.equal(await constrained.evaluate(() => document.getAnimations().length), 0);
+  await constrained.getByRole('navigation').getByRole('link', { name: 'Plugins & Skills' }).click();
+  assert.equal(new URL(constrained.url()).pathname, '/plugins/');
+  report.constrainedFallback = { width: 390, cpuSlowdown: 4, latencyMs: 150, artBlocked: true };
+  await constrained.context().close();
+
+  for (const [profile, width] of [['mobile', 390], ['desktop', 1440]]) {
+    const coldPage = await browser.newPage({ viewport: { width, height: 900 } });
+    report.transfer[profile] = {};
+    for (const state of ['cold', 'warm']) {
+      if (state === 'cold') await coldPage.goto(base);
+      else await coldPage.reload();
+      const requests = await coldPage.evaluate(() =>
+        performance.getEntriesByType('navigation').concat(performance.getEntriesByType('resource'))
+          .map(({ name, transferSize, encodedBodySize }) => ({
+            path: new URL(name).pathname, transferSize, encodedBodySize,
+          })));
+      report.transfer[profile][state] = requests;
+      assert.equal(requests.length, 3);
+      assert(requests.every(({path}) => !path.endsWith('.mjs')));
+      assert(requests.some(({path}) => path.endsWith(profile === 'mobile' ? 'orbit-small.webp' : 'orbit.webp')));
+    }
+    const coldBytes = report.transfer[profile].cold.reduce((total, item) => total + item.transferSize, 0);
+    assert(coldBytes < (profile === 'mobile' ? 19 : 38) * 1024, profile + ' cold homepage exceeds asset envelope');
+    await coldPage.context().close();
   }
   await writeFile(new URL('browser.json', proof), JSON.stringify(report, null, 2) + '\n');
   console.log(JSON.stringify(report, null, 2));

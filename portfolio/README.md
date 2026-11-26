@@ -1,6 +1,4 @@
-# Josh Yorko’s portfolio preview
-
-Build with Node 22 or newer. The build has zero package dependencies and writes only static files.
+# Josh Yorko’s orbital portfolio
 
 ```sh
 cd portfolio
@@ -8,19 +6,15 @@ node build.mjs
 python3 -m http.server --bind 127.0.0.1 --directory dist 8000
 ```
 
-Open http://127.0.0.1:8000/. The server above is for local browsing. The browser test harness serves the generated security headers and cache policy. A future Cloudflare preview can serve `dist/` as static assets. This branch has no deployment configuration or automation.
+Open http://127.0.0.1:8000/. The dependency-free build needs Node 22 or newer. The simple server is for browsing. The verification server applies the generated headers and 404 page.
 
-## Review
+## Design review
 
-| Layout | Phone | Desktop |
-|---|---|---|
-| Final directory | [390 px](proof/home-390.png) | [1440 px](proof/home-1440.png) |
-| Editorial prototype | [390 px](proof/editorial-390.png) | [1440 px](proof/editorial-1440.png) |
-| Directory prototype | [390 px](proof/directory-390.png) | [1440 px](proof/directory-1440.png) |
+[360 px](proof/home-360.png) · [390 px](proof/home-390.png) · [411 px](proof/home-411.png) · [1440 px](proof/home-1440.png) · [Plugins](proof/plugins-390.png) · [Skill search](proof/skills-390.png) · [Lab](proof/lab-390.png)
 
-The independent reviewer preferred the directory for first-view access to skills, projects, notes, and the résumé. The final version removes repeated navigation from the landing page and adds direct links to three named projects. [360 px](proof/home-360.png) · [411 px](proof/home-411.png) · [Plugins](proof/plugins-390.png) · [Skill search](proof/skills-390.png) · [Lab](proof/lab-390.png)
+The homepage pairs two direct tasks with a single orbital illustration. The complete site navigation lives in the document. ImageGen produced the original illustration for this project. The two WebP encodes are the only new visual assets. The page uses system fonts and static art, with no animation, GPU scene, or homepage JavaScript.
 
-Theo’s focused link hierarchy and Ben Davis’s distinct resource pages informed the design. Josh’s 37signals-inspired product design, scope judgment, and Shape Up skills guided the interface-first approach and the choice to keep the lab separate. [Theo](https://t3.gg) · [Ben Davis](https://davis7.sh) · [Josh’s product skills](https://github.com/joshyorko/plugins/tree/e24cd596ef41e9294ad770d2b613bf77b42a8a68/plugins/37signals/skills)
+The Neon and Opus arena revisions informed the provenance links and dated notes. First-class routes, public catalog sources, offline Actions and MemoryD work, and the earlier design evidence come from [PR #52’s baseline](https://github.com/joshyorko/yorko-resume/tree/631481871d22d7b053c1aae23a84cc7d14d04b09/portfolio).
 
 ## Verify
 
@@ -30,12 +24,14 @@ npm ci
 npm run verify
 ```
 
-Set `CHROME` if desktop Chrome is installed outside `/usr/bin/google-chrome`. The test uses a temporary profile with Chrome’s sandbox enabled. [Browser results](proof/browser.json) · [Public link checks](proof/public-links.txt)
+Set `CHROME` if Chrome is outside `/usr/bin/google-chrome`. Set `PROOF_DIR` to an absolute path to save the captures and results outside the checkout. The browser uses a temporary profile with the Chrome sandbox enabled. [Browser results](proof/browser.json)
 
-The static skill catalog is pinned to [e24cd596ef41e9294ad770d2b613bf77b42a8a68](https://github.com/joshyorko/plugins/commit/e24cd596ef41e9294ad770d2b613bf77b42a8a68). Update it with `python3 snapshot-catalog.py /path/to/plugins > data/catalog.json`, review the metadata diff, then rebuild. The CLI extracts manifest versions and skill frontmatter. The website loads no skill instruction bodies.
+The catalog is pinned to [e24cd596ef41e9294ad770d2b613bf77b42a8a68](https://github.com/joshyorko/plugins/commit/e24cd596ef41e9294ad770d2b613bf77b42a8a68). Refresh with `python3 snapshot-catalog.py /path/to/plugins > data/catalog.json`. Review the metadata diff before rebuilding.
 
-## Lab and archive
+## Deploy and roll back
 
-Agent Lab retains the 96-byte Actions WASM kernel and pinned native-verified synthetic MemoryD bundle. The separate, versioned offline HTML runs the same code. Save the download and compare its SHA-256 with the checksum linked on the lab page. The lab has fixed assets, unsigned integer inputs, a 16-entry in-memory chronology, and an explicit receipt download. The browser checks are scoped to those assets. The synthetic model comparison, SQLite gallery, and general artifact workbench are outside this candidate.
+Build and serve only `portfolio/dist/`. The build contains no test results, design drafts, secrets, third-party scripts, or analytics. The optional `node preview-pack.mjs FULL_COMMIT` emits a review Worker from those same bytes and labels the responses with the candidate commit. Its route table serves only packaged files.
 
-PR #51’s entire frontend, Worker config, and old test surfaces are preserved at [a535909574cb94b169040e05b54ae198fe77673a](https://github.com/joshyorko/yorko-resume/tree/a535909574cb94b169040e05b54ae198fe77673a/machine-room). The archived deployable ZIP SHA-256 is `247f69aff3f535a8377d86f4673a284e58165c2521d97ea2ccdcc8c748f30234`. Its browser, offline and geometry evidence is [in the archive](https://github.com/joshyorko/yorko-resume/tree/a535909574cb94b169040e05b54ae198fe77673a/machine-room/proof).
+GitHub Pages and the existing Cloudflare preview are separate surfaces. The production promotion target and normal release path must be identified before moving traffic. A Cloudflare promotion should record the active version ID, upload a candidate version without shifting traffic, and verify the versioned preview. Roll back by restoring the previously recorded version to 100% and checking the live body digests and routes. Neither rollback nor promotion requires a DNS change on an existing verified target.
+
+The earlier Cloudflare Worker must remain available independently of a review Worker. The [Machine Room rollback source](https://github.com/joshyorko/yorko-resume/tree/a535909574cb94b169040e05b54ae198fe77673a/machine-room) includes its deployment archive, geometry evidence and tests. ZIP SHA-256 `247f69aff3f535a8377d86f4673a284e58165c2521d97ea2ccdcc8c748f30234`.

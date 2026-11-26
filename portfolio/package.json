@@ -3,8 +3,7 @@
   "private": true,
   "scripts": {
     "build": "node build.mjs",
-    "compare": "node build.mjs --compare",
-    "verify": "npm run build && npm run compare && node verify.mjs"
+    "verify": "npm run build && node verify.mjs"
   },
   "devDependencies": {
     "axe-core": "4.11.1",
