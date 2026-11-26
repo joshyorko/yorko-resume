@@ -2,11 +2,9 @@ name: Verify portfolio
 
 on:
   push:
-    branches: [preview-v2]
-    paths: [portfolio/**, .github/workflows/portfolio-verify.yml]
+    branches: [main, preview-v2]
   pull_request:
     branches: [main]
-    paths: [portfolio/**, .github/workflows/portfolio-verify.yml]
 
 permissions:
   contents: read
@@ -29,6 +27,14 @@ jobs:
       - run: npm run verify
         env:
           PROOF_DIR: ${{ runner.temp }}/portfolio-proof
+      - name: Verify packaged Worker
+        run: |
+          for mode in preview production; do
+            flags=()
+            if [[ "$mode" == production ]]; then flags=(--production); fi
+            node preview-pack.mjs "$GITHUB_SHA" "${flags[@]}" > "$RUNNER_TEMP/$mode.mjs"
+            node release/check-worker.mjs "$RUNNER_TEMP/$mode.mjs" "$GITHUB_SHA" "$mode"
+          done
       - uses: actions/upload-artifact@v4
         with:
           name: portfolio-browser-proof

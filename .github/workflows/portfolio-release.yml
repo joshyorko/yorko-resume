@@ -1,0 +1,73 @@
+name: Release portfolio Worker
+
+on:
+  workflow_dispatch:
+    inputs:
+      approved_revision:
+        description: Full reviewed main commit
+        required: true
+        type: string
+      previous_version:
+        description: Current 100% Worker version UUID
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency: portfolio-worker-production
+
+jobs:
+  verify:
+    if: github.ref == 'refs/heads/main' && github.sha == inputs.approved_revision
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: portfolio
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: portfolio/package-lock.json
+      - run: npm ci
+      - run: npm run verify
+        env:
+          PROOF_DIR: ${{ runner.temp }}/portfolio-proof
+      - run: |
+          node preview-pack.mjs "$GITHUB_SHA" --production > "$RUNNER_TEMP/worker.mjs"
+          node release/check-worker.mjs "$RUNNER_TEMP/worker.mjs" "$GITHUB_SHA" production
+          sha256sum "$RUNNER_TEMP/worker.mjs"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: worker-module
+          path: ${{ runner.temp }}/worker.mjs
+
+  publish:
+    needs: verify
+    runs-on: ubuntu-latest
+    environment: portfolio-worker-production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/download-artifact@v4
+        with:
+          name: worker-module
+          path: ${{ runner.temp }}
+      - name: Confirm main and rebuild expected assets
+        run: |
+          test "$(git ls-remote origin refs/heads/main | cut -f1)" = "$GITHUB_SHA"
+          node portfolio/build.mjs
+          node portfolio/release/check-worker.mjs "$RUNNER_TEMP/worker.mjs" "$GITHUB_SHA" production
+      - name: Publish reviewed version
+        env:
+          WORKER_PUBLISH_ENABLED: ${{ vars.WORKER_PUBLISH_ENABLED }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          PREVIOUS_VERSION: ${{ inputs.previous_version }}
+        run: node portfolio/release/deploy-worker.mjs publish "$PREVIOUS_VERSION" "$RUNNER_TEMP/worker.mjs" "$GITHUB_SHA"
+      - name: Smoke test live revision
+        run: node portfolio/release/check-worker.mjs --live "$GITHUB_SHA" production

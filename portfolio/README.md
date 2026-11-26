@@ -14,7 +14,7 @@ The C-hybrid home pairs Josh’s path from nursing assistant to backend and AI e
 
 Text marked **Draft** is first-person copy awaiting Josh’s approval. The career path came from Josh on 2026-11-26. Project facts link to releases, merged pull requests and repositories.
 
-The résumé page and its one-page, text-selectable PDF use the approved copy from Canva design `DAHb9y11dDU`. The PDF was generated from the saved text. The authorized Canva connector provided the design content without a PDF export. The two legacy PDF paths use the same approved bytes. The legacy Markdown and TeX source corrections remove the inaccurate degree claim.
+The résumé page uses [structured content](resume/content.json) from the approved Working Résumé design `DAHb9y11dDU`. The approved PDF was reconstructed from Canva’s saved text. The portfolio, GitHub Pages compatibility build, and retained MkDocs site use that one PDF. The [LaTeX candidates](resume/README.md) use the same structured copy and are review artifacts.
 
 The catalog is pinned to [e24cd59](https://github.com/joshyorko/plugins/commit/e24cd596ef41e9294ad770d2b613bf77b42a8a68). Refresh with `python3 snapshot-catalog.py /path/to/plugins > data/catalog.json`.
 
@@ -47,6 +47,4 @@ The Parcel Relay browser cases use Chrome DevTools offline mode before opening t
 
 ## Release and rollback
 
-Serve only `portfolio/dist/`. The candidate sends `X-Robots-Tag: noindex, nofollow`. `node preview-pack.mjs FULL_COMMIT` generates a review Worker from the same build bytes and labels responses with the supplied commit.
-
-Record the active version ID before promoting any reviewed candidate to the confirmed production target. Roll back by restoring that version to 100 percent and checking the live routes. The previous C-hybrid build is recoverable at `18c2e2f8954b508108fd784eb56b06d57b92675e`.
+See the [release runbook](RELEASE.md) for the Worker and GitHub Pages procedures.

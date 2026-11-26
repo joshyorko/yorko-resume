@@ -1,0 +1,180 @@
+{
+  "name": "Joshua Yorko",
+  "title": "Software Engineer | Distributed Systems & Agentic AI",
+  "contactText": "Worcester, MA · (260) 443-8425",
+  "contactLinks": [
+    [
+      "joshua.yorko@gmail.com",
+      "mailto:joshua.yorko@gmail.com"
+    ],
+    [
+      "GitHub",
+      "https://github.com/joshyorko"
+    ],
+    [
+      "LinkedIn",
+      "https://www.linkedin.com/in/joshua-yorko-560103a9/"
+    ]
+  ],
+  "summary": "I build and operate healthcare backend systems, distributed automation and AI evaluation tooling. I also maintain open-source execution runtimes and contribute architectural designs to autonomous software engineering projects.",
+  "jobs": [
+    {
+      "heading": "Gainwell Technologies",
+      "dates": "Jun 2023 - Present",
+      "role": "Advisor Application Designer",
+      "bullets": [
+        "Build and operate event-driven AWS healthcare systems using Terraform, Lambda, ECS, SQS, DynamoDB and S3, with durable state, retries and idempotent processing.",
+        "Built an MCP/HTTP testing platform for call-processing pipelines and repeatable AI evaluations, including blinded prompt comparisons, transcript grounding and regression tests.",
+        "Built and operate a daily claims-image API integrating four clearinghouses, with asynchronous FastAPI services, PostgreSQL caching, object storage and Kubernetes deployment.",
+        "Built daily claims allocation around analyst skills, availability and priorities, delivering individualized workloads and exception reports from Python/SQL pipelines.",
+        "Designed and operate an hourly distributed QA execution platform: producer/consumer queues in DocumentDB, autoscaling Kubernetes ARC runners, atomic work claims, failure replay and idempotent results. Added redacted diagnostics for agent-assisted fixes.",
+        "Building a Go/SOAP API replacement for browser-based QA, with SQS, DynamoDB transactions, durable write intents and reconciliation of uncertain external submissions.",
+        "Built an isolated Windows VM and Docker lab with synthetic data to enable reproducible vendor API integration testing without access to production PHI."
+      ]
+    },
+    {
+      "heading": "Gainwell Technologies | Senior Data Engineer / Software Engineer",
+      "dates": "Jun 2022 - Mar 2023",
+      "role": null,
+      "bullets": [
+        "Built AWS Glue/S3/PySpark data pipelines and PostgreSQL-backed services for Django applications."
+      ]
+    },
+    {
+      "heading": "Lambent Spaces | Implementations Specialist",
+      "dates": "Mar 2021 - Oct 2022",
+      "role": null,
+      "bullets": [
+        "Built Python/SQL tooling for customer implementations and troubleshooting."
+      ]
+    },
+    {
+      "heading": "CVS Health | Data Analyst",
+      "dates": "May 2019 - Mar 2021",
+      "role": null,
+      "bullets": [
+        "Built Python deployment reporting for a Microsoft 365 rollout across 80,000 devices."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Hive Commons",
+      "description": "Authored desired-state reconciliation and external software-factory RFCs adopted in Hive v4/v5; scoped a 16-issue epic and separated admission, verification and publication.",
+      "links": [
+        [
+          "Hive repo",
+          "https://github.com/hivecommons/hive"
+        ],
+        [
+          "Convergence RFC #3845",
+          "https://github.com/hivecommons/hive/issues/3845"
+        ],
+        [
+          "External factories RFC #8201",
+          "https://github.com/hivecommons/hive/issues/8201"
+        ],
+        [
+          "Maintainer adoption",
+          "https://github.com/hivecommons/hive/issues/8290"
+        ]
+      ]
+    },
+    {
+      "name": "Project Bluefin",
+      "description": "58 merged PRs across eight repositories: agent execution/review, OCI composition, native ARM64 qualification and CI reliability; authored exploratory testing RFCs.",
+      "links": [
+        [
+          "Project Bluefin",
+          "https://github.com/projectbluefin"
+        ],
+        [
+          "Merged PRs",
+          "https://github.com/search?q=org%3Aprojectbluefin+author%3Ajoshyorko+is%3Apr+is%3Amerged&type=pullrequests"
+        ],
+        [
+          "Review #191",
+          "https://github.com/projectbluefin/contribute/pull/191"
+        ],
+        [
+          "Review #347",
+          "https://github.com/projectbluefin/contribute/pull/347"
+        ],
+        [
+          "Desktop RFC #1302",
+          "https://github.com/projectbluefin/testsuite/issues/1302"
+        ],
+        [
+          "Validation RFC #1303",
+          "https://github.com/projectbluefin/testsuite/issues/1303"
+        ]
+      ]
+    },
+    {
+      "name": "RCC & Actions Runtime",
+      "description": "Maintain community continuations of Robocorp tooling: uv-native environments, immutable artifacts, remote/offline distribution, execution leases and Python MCP/HTTP tools.",
+      "links": [
+        [
+          "RCC repo",
+          "https://github.com/joshyorko/rcc"
+        ],
+        [
+          "Artifacts #119",
+          "https://github.com/joshyorko/rcc/pull/119"
+        ],
+        [
+          "uv-native #81",
+          "https://github.com/joshyorko/rcc/pull/81"
+        ],
+        [
+          "Actions Runtime",
+          "https://github.com/joshyorko/actions"
+        ],
+        [
+          "Recovery #317",
+          "https://github.com/joshyorko/actions/pull/317"
+        ]
+      ]
+    },
+    {
+      "name": "Linux & OCI systems",
+      "description": "Build Dudley OS, DSB Common, Omarchy bootc and Webtop OS: signed reusable OCI payloads, immutable OS assembly and portable graphical workspaces.",
+      "links": [
+        [
+          "Dudley OS",
+          "https://github.com/joshyorko/dudley-os"
+        ],
+        [
+          "DSB Common",
+          "https://github.com/joshyorko/dsb-common"
+        ],
+        [
+          "Omarchy bootc",
+          "https://github.com/joshyorko/omarchy-bootc"
+        ],
+        [
+          "Webtop OS",
+          "https://github.com/joshyorko/webtop-os"
+        ]
+      ]
+    },
+    {
+      "name": "Hauler",
+      "description": "Fixed Docker-context resolution upstream, with regression tests and real container-image import verification.",
+      "links": [
+        [
+          "Hauler repo",
+          "https://github.com/hauler-dev/hauler"
+        ],
+        [
+          "Docker context fix #928",
+          "https://github.com/hauler-dev/hauler/pull/928"
+        ]
+      ]
+    }
+  ],
+  "skills": [
+    "Python, Go, SQL, TypeScript · FastAPI, PostgreSQL, DynamoDB · AWS, Terraform, Kubernetes, Docker, Argo CD",
+    "MCP, Amazon Bedrock, LLM evaluation, Playwright, pytest · OCI, bootc, GitHub Actions"
+  ]
+}
