@@ -29,6 +29,17 @@ try{for(const width of [1440,390]){
  assert.deepEqual(errors,[]);report.push({width,coldRequests:cold,warmReloadRequests:warm,geometryHit:hit,axe,errors});await page.close()
 }
 const plain=await browser.newPage({javaScriptEnabled:false});await plain.goto(base);for(const a of await plain.locator('a[href^="stations/"]').evaluateAll(links=>[...new Set(links.map(a=>a.href))])){await plain.goto(a);assert(await plain.locator('h1').isVisible());assert(await plain.getByText('Public evidence',{exact:true}).isVisible())}
+await plain.goto(base+'infrastructure/');
+const catalog=await plain.locator('article h2 a').evaluateAll(links=>links.map(a=>a.href));
+assert.equal(catalog.length,8);
+await plain.setViewportSize({width:390,height:844});
+for(const url of catalog){
+ const response=await plain.goto(url);assert.equal(response.status(),200);
+ assert(await plain.getByRole('heading',{name:'Project status'}).isVisible());
+ assert(await plain.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+}
+await plain.goto(base+'infrastructure/devsy-provider-harvester.html');
+assert(await plain.getByRole('link',{name:'Official attribution'}).isVisible());
 await plain.goto(base+'resume.html');assert.equal(await plain.locator('article').count(),5);
 const fail=await browser.newPage();await fail.addInitScript(()=>{HTMLCanvasElement.prototype.getContext=()=>null});await fail.route('**/*.wasm',r=>r.abort());await fail.goto(base+'#review');await fail.getByText(/Experiment unavailable/).waitFor();await fail.locator('[data-id=memory]').click();await fail.getByRole('button',{name:'Query SQLite'}).click();await fail.getByText(/Unable to complete/).waitFor();
 await writeFile('proof/checks.json',JSON.stringify(report,null,2));console.log(report)

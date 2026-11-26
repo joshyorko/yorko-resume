@@ -1,5 +1,6 @@
+import {infrastructure,infrastructureRelationships} from './infrastructure.mjs';
 const link=(path,label)=>({label,url:'https://github.com/'+path});
-export const profile={name:'Josh Yorko',practice:'Software engineering · Automation and developer tools',career:[
+export const profile={infrastructure,infrastructureRelationships,name:'Josh Yorko',practice:'Software engineering · Automation and developer tools',career:[
  ['Jun 2023 – present','Gainwell Technologies','Advisor Application Developer','Backend, data and platform engineering. Shared MCP and HTTP test infrastructure and AI evaluations. Daily healthcare claims API and allocation systems, hourly Kubernetes ARC QA, and ongoing Go/SOAP replacement in an isolated synthetic-data lab.'],
  ['Jun 2022 – Mar 2023','Gainwell Technologies','Senior Data Engineer / Software Engineer','Data engineering and software development.'],
  ['Mar 2021 – Oct 2022','Lambent Spaces','Implementations Specialist','Authored SQL and Python scripts for implementations and automation.'],
