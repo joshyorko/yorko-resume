@@ -25,7 +25,7 @@ func (m *YorkoResume) BuildPdf(
 	return m.buildContainer(source).File(resumePDF)
 }
 
-// BuildSite compiles the resume PDF, copies it into docs/assets, then builds the MkDocs site.
+// BuildSite builds the MkDocs site with the approved, checked-in résumé PDF.
 func (m *YorkoResume) BuildSite(
 	ctx context.Context,
 	// +defaultPath="/"
@@ -61,7 +61,7 @@ func (m *YorkoResume) buildContainer(source *dagger.Directory) *dagger.Container
 		WithWorkdir(resumeTexDir).
 		WithExec([]string{"xelatex", "-interaction=nonstopmode", "-halt-on-error", "JoshYorkoResume.tex"}).
 		WithExec([]string{"xelatex", "-interaction=nonstopmode", "-halt-on-error", "JoshYorkoResume.tex"}).
-		WithExec([]string{"cp", resumePDF, publishedPDF}).
+		WithExec([]string{"test", "-s", publishedPDF}).
 		WithWorkdir(workdir).
 		WithExec([]string{"mkdocs", "build", "--strict"})
 }

@@ -1,0 +1,251 @@
+{
+  "viewports": [
+    360,
+    390,
+    411,
+    850,
+    1440
+  ],
+  "axeViolations": {
+    "/ @390": [],
+    "/computer/ @390": [],
+    "/plugins/ @390": [],
+    "/skills/ @390": [],
+    "/projects/ @390": [],
+    "/systems/ @390": [],
+    "/notes/ @390": [],
+    "/resume/ @390": [],
+    "/computer/?sample=1 @390": [],
+    "/computer/ Files tab @390": [],
+    "/computer/ Inspect tab @390": [],
+    "/computer/ Snapshots tab @390": [],
+    "/ @1440": [],
+    "/computer/ @1440": [],
+    "/plugins/ @1440": [],
+    "/skills/ @1440": [],
+    "/projects/ @1440": [],
+    "/systems/ @1440": [],
+    "/notes/ @1440": [],
+    "/resume/ @1440": [],
+    "/computer/?sample=1 @1440": [],
+    "search dialog @360": [],
+    "search dialog @390": [],
+    "search dialog @411": [],
+    "search dialog @1440": []
+  },
+  "navigation": [
+    "Computer",
+    "Projects",
+    "Systems",
+    "Plugins & Skills",
+    "Notes",
+    "Résumé"
+  ],
+  "transfer": {
+    "mobile": {
+      "cold": [
+        {
+          "path": "/",
+          "transferSize": 15650,
+          "encodedBodySize": 15350
+        },
+        {
+          "path": "/site.css",
+          "transferSize": 16139,
+          "encodedBodySize": 15839
+        },
+        {
+          "path": "/home.mjs",
+          "transferSize": 759,
+          "encodedBodySize": 459
+        },
+        {
+          "path": "/jump.mjs",
+          "transferSize": 5895,
+          "encodedBodySize": 5595
+        },
+        {
+          "path": "/fonts/literata-normal.woff2",
+          "transferSize": 110380,
+          "encodedBodySize": 110080
+        },
+        {
+          "path": "/fonts/schibsted-normal.woff2",
+          "transferSize": 47052,
+          "encodedBodySize": 46752
+        },
+        {
+          "path": "/fonts/jetbrains-normal.woff2",
+          "transferSize": 31732,
+          "encodedBodySize": 31432
+        },
+        {
+          "path": "/jump-index.mjs",
+          "transferSize": 7251,
+          "encodedBodySize": 6951
+        }
+      ],
+      "warm": [
+        {
+          "path": "/",
+          "transferSize": 300,
+          "encodedBodySize": 15350
+        },
+        {
+          "path": "/site.css",
+          "transferSize": 0,
+          "encodedBodySize": 15839
+        },
+        {
+          "path": "/home.mjs",
+          "transferSize": 300,
+          "encodedBodySize": 0
+        },
+        {
+          "path": "/jump.mjs",
+          "transferSize": 300,
+          "encodedBodySize": 0
+        },
+        {
+          "path": "/fonts/literata-normal.woff2",
+          "transferSize": 0,
+          "encodedBodySize": 110080
+        },
+        {
+          "path": "/fonts/schibsted-normal.woff2",
+          "transferSize": 0,
+          "encodedBodySize": 46752
+        },
+        {
+          "path": "/fonts/jetbrains-normal.woff2",
+          "transferSize": 0,
+          "encodedBodySize": 31432
+        },
+        {
+          "path": "/jump-index.mjs",
+          "transferSize": 300,
+          "encodedBodySize": 0
+        }
+      ],
+      "coldBytes": 234858
+    },
+    "desktop": {
+      "cold": [
+        {
+          "path": "/",
+          "transferSize": 15650,
+          "encodedBodySize": 15350
+        },
+        {
+          "path": "/site.css",
+          "transferSize": 16139,
+          "encodedBodySize": 15839
+        },
+        {
+          "path": "/home.mjs",
+          "transferSize": 759,
+          "encodedBodySize": 459
+        },
+        {
+          "path": "/jump.mjs",
+          "transferSize": 5895,
+          "encodedBodySize": 5595
+        },
+        {
+          "path": "/fonts/literata-normal.woff2",
+          "transferSize": 110380,
+          "encodedBodySize": 110080
+        },
+        {
+          "path": "/fonts/schibsted-normal.woff2",
+          "transferSize": 47052,
+          "encodedBodySize": 46752
+        },
+        {
+          "path": "/fonts/jetbrains-normal.woff2",
+          "transferSize": 31732,
+          "encodedBodySize": 31432
+        },
+        {
+          "path": "/jump-index.mjs",
+          "transferSize": 7251,
+          "encodedBodySize": 6951
+        }
+      ],
+      "warm": [
+        {
+          "path": "/",
+          "transferSize": 300,
+          "encodedBodySize": 15350
+        },
+        {
+          "path": "/site.css",
+          "transferSize": 0,
+          "encodedBodySize": 15839
+        },
+        {
+          "path": "/home.mjs",
+          "transferSize": 300,
+          "encodedBodySize": 0
+        },
+        {
+          "path": "/jump.mjs",
+          "transferSize": 300,
+          "encodedBodySize": 0
+        },
+        {
+          "path": "/fonts/literata-normal.woff2",
+          "transferSize": 0,
+          "encodedBodySize": 110080
+        },
+        {
+          "path": "/fonts/schibsted-normal.woff2",
+          "transferSize": 0,
+          "encodedBodySize": 46752
+        },
+        {
+          "path": "/fonts/jetbrains-normal.woff2",
+          "transferSize": 0,
+          "encodedBodySize": 31432
+        },
+        {
+          "path": "/jump-index.mjs",
+          "transferSize": 300,
+          "encodedBodySize": 0
+        }
+      ],
+      "coldBytes": 234858
+    }
+  },
+  "search": [
+    360,
+    390,
+    411,
+    1440
+  ],
+  "computer": {
+    "online": {
+      "sampleSkills": 22,
+      "imported": [
+        "visits.csv",
+        "tools.json"
+      ],
+      "savedBytes": 57344,
+      "savedSha256": "3b06890487ba3c31e7c0e0aa49a0c7f963e6162c4a4e717d2d1ed54e680837ab",
+      "restoredSkills": 22,
+      "internalTablesHidden": true
+    },
+    "offline": {
+      "sampleSkills": 22,
+      "imported": [
+        "visits.csv",
+        "tools.json"
+      ],
+      "savedBytes": 57344,
+      "savedSha256": "dbd59b2bd46b6b0569d7ce5bd8f86ce491dae3a03a6752d2be409b14e234c787",
+      "restoredSkills": 22,
+      "internalTablesHidden": true
+    }
+  },
+  "browser": "158.0.8127.88"
+}
