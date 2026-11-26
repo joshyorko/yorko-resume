@@ -39,8 +39,8 @@ function job(job, style) {
   return command(style, tex(employer), tex(job.role || previousRole), tex(job.dates));
 }
 
-function work(order, block) {
-  return order.map(index => command(block, emphasize(current.bullets[index], currentPhrases[index]))).join('\n');
+function work(order, block, phrases = currentPhrases) {
+  return order.map(index => command(block, emphasize(current.bullets[index], phrases[index]))).join('\n');
 }
 
 function projects(style, start = 0, end = content.projects.length) {
@@ -99,7 +99,7 @@ const compositions = {
     sections.skills, stackedSkills, '\\newpage', sections.projects, ...projectEntries(cleanProjects)],
   T: [sections.experience, job(current, 'row'), command('workgroup', 'Production backend services'),
     work([2, 0, 3], 'achievement'), command('workgroup', 'Distributed execution and AI evaluation'),
-    work([4, 1, 5, 6], 'achievement'), earlierJobs('row'), sections.skills, stackedSkills,
+    work([4, 1, 5, 6], 'achievement', [null, 'blinded prompt comparisons', null, null, 'atomic work claims, failure replay', currentPhrases[5]]), earlierJobs('row'), sections.skills, stackedSkills,
     '\\newpage\\thispagestyle{resumereview}', sections.projects, ...projectEntries(platform.projects)],
   C: [sections.projects, projects('evidenceproject', 0, 2), sections.experience,
     job(current, 'row'), work(focused.slice(0, 1), 'lead'), work(focused.slice(1), 'achievement'),
