@@ -1,3 +1,4 @@
+import '../resume/verify-approved.mjs';
 import { strict as assert } from 'node:assert';
 import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';

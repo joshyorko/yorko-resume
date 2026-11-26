@@ -1,3 +1,4 @@
+import { approvedResumeDigest } from './resume/verify-approved.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { createServer } from 'node:http';
@@ -105,8 +106,8 @@ try {
     noJS.waitForEvent('download'), noJS.getByRole('link', { name: 'Download Résumé' }).click(),
   ]);
   const pdf = await readFile(await resume.path());
-  assert.equal(createHash('sha256').update(pdf).digest('hex'), '6021e8d0bdd3fd18c5b628dfba981de5c685c7f536404b5fb88f4e00f441f614');
-  assert.equal(await noJS.locator('.resume .resume-evidence a').count(), 21);
+  assert.equal(createHash('sha256').update(pdf).digest('hex'), approvedResumeDigest);
+  assert.equal(await noJS.locator('.resume .resume-project a').count(), 12);
   await noJS.goto(base + '/plugins/');
   await noJS.getByRole('link', { name: 'Browse and search skills' }).click();
   assert.equal(await noJS.locator('.skill:visible').count(), 22);

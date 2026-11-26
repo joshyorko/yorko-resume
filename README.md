@@ -11,4 +11,4 @@ The build writes `portfolio/dist/`. It uses the catalog snapshot and approved r�
 - [Portfolio](https://joshyorko-portfolio-preview.joshua-yorko.workers.dev/)
 - [Legacy homepage](https://joshyorko.github.io/yorko-resume/) and [legacy PDF URL](https://joshyorko.github.io/yorko-resume/assets/JoshYorkoResume.pdf)
 - [Deployment, GitHub Pages compatibility, and rollback](portfolio/RELEASE.md)
-- [LaTeX review candidates](portfolio/resume/README.md)
+- [Approved résumé and LaTeX review history](portfolio/resume/README.md)
