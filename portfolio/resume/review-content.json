@@ -4,12 +4,12 @@
     {
       "name": "Josh Room",
       "url": "https://github.com/joshyorko/josh-room",
-      "description": "Encrypted, named workspace snapshots and safe restoration through VS Code."
+      "description": "Built encrypted, named workspace snapshots with safe restoration through VS Code."
     },
     {
       "name": "Josh’s All the Things (JAT)",
       "url": "https://github.com/joshyorko/josh-all-the-things",
-      "description": "Portable Hauler-based capsules for workspaces, environments and OCI artifacts."
+      "description": "Built portable Hauler-based capsules for workspaces, environments and OCI artifacts."
     }
   ]
 }
