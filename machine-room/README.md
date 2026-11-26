@@ -1,0 +1,31 @@
+# Machine Room
+
+Static design candidate for Josh Yorko. Six project installations share one Three.js hall. The public résumé, source evidence and project pages are HTML. The preview includes noindex metadata and an X-Robots-Tag header for compatible hosts.
+
+## Run and verify
+
+Use Node 22+ and the project-local dependencies. From this directory run:
+
+```sh
+npm ci --ignore-scripts
+npm run build
+python3 -m http.server 4175 --bind 127.0.0.1 --directory dist
+```
+
+In another shell, from the same directory, run `npm run verify`. Set CHROME_PATH for a different Chrome executable. PREVIEW_URL can point the checks at another build. The verifier writes 1440×900 and 390×844 screenshots and exercises geometry, keyboard focus, touch, four policy refusals, SQLite evidence lookup, cache reuse, persisted crash recovery, versioned files, digest mismatch, JavaScript-disabled pages, WebGL failure and WASM download failure. Run `node capture.mjs` for the camera recording, renderer sample and static fallback photographs, then rebuild to include updated photographs.
+
+## Extend
+
+Edit profile.mjs for the role, claim, evidence, scenario, receipt and relationships. build.mjs generates station pages, résumé, directory and portable JSON from it. Add a bay and geometry in src/scene.mjs and a scoped experiment in src/experiments.mjs. policy.mjs emits the small WebAssembly decision function. The host owns navigation. Each inspector owns its input and receipt. Retained local state is limited to the synthetic Actions job. No real deployments, credentials, agent inference or live production data are involved in the experiments.
+
+## Qualification
+
+Proof files contain captured browser results and screenshots. Browser runs use Chrome with ANGLE SwiftShader. Frame samples cover a single recorded transition, including recorder and scheduling cost. Browser touch emulation and reduced motion were exercised. Physical phone GPU, human screen-reader review and offline reload were not qualified. The static build loads WebGL after the text page and loads SQLite on query. The renderer stops scheduling frames after the transition. No service worker or WebGPU.
+
+The first geometry study looked like models under uniform beige lighting. Independent visual review prompted directional architectural shadows, a lower central aisle view and matching bay signs. Atlas remains faster to scan for project connections. The room devotes more space to six systems the visitor can exercise. At phone width the first view deliberately crops the distant bays; all six are in the index.
+
+PStack 0.15.48: poteto-mode/worker.md, poteto-mode/SKILL.md, prototype playbook, architect, experience-first, exhaust-the-design-space, model-the-domain, build-the-lever and prove-it-works. The T3 preview and local Chrome mapped the control-UI requirement. Astra implemented the prototype and an independent Codex reviewer examined the initial rendered frame.
+
+## Isolated static preview contract
+
+Publish only the contents of dist/ as the root of a fresh static-only preview. No Functions, bindings, analytics, custom domains, DNS, or production routing. Preserve relative asset paths, serve WebAssembly as application/wasm, honor _headers and robots.txt. Never replace an existing Worker or Pages project. Verify external page, header, WASM and geometry after upload. The résumé repository's existing main and site stay separate from this candidate.

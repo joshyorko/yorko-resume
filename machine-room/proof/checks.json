@@ -1,0 +1,18 @@
+[
+  {
+    "width": 1440,
+    "coldRequests": 7,
+    "warmReloadRequests": 7,
+    "geometryHit": "Memory core",
+    "axe": [],
+    "errors": []
+  },
+  {
+    "width": 390,
+    "coldRequests": 7,
+    "warmReloadRequests": 7,
+    "geometryHit": "Foundry",
+    "axe": [],
+    "errors": []
+  }
+]
