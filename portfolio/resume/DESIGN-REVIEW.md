@@ -29,3 +29,7 @@ H combines C’s evidence-first typography with A’s two current-role groups. A
 The hybrid uses 10.8 pt body type, 12.8 pt leading and 9.8 pt evidence links. The bottom text margin is 0.43 in. The A/C/H contact sheet includes color and grayscale. A, B and C retain their earlier PDF bytes.
 
 The hybrid’s PDF content stream reads in order in Poppler raw mode, and the visible rows read in order in pypdf layout mode and row-configured pdfminer. Default geometric extraction can detach the right-aligned dates. The document is untagged.
+
+## Owner-requested content revision
+
+R keeps the hybrid’s layout and groups the two original tools at the top, followed by the RCC and Actions continuations and the existing upstream evidence. The project names are the clickable labels. The summary distinguishes building and maintaining tools from upstream code, test and architecture contributions. Body and links retain H’s point sizes. R fits on one Letter page with a measured 0.52 in bottom text margin. It carries 26 unique link targets.

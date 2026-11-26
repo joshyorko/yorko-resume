@@ -1,6 +1,7 @@
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import review from './review-content.json' with { type: 'json' };
 import content from './content.json' with { type: 'json' };
 
 const engine = process.env.TECTONIC || 'tectonic';
@@ -66,6 +67,13 @@ const compositions = {
     job(current, 'datedrow'), command('workgroup', 'QA and integration'),
     work([4, 1, 5, 6], 'achievement'), command('workgroup', 'Healthcare systems'),
     work([0, 2, 3], 'achievement'), earlierJobs('datedrow'), sections.skills, compactSkills],
+  R: [sections.projects, ...review.originalProjects.map(({ name, url, description }) =>
+    command('originalproject', links([[name, url]]), tex(description))),
+    projects('evidenceproject', 2, 3), projects('evidenceproject', 0, 2),
+    projects('evidenceproject', 3), sections.experience,
+    job(current, 'datedrow'), command('workgroup', 'QA and integration'),
+    work([4, 1, 5, 6], 'achievement'), command('workgroup', 'Healthcare systems'),
+    work([0, 2, 3], 'achievement'), earlierJobs('datedrow'), sections.skills, compactSkills],
   C: [sections.projects, projects('evidenceproject', 0, 2), sections.experience,
     job(current, 'row'), work(focused.slice(0, 1), 'lead'), work(focused.slice(1), 'achievement'),
     earlierJobs('row'), command('sectiontitle', 'MORE OPEN-SOURCE ENGINEERING'),
@@ -74,12 +82,12 @@ const compositions = {
 
 const template = readFileSync(new URL('./layout.tex', import.meta.url), 'utf8');
 for (const [id, composition] of Object.entries(compositions)) {
-  const style = readFileSync(new URL('./layout-' + id + '.tex', import.meta.url), 'utf8');
-  const source = template.replace('%%STYLE%%', () => style)
+  const style = readFileSync(new URL('./layout-' + (id === 'R' ? 'H' : id) + '.tex', import.meta.url), 'utf8');
+  const source = template.replace('%%STYLE%%', () => id === 'R' ? style + '\n' + readFileSync(new URL('./layout-R.tex', import.meta.url), 'utf8') : style)
     .replace('%%NAME%%', () => tex(content.name))
     .replace('%%TITLE%%', () => tex(content.title))
     .replace('%%CONTACT%%', () => tex(content.contactText) + ' \\separator ' + links(content.contactLinks))
-    .replace('%%SUMMARY%%', () => tex(content.summary))
+    .replace('%%SUMMARY%%', () => tex(id === 'R' ? review.summary : content.summary))
     .replace('%%BODY%%', () => composition.join('\n'));
   writeFileSync(resolve(output, id + '.tex'), source);
   execFileSync(engine, ['--untrusted', '--bundle', 'https://relay.fullyjustified.net/default_bundle_v33.tar', '--keep-logs', id + '.tex'], {

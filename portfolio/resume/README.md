@@ -24,3 +24,7 @@ python portfolio/resume/render-review.py "$out"
 CI uploads the final PDF and three earlier candidates, 150 dpi color and grayscale PNGs, side-by-side sheet, critique, render log and verification report as `resume-review-only`. Checks cover US Letter size, one page, metadata, Unicode font embedding, ordered text blocks in Poppler and pdfminer, all 21 OSS and three existing contact URIs, and text and annotation bounds. Extractor checks establish text-layer behavior in those tools. PDF SHA-256 values are part of the report. If hashes differ across environments, rerun the semantic verifications and inspect the page render before approving a candidate.
 
 After owner approval, verify the selected build, update the single approved PDF source in a reviewed commit, and rebuild both public targets from that commit. The legacy Pages path uses a copy made at build time. The retained MkDocs path resolves to the same source.
+
+## Review-stage content
+
+R applies the summary and named projects in [review-content.json](review-content.json) to the approved [content.json](content.json). A through H and the public HTML use the approved base. After owner approval, incorporate the staged summary and entries into the shared content and adapt the HTML renderer to the new named entries. Regenerate and verify the selected PDF before replacing the single public source. Promotion is a separate change.

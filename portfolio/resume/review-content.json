@@ -1,0 +1,15 @@
+{
+  "summary": "I build and operate healthcare backend systems, distributed automation, and AI evaluation tooling. I also build and maintain open-source runtimes and developer tools, and contribute code, tests, and architecture to upstream projects.",
+  "originalProjects": [
+    {
+      "name": "Josh Room",
+      "url": "https://github.com/joshyorko/josh-room",
+      "description": "Encrypted, named workspace snapshots and safe restoration through VS Code."
+    },
+    {
+      "name": "Josh’s All the Things (JAT)",
+      "url": "https://github.com/joshyorko/josh-all-the-things",
+      "description": "Portable Hauler-based capsules for workspaces, environments and OCI artifacts."
+    }
+  ]
+}

@@ -30,6 +30,7 @@ def require_ordered(text, expected, parser):
 
 
 content = json.loads(Path(__file__).with_name("content.json").read_text())
+review = json.loads(Path(__file__).with_name("review-content.json").read_text())
 header = [content["name"], content["title"], content["contactText"],
           *(label for label, _ in content["contactLinks"]), content["summary"]]
 projects = []
@@ -51,7 +52,7 @@ def experience(design):
         else:
             result.extend([*job["heading"].split(" | "), job["dates"]])
         bullets = job["bullets"]
-        if index == 0 and design in ("A", "H"):
+        if index == 0 and design in ("A", "H", "R"):
             bullets = [bullets[i] for i in (4, 1, 5, 6, 0, 2, 3)]
         if index == 0 and design == "C":
             bullets = [bullets[4], *bullets[:4], *bullets[5:]]
@@ -59,11 +60,18 @@ def experience(design):
     return result
 
 
-for name in ("A", "B", "C", "H"):
+for name in ("A", "B", "C", "H", "R"):
     work = experience(name)
     featured = ["OPEN-SOURCE ENGINEERING", *sum(projects[:2], [])]
     more = sum(projects[2:], [])
-    if name == "C":
+    expected_links = links
+    if name == "R":
+        originals = [value for project in review["originalProjects"] for value in (project["name"], project["description"])]
+        expected_links = links + [(project["name"], project["url"]) for project in review["originalProjects"]]
+        assert len({url for _, url in expected_links}) == len(expected_links) == 26
+        expected = header[:-1] + [review["summary"], featured[0], *originals, *projects[2],
+                                  *featured[1:], *sum(projects[3:], [])] + work + skills
+    elif name == "C":
         expected = header + featured + work + ["MORE OPEN-SOURCE ENGINEERING"] + more + skills
     elif name == "H":
         expected = header + featured + more + work + skills
@@ -77,16 +85,16 @@ for name in ("A", "B", "C", "H"):
     assert reader.metadata.author == content["name"]
     assert reader.metadata.title == f"{content['name']} — Résumé"
 
-    poppler = ("-raw",) if name == "H" else ()
+    poppler = ("-raw",) if name in ("H", "R") else ()
     require_ordered(run("pdftotext", *poppler, str(pdf), "-"), expected, f"{name}/Poppler")
-    if name == "H":
+    if name in ("H", "R"):
         require_ordered(page.extract_text(extraction_mode="layout"), expected, f"{name}/pypdf")
-    layout = LAParams(boxes_flow=None, char_margin=55) if name == "H" else None
+    layout = LAParams(boxes_flow=None, char_margin=55) if name in ("H", "R") else None
     require_ordered(extract_text(pdf, laparams=layout), expected, f"{name}/pdfminer")
 
     annotations = [ref.get_object() for ref in page["/Annots"]]
     assert all(a["/Subtype"] == "/Link" and a["/A"]["/S"] == "/URI" for a in annotations)
-    assert sorted(a["/A"]["/URI"] for a in annotations) == sorted(url for _, url in links), name
+    assert sorted(a["/A"]["/URI"] for a in annotations) == sorted(url for _, url in expected_links), name
     for annotation in annotations:
         x1, y1, x2, y2 = annotation["/Rect"]
         assert 0 < x1 < x2 < 612 and 0 < y1 < y2 < 792
@@ -100,7 +108,7 @@ for name in ("A", "B", "C", "H"):
     for word in words:
         x1, y1, x2, y2 = (float(word.attrib[k]) for k in ("xMin", "yMin", "xMax", "yMax"))
         assert 20 < x1 < x2 < 592 and 20 < y1 < y2 < 772
-    if name == "H":
+    if name in ("H", "R"):
         # Each date is on its own employer row, aligned to the same right edge.
         date_edges = []
         for job in content["jobs"]:
@@ -113,6 +121,6 @@ for name in ("A", "B", "C", "H"):
         assert len(date_edges) == 4 and max(date_edges) - min(date_edges) < 1, name
     tagged = bool(reader.trailer["/Root"].get("/StructTreeRoot"))
     checksum = hashlib.sha256(pdf.read_bytes()).hexdigest()
-    print(f"{name}: Letter, one page; 24 exact URI annotations; both text parsers passed; "
+    print(f"{name}: Letter, one page; {len(expected_links)} exact URI annotations; both text parsers passed; "
           f"embedded Unicode fonts; bottom text margin {(792-bottom)/72:.2f} in; "
           f"no text or link bounds violations; tagged={tagged}; SHA-256 {checksum}")
