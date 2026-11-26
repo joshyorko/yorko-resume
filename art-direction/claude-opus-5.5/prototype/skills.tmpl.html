@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Plugins and skills · Josh Yorko</title>
+<meta name="description" content="22 agent skills in four plugins, each listed by the job it's for.">
+<link rel="preload" href="fonts/familjen.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/newsreader-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="site.css">
+</head>
+<body class="skills-page">
+<div class="wrap">
+  <header class="top">
+    <a class="mark" href="index.html" aria-label="Josh Yorko, home"><span class="glyph" aria-hidden="true">jy</span>Josh Yorko</a>
+    <nav aria-label="Primary">
+      <a href="skills.html" aria-current="page">Skills</a>
+      <a href="index.html#work">Work</a>
+      <a href="https://github.com/joshyorko/yorko-resume/blob/631481871d22d7b053c1aae23a84cc7d14d04b09/docs/assets/JoshYorkoResume.pdf">Résumé</a>
+    </nav>
+  </header>
+
+  <div class="skills-grid">
+    <div>
+      <div class="page-head">
+        <h1>Plugins and skills</h1>
+        <p>Each skill starts with the job it's for. Your agent reads that line to decide when to load it. Search it the same way.</p>
+      </div>
+      
+      <div class="find">
+        <label for="q">What are you working on?</label>
+        <input id="q" type="search" autocomplete="off" placeholder="review, Turbo, robot, cache…">
+        <nav class="jump" aria-label="Plugins" id="jump"></nav>
+      </div>
+      <div class="only-wide">
+      <div class="install">
+        <code><span class="p">$ </span>curl -fsSL https://raw.githubusercontent.com/joshyorko/plugins/main/install.sh | bash</code>
+        <button class="copy" data-copy="curl -fsSL https://raw.githubusercontent.com/joshyorko/plugins/main/install.sh | bash">Copy</button>
+      </div>
+      <p class="install-note">Installs all four plugins for Codex. <a class="voice" href="https://github.com/joshyorko/plugins#quick-start">Other clients and pinned versions</a></p>
+      </div>
+    </div>
+    <div>
+      <div id="groups" aria-live="polite"></div>
+      <div class="only-narrow">
+      <div class="install">
+        <code><span class="p">$ </span>curl -fsSL https://raw.githubusercontent.com/joshyorko/plugins/main/install.sh | bash</code>
+        <button class="copy" data-copy="curl -fsSL https://raw.githubusercontent.com/joshyorko/plugins/main/install.sh | bash">Copy</button>
+      </div>
+      <p class="install-note">Installs all four plugins for Codex. <a class="voice" href="https://github.com/joshyorko/plugins#quick-start">Other clients and pinned versions</a></p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <span class="pin">catalog pinned to joshyorko/plugins@e24cd59 · skill bodies load from GitHub, not this site</span>
+    <span><a href="https://github.com/joshyorko/plugins">github.com/joshyorko/plugins</a></span>
+  </footer>
+</div>
+
+<script>
+const CATALOG = __CATALOG__;
+const META = {
+  "37signals": { title: "37signals", blurb: "Rails, Hotwire, product refresh, Shape Up and scope judgment, grounded in public 37signals and Basecamp writing. Community-made, not official guidance." },
+  "rcc": { title: "RCC Automation", blurb: "RCC environments, robots, work items, Action Server packages and CI caching, through the RCC CLI. Scaffolds a new robot only when you ask." },
+  "luna-factory": { title: "Luna Factory", blurb: "An orchestration skill with a local Rust control plane and an MCP Apps workbench. A project I wrote; opt-in, and nothing here depends on it." },
+  "fizzy": { title: "Fizzy", blurb: "Boards, cards and comments through the upstream fizzy CLI or MCP connector, with your own account." },
+};
+const ORDER = ["37signals", "rcc", "luna-factory", "fizzy"];
+const REPO = "https://github.com/joshyorko/plugins/blob/e24cd596ef41e9294ad770d2b613bf77b42a8a68/";
+const plugins = ORDER.map((id) => CATALOG.find((p) => p.plugin === id));
+
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const mark = (s, q) => {
+  if (!q) return esc(s);
+  const i = s.toLowerCase().indexOf(q);
+  if (i < 0) return esc(s);
+  return esc(s.slice(0, i)) + "<mark>" + esc(s.slice(i, i + q.length)) + "</mark>" + esc(s.slice(i + q.length));
+};
+function describe(d, q) {
+  const m = d.match(/^(Use when|Use for|\w+)\s/);
+  const head = m ? m[1] : "";
+  return `<em>${head}</em> ${mark(d.slice(head.length).trimStart(), q)}`;
+}
+
+const groups = document.getElementById("groups");
+const jump = document.getElementById("jump");
+
+function render(raw) {
+  const q = raw.trim().toLowerCase();
+  let shown = 0;
+  groups.innerHTML = plugins.map((p) => {
+    const meta = META[p.plugin];
+    const hits = p.skills.filter(([n, d]) => !q || n.toLowerCase().includes(q) || d.toLowerCase().includes(q));
+    shown += hits.length;
+    if (!hits.length) return "";
+    return `<section class="group" id="g-${p.plugin}">
+      <div class="group-head">
+        <h2>${meta.title} <span class="pin">${p.version} · ${p.skills.length} skill${p.skills.length > 1 ? "s" : ""}</span></h2>
+        ${q ? "" : `<p>${meta.blurb}</p>`}
+        <span class="src"><a href="https://github.com/joshyorko/plugins/tree/e24cd596ef41e9294ad770d2b613bf77b42a8a68/plugins/${p.plugin}">plugins/${p.plugin}</a></span>
+      </div>
+      ${hits.map(([n, d, src]) => `<div class="skill" id="${n}">
+        <div class="name"><a href="${REPO + src}" title="Read SKILL.md on GitHub">${mark(n, q)}</a></div>
+        <p>${describe(d, q)}</p>
+      </div>`).join("")}
+    </section>`;
+  }).join("");
+  if (!shown) groups.innerHTML = `<p class="empty">No skill mentions <b>“${esc(raw.trim())}”</b>. Try a job instead of a tool name, like <i>review</i>, <i>robot</i> or <i>Turbo</i>.</p>`;
+  jump.innerHTML = plugins.map((p) => {
+    const n = p.skills.filter(([a, d]) => !q || a.toLowerCase().includes(q) || d.toLowerCase().includes(q)).length;
+    return n ? `<a href="#g-${p.plugin}">${META[p.plugin].title}<b>${n}</b></a>` : "";
+  }).join("");
+}
+
+const input = document.getElementById("q");
+const params = new URLSearchParams(location.search);
+input.value = params.get("q") || "";
+render(input.value);
+input.addEventListener("input", () => render(input.value));
+if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
+
+document.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", async () => {
+  try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = "Copied"; }
+  catch { b.textContent = "Select and copy"; }
+  setTimeout(() => (b.textContent = "Copy"), 1600);
+}));
+</script>
+</body>
+</html>

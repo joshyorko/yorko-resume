@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Josh Yorko</title>
+<meta name="description" content="Josh Yorko builds reproducible automation and publishes agent plugins and skills.">
+<link rel="preload" href="fonts/familjen.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/newsreader-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="mark" href="index.html" aria-label="Josh Yorko, home"><span class="glyph" aria-hidden="true">jy</span>Josh Yorko</a>
+    <nav aria-label="Primary">
+      <a href="skills.html">Skills</a>
+      <a href="#work">Work</a>
+      <a href="https://github.com/joshyorko/yorko-resume/blob/631481871d22d7b053c1aae23a84cc7d14d04b09/docs/assets/JoshYorkoResume.pdf">Résumé</a>
+    </nav>
+  </header>
+
+  <div class="hero-grid">
+    <section class="intro">
+      <h1 class="thesis">I build automation that runs <span class="voice">the same way twice,</span> and the skills that teach coding agents to use it.</h1>
+      <p class="who"><strong>Software engineer.</strong> Backend, data and platform work at Gainwell Technologies. I maintain the RCC distribution and a public marketplace of agent plugins.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://github.com/joshyorko/yorko-resume/blob/631481871d22d7b053c1aae23a84cc7d14d04b09/docs/assets/JoshYorkoResume.pdf">Read the résumé <span class="mono">PDF</span></a>
+        <a class="btn" href="https://github.com/joshyorko">GitHub</a>
+      </div>
+    </section>
+
+    <section class="needs" aria-labelledby="needs-h">
+      <h2 id="needs-h">I need to…</h2>
+      <ol>
+        <li><a href="#rcc"><span class="need">reproduce an automation environment</span><span class="tool"><span class="arrow">→</span><b>rcc</b> v18.19.11</span></a></li>
+        <li><a href="#p-37signals"><span class="need">give my agent Rails and product judgment</span><span class="tool"><span class="arrow">→</span><b>37signals skills</b> 0.1.0</span></a></li>
+        <li><a href="#actions"><span class="need">serve Python actions over HTTP or MCP</span><span class="tool"><span class="arrow">→</span><b>actions-runtime</b> 1.1.1</span></a></li>
+        <li><a href="#josh-room"><span class="need">save and restore an encrypted workspace</span><span class="tool"><span class="arrow">→</span><b>josh-room</b> + jat</span></a></li>
+        <li><a href="#memoryd"><span class="need">give a coding agent durable local recall</span><span class="tool"><span class="arrow">→</span><b>memoryd</b> v0.1.0</span></a></li>
+        <li><a href="#p-fizzy"><span class="need">work Fizzy boards from an agent</span><span class="tool"><span class="arrow">→</span><b>fizzy plugin</b> 0.1.2</span></a></li>
+        <li><a href="#systems"><span class="need">boot a workstation from an image</span><span class="tool"><span class="arrow">→</span><b>dudley-os</b> bootc</span></a></li>
+        <li><a href="https://github.com/joshyorko/yorko-resume/blob/631481871d22d7b053c1aae23a84cc7d14d04b09/docs/assets/JoshYorkoResume.pdf"><span class="need">see who built all this</span><span class="tool"><span class="arrow">→</span><b>résumé</b> pdf</span></a></li>
+      </ol>
+    </section>
+  </div>
+</div>
+
+<div class="wrap">
+  <section class="shelf" id="skills" aria-labelledby="skills-h">
+    <div class="shelf-grid">
+      <div>
+        <div class="sec-head">
+          <h2 id="skills-h">Agent plugins and skills</h2>
+          <p>A skill is a set of instructions a coding agent loads when the job matches. I publish four plugins with 22 skills from one public repo, with manifests for Codex, Claude Code and Hermes.</p>
+        </div>
+        <div class="install">
+          <code><span class="p">$ </span>curl -fsSL https://raw.githubusercontent.com/joshyorko/plugins/main/install.sh | bash</code>
+          <button class="copy" data-copy="curl -fsSL https://raw.githubusercontent.com/joshyorko/plugins/main/install.sh | bash">Copy</button>
+        </div>
+        <p class="install-note">Codex bootstrap for macOS and Linux. Windows and pinned installs are in the <a class="voice" href="https://github.com/joshyorko/plugins#quick-start">README</a>.</p>
+      </div>
+
+      <div>
+        <article class="plugin" id="p-37signals">
+          <h3>37signals <span class="pin">0.1.0 · 10 skills</span></h3>
+          <p class="trigger"><span class="lead">Use when</span> a Rails, Hotwire or product decision needs judgment grounded in public 37signals and Basecamp writing.</p>
+          <p class="note">Community-made and source-cited. Not official 37signals guidance.</p>
+          <ul class="tokens">
+            <li><a href="skills.html#37signals-shape-up">37signals-shape-up</a></li>
+            <li><a href="skills.html#37signals-scope-judgment">37signals-scope-judgment</a></li>
+            <li><a href="skills.html#37signals-hotwire">37signals-hotwire</a></li>
+            <li><a href="skills.html#37signals-rails-review">37signals-rails-review</a></li>
+            <li><a href="skills.html#dhh-rails-judgment">dhh-rails-judgment</a></li>
+            <li><a class="more" href="skills.html#g-37signals">+5 more</a></li>
+          </ul>
+        </article>
+
+        <article class="plugin" id="p-rcc">
+          <h3>RCC Automation <span class="pin">0.6.1 · 9 skills</span></h3>
+          <p class="trigger"><span class="lead">Use when</span> you're building robots, work-item queues or Action Server packages on RCC.</p>
+          <p class="note">Drives the RCC CLI directly. Scaffolds a new robot or Actions package only when you ask. No bundled MCP server.</p>
+          <ul class="tokens">
+            <li><a href="skills.html#rcc">rcc</a></li>
+            <li><a href="skills.html#rcc-robots">rcc-robots</a></li>
+            <li><a href="skills.html#action-server">action-server</a></li>
+            <li><a href="skills.html#rcc-workitems">rcc-workitems</a></li>
+            <li><a href="skills.html#verify-rcc">verify-rcc</a></li>
+            <li><a class="more" href="skills.html#g-rcc">+4 more</a></li>
+          </ul>
+        </article>
+
+        <article class="plugin" id="p-fizzy">
+          <h3>Fizzy <span class="pin">0.1.2 · 1 skill</span></h3>
+          <p class="trigger"><span class="lead">Use when</span> an agent should work Fizzy boards, cards and comments.</p>
+          <p class="note">Goes through the upstream fizzy CLI or MCP connector, with your own account.</p>
+          <ul class="tokens"><li><a href="skills.html#fizzy">fizzy</a></li></ul>
+        </article>
+
+        <article class="plugin" id="p-luna">
+          <h3>Luna Factory <span class="pin">0.2.1 · 2 skills</span></h3>
+          <p class="trigger"><span class="lead">Use when</span> a large objective splits into independent workstreams for native Codex workers.</p>
+          <p class="note">A Rust control plane and MCP Apps workbench I wrote. Opt-in, and nothing on this site runs on it.</p>
+          <ul class="tokens"><li><a href="skills.html#luna-factory">luna-factory</a></li><li><a href="skills.html#setup">setup</a></li></ul>
+        </article>
+
+        <div class="shelf-foot">
+          <span class="pin">catalog pinned to plugins@e24cd59</span>
+          <a class="go" href="skills.html">All 22 skills →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section class="sec split after-shelf" id="work" aria-labelledby="work-h">
+    <div class="sec-head">
+      <h2 id="work-h">Selected work</h2>
+      <p>Tools I maintain, and fixes I've sent upstream. Every link goes to source or a release.</p>
+    </div>
+    <div class="work">
+      <div class="item" id="rcc">
+        <h3>RCC <span class="pin">v18.19.11</span></h3>
+        <p>Build reproducible environments for automation projects. I maintain this distribution and its environment artifact tooling.</p>
+        <div class="links"><a href="https://github.com/joshyorko/rcc">source</a><a href="https://github.com/joshyorko/rcc/releases/tag/v18.19.11">release</a></div>
+      </div>
+      <div class="item" id="actions">
+        <h3>Actions Runtime <span class="pin">1.1.1</span></h3>
+        <p>Expose Python actions over HTTP or MCP. My work is in the fork of Robocorp Actions.</p>
+        <div class="links"><a href="https://github.com/joshyorko/actions">fork</a><a href="https://github.com/joshyorko/actions/releases/tag/actions-runtime-1.1.1">release</a></div>
+      </div>
+      <div class="item" id="josh-room">
+        <h3>Josh Room and JAT</h3>
+        <p>Save and restore encrypted workspace snapshots. Josh All The Things provides the capture and restore tooling.</p>
+        <div class="links"><a href="https://github.com/joshyorko/josh-room">josh-room</a><a href="https://github.com/joshyorko/josh-all-the-things">jat</a><a href="https://github.com/joshyorko/josh-all-the-things/pull/43">capture identity PR</a></div>
+      </div>
+      <div class="item" id="memoryd">
+        <h3>MemoryD <span class="pin">v0.1.0</span></h3>
+        <p>Durable local recall for coding agents, with exportable records and evidence.</p>
+        <div class="links"><a href="https://github.com/joshyorko/codex-memoryd">source</a><a href="https://github.com/joshyorko/codex-memoryd/releases/tag/v0.1.0">release</a></div>
+      </div>
+      <div class="item" id="cas">
+        <h3>Codex Action Server</h3>
+        <p>Connect Codex workflows to the Actions stack. The linked change shows the integration work.</p>
+        <div class="links"><a href="https://github.com/joshyorko/codex-action-server">source</a><a href="https://github.com/joshyorko/codex-action-server/pull/30">integration PR #30</a></div>
+      </div>
+      <div class="item" id="review">
+        <h3>Bluefin Review <span class="tag">upstream</span></h3>
+        <p>Revision-bound mutation plans, re-review deltas and fresh admission checks for Bluefin's review tooling.</p>
+        <div class="links"><a href="https://github.com/projectbluefin/contribute/pull/191">PR #191</a><a href="https://github.com/projectbluefin/contribute/pull/350">PR #350</a><a href="https://github.com/projectbluefin/contribute/pull/489">PR #489</a></div>
+      </div>
+      <div class="item" id="mcp-tunnel-kit">
+        <h3>MCP Tunnel Kit</h3>
+        <p>Package and operate a self-hosted tunnel control plane for MCP integrations.</p>
+        <div class="links"><a href="https://github.com/joshyorko/mcp-tunnel-kit">source and docs</a></div>
+      </div>
+      <div class="item" id="hauler">
+        <h3>Hauler <span class="tag">upstream</span></h3>
+        <p>A fix for Docker context selection in the upstream OCI transport tool.</p>
+        <div class="links"><a href="https://github.com/hauler-dev/hauler/pull/928">PR #928</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec split" id="systems" aria-labelledby="systems-h">
+    <div class="sec-head">
+      <h2 id="systems-h">Systems</h2>
+      <p>The images, containers and packages my own machines run on.</p>
+    </div>
+    <ul class="systems">
+      <li><a href="https://github.com/joshyorko/dudley-os"><b>Dudley OS</b></a><span>A personal bootc workstation distribution based on Project Bluefin.</span></li>
+      <li><a href="https://github.com/devsy-org/devsy-provider-harvester#license-and-attribution"><b>Devsy Harvester provider</b></a><span>Provisions Harvester VMs for devcontainers. I created it; Devsy maintains it upstream.</span></li>
+      <li><a href="https://github.com/joshyorko/omarchy-bootc"><b>Omarchy Bootc</b></a><span>Packages the upstream Omarchy userspace as an Arch bootc image.</span></li>
+      <li><a href="https://github.com/joshyorko/room-of-requirement"><b>Room of Requirement</b></a><span>Homebrew-first devcontainer images for Ubuntu, Debian and Wolfi.</span></li>
+      <li><a href="https://github.com/joshyorko/homebrew-tools"><b>Homebrew Tools</b></a><span>Formulae and casks for developer tools, with build and install checks.</span></li>
+      <li><a href="https://github.com/joshyorko/webtop-os"><b>Webtop OS</b></a><span>An Omarchy desktop packaged for browser streaming.</span></li>
+    </ul>
+  </section>
+
+  <section class="sec" aria-label="Elsewhere on this site">
+    <div class="elsewhere">
+      <a href="#lab"><b>Agent Lab</b><span>Two checks that run in your browser: an Actions manifest boundary and a MemoryD export. Results stay on the page.</span></a>
+      <a href="#notes"><b>Engineering notes</b><span>Write-ups behind the upstream fixes, with the checks you can rerun.</span></a>
+      <a href="https://github.com/joshyorko/yorko-resume/blob/631481871d22d7b053c1aae23a84cc7d14d04b09/docs/assets/JoshYorkoResume.pdf"><b>Résumé</b><span>Experience, skills and education as a PDF.</span></a>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>Josh Yorko · static pages, no backend</span>
+    <span><a href="https://github.com/joshyorko">github.com/joshyorko</a></span>
+  </footer>
+</div>
+
+<script>
+  const q = new URLSearchParams(location.search);
+  if (q.get("v") === "shelf") document.body.classList.add("v-shelf");
+  if (q.get("type") === "bricolage") document.body.classList.add("type-bricolage");
+  document.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = "Copied"; }
+    catch { b.textContent = "Select and copy"; }
+    setTimeout(() => (b.textContent = "Copy"), 1600);
+  }));
+</script>
+</body>
+</html>

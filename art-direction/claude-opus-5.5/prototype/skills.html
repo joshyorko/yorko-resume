@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Plugins and skills · Josh Yorko</title>
+<meta name="description" content="22 agent skills in four plugins, each listed by the job it's for.">
+<link rel="preload" href="fonts/familjen.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/newsreader-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="site.css">
+</head>
+<body class="skills-page">
+<div class="wrap">
+  <header class="top">
+    <a class="mark" href="index.html" aria-label="Josh Yorko, home"><span class="glyph" aria-hidden="true">jy</span>Josh Yorko</a>
+    <nav aria-label="Primary">
+      <a href="skills.html" aria-current="page">Skills</a>
+      <a href="index.html#work">Work</a>
+      <a href="https://github.com/joshyorko/yorko-resume/blob/631481871d22d7b053c1aae23a84cc7d14d04b09/docs/assets/JoshYorkoResume.pdf">Résumé</a>
+    </nav>
+  </header>
+
+  <div class="skills-grid">
+    <div>
+      <div class="page-head">
+        <h1>Plugins and skills</h1>
+        <p>Each skill starts with the job it's for. Your agent reads that line to decide when to load it. Search it the same way.</p>
+      </div>
+      
+      <div class="find">
+        <label for="q">What are you working on?</label>
+        <input id="q" type="search" autocomplete="off" placeholder="review, Turbo, robot, cache…">
+        <nav class="jump" aria-label="Plugins" id="jump"></nav>
+      </div>
+      <div class="only-wide">
+      <div class="install">
+        <code><span class="p">$ </span>curl -fsSL https://raw.githubusercontent.com/joshyorko/plugins/main/install.sh | bash</code>
+        <button class="copy" data-copy="curl -fsSL https://raw.githubusercontent.com/joshyorko/plugins/main/install.sh | bash">Copy</button>
+      </div>
+      <p class="install-note">Installs all four plugins for Codex. <a class="voice" href="https://github.com/joshyorko/plugins#quick-start">Other clients and pinned versions</a></p>
+      </div>
+    </div>
+    <div>
+      <div id="groups" aria-live="polite"></div>
+      <div class="only-narrow">
+      <div class="install">
+        <code><span class="p">$ </span>curl -fsSL https://raw.githubusercontent.com/joshyorko/plugins/main/install.sh | bash</code>
+        <button class="copy" data-copy="curl -fsSL https://raw.githubusercontent.com/joshyorko/plugins/main/install.sh | bash">Copy</button>
+      </div>
+      <p class="install-note">Installs all four plugins for Codex. <a class="voice" href="https://github.com/joshyorko/plugins#quick-start">Other clients and pinned versions</a></p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <span class="pin">catalog pinned to joshyorko/plugins@e24cd59 · skill bodies load from GitHub, not this site</span>
+    <span><a href="https://github.com/joshyorko/plugins">github.com/joshyorko/plugins</a></span>
+  </footer>
+</div>
+
+<script>
+const CATALOG = [{"plugin": "37signals", "version": "0.1.0", "skills": [["37signals-communication", "Use when drafting or reviewing async updates, decision memos, tradeoffs, or status.", "plugins/37signals/skills/37signals-communication/SKILL.md"], ["37signals-hotwire", "Use when designing, implementing, or reviewing Rails UI with Hotwire, Turbo, Stimulus, or server rendering.", "plugins/37signals/skills/37signals-hotwire/SKILL.md"], ["37signals-product-design", "Use when designing or reviewing product UI, flows, onboarding, settings, empty states, copy, or screens.", "plugins/37signals/skills/37signals-product-design/SKILL.md"], ["37signals-product-refresh", "Use when improving an existing product, screen, workflow, onboarding, settings, or stale feature.", "plugins/37signals/skills/37signals-product-refresh/SKILL.md"], ["37signals-rails-implement", "Use when implementing or extending Rails features across models, REST, Hotwire, jobs, tenancy, and tests.", "plugins/37signals/skills/37signals-rails-implement/SKILL.md"], ["37signals-rails-refactor", "Use when simplifying Rails code without behavior change, especially indirection, verbs, or scattered domain logic.", "plugins/37signals/skills/37signals-rails-refactor/SKILL.md"], ["37signals-rails-review", "Use when reviewing Rails code, PRs, or architecture for conventions, Hotwire defaults, and correctness risks.", "plugins/37signals/skills/37signals-rails-review/SKILL.md"], ["37signals-scope-judgment", "Use when simplifying product plans, roadmaps, feature sets, process, meetings, AI workflows, or strategy.", "plugins/37signals/skills/37signals-scope-judgment/SKILL.md"], ["37signals-shape-up", "Use when shaping a raw product idea, request, spike, project, or bet into a bounded Shape Up pitch.", "plugins/37signals/skills/37signals-shape-up/SKILL.md"], ["dhh-rails-judgment", "Use when evaluating Rails architecture through DHH or Rails Doctrine judgment.", "plugins/37signals/skills/dhh-rails-judgment/SKILL.md"]]}, {"plugin": "fizzy", "version": "0.1.2", "skills": [["fizzy", "Use for Fizzy boards, cards, comments, setup, self-hosting, CLI, MCP, connectors, and workflows.", "plugins/fizzy/skills/fizzy/SKILL.md"]]}, {"plugin": "luna-factory", "version": "0.2.1", "skills": [["luna-factory", "Use when a substantial objective has potentially independent workstreams and the user wants Luna-first cost control, native Codex subagents, evidence-backed completion, or bounded Sol escalation.", "plugins/luna-factory/skills/luna-factory/SKILL.md"], ["setup", "Guide a user through safe, operator-approved Luna Factory plugin setup.", "plugins/luna-factory/skills/setup/SKILL.md"]]}, {"plugin": "rcc", "version": "0.6.1", "skills": [["action-server", "Use when authoring or debugging ACTIONS packages, package.yaml, actions-core, actions-runtime, MCP, secrets, tests, or Docker/Compose builds and deployments.", "plugins/rcc/skills/action-server/SKILL.md"], ["rcc", "Route RCC-family work across core, Environment Artifacts, providers, robots, work items, Action Server, CI/cache, and maintenance automation.", "plugins/rcc/skills/rcc/SKILL.md"], ["rcc-ci-maintenance", "Use for RCC in GitHub Actions, Environment Artifact promotion/prewarm, ROBOCORP_HOME cache, pinned installs, maintenance, bot PRs, and cache hygiene.", "plugins/rcc/skills/rcc-ci-maintenance/SKILL.md"], ["rcc-core", "Use for RCC itself: commands, install, source, Holotree/cache, Environment Artifacts, providers, trust, coordination, endpoints, templates, and bundles.", "plugins/rcc/skills/rcc-core/SKILL.md"], ["rcc-robot-framework", "Use when authoring, reviewing, running, or debugging Robot Framework .robot suites, resources, custom Python libraries, Robot CLI or Rebot results, or RCC's robot_tests acceptance harness.", "plugins/rcc/skills/rcc-robot-framework/SKILL.md"], ["rcc-robots", "Use for RCC automation projects, robot.yaml, conda.yaml, Holotree, Environment Artifact use, freezes, bundles, templates, envs, and tasks.", "plugins/rcc/skills/rcc-robots/SKILL.md"], ["rcc-rpaframework", "Use when selecting, authoring, reviewing, or debugging RPA Framework libraries and RPA.* keywords in RCC-managed Robot Framework or Python automation projects.", "plugins/rcc/skills/rcc-rpaframework/SKILL.md"], ["rcc-workitems", "Use for RCC work item queues, robocorp.workitems, actions-work-items, producer/consumer flows, envs, and adapters.", "plugins/rcc/skills/rcc-workitems/SKILL.md"], ["verify-rcc", "Verify the RCC plugin from its source checkout on Linux: drive real RCC CLI health, onboarding and local SDK fixtures, offline Tealdeer, and packaged skill discovery with retained evidence. Use after RCC guidance, helper, or distribution changes.", "plugins/rcc/skills/verify-rcc/SKILL.md"]]}];
+const META = {
+  "37signals": { title: "37signals", blurb: "Rails, Hotwire, product refresh, Shape Up and scope judgment, grounded in public 37signals and Basecamp writing. Community-made, not official guidance." },
+  "rcc": { title: "RCC Automation", blurb: "RCC environments, robots, work items, Action Server packages and CI caching, through the RCC CLI. Scaffolds a new robot only when you ask." },
+  "luna-factory": { title: "Luna Factory", blurb: "An orchestration skill with a local Rust control plane and an MCP Apps workbench. A project I wrote; opt-in, and nothing here depends on it." },
+  "fizzy": { title: "Fizzy", blurb: "Boards, cards and comments through the upstream fizzy CLI or MCP connector, with your own account." },
+};
+const ORDER = ["37signals", "rcc", "luna-factory", "fizzy"];
+const REPO = "https://github.com/joshyorko/plugins/blob/e24cd596ef41e9294ad770d2b613bf77b42a8a68/";
+const plugins = ORDER.map((id) => CATALOG.find((p) => p.plugin === id));
+
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const mark = (s, q) => {
+  if (!q) return esc(s);
+  const i = s.toLowerCase().indexOf(q);
+  if (i < 0) return esc(s);
+  return esc(s.slice(0, i)) + "<mark>" + esc(s.slice(i, i + q.length)) + "</mark>" + esc(s.slice(i + q.length));
+};
+function describe(d, q) {
+  const m = d.match(/^(Use when|Use for|\w+)\s/);
+  const head = m ? m[1] : "";
+  return `<em>${head}</em> ${mark(d.slice(head.length).trimStart(), q)}`;
+}
+
+const groups = document.getElementById("groups");
+const jump = document.getElementById("jump");
+
+function render(raw) {
+  const q = raw.trim().toLowerCase();
+  let shown = 0;
+  groups.innerHTML = plugins.map((p) => {
+    const meta = META[p.plugin];
+    const hits = p.skills.filter(([n, d]) => !q || n.toLowerCase().includes(q) || d.toLowerCase().includes(q));
+    shown += hits.length;
+    if (!hits.length) return "";
+    return `<section class="group" id="g-${p.plugin}">
+      <div class="group-head">
+        <h2>${meta.title} <span class="pin">${p.version} · ${p.skills.length} skill${p.skills.length > 1 ? "s" : ""}</span></h2>
+        ${q ? "" : `<p>${meta.blurb}</p>`}
+        <span class="src"><a href="https://github.com/joshyorko/plugins/tree/e24cd596ef41e9294ad770d2b613bf77b42a8a68/plugins/${p.plugin}">plugins/${p.plugin}</a></span>
+      </div>
+      ${hits.map(([n, d, src]) => `<div class="skill" id="${n}">
+        <div class="name"><a href="${REPO + src}" title="Read SKILL.md on GitHub">${mark(n, q)}</a></div>
+        <p>${describe(d, q)}</p>
+      </div>`).join("")}
+    </section>`;
+  }).join("");
+  if (!shown) groups.innerHTML = `<p class="empty">No skill mentions <b>“${esc(raw.trim())}”</b>. Try a job instead of a tool name, like <i>review</i>, <i>robot</i> or <i>Turbo</i>.</p>`;
+  jump.innerHTML = plugins.map((p) => {
+    const n = p.skills.filter(([a, d]) => !q || a.toLowerCase().includes(q) || d.toLowerCase().includes(q)).length;
+    return n ? `<a href="#g-${p.plugin}">${META[p.plugin].title}<b>${n}</b></a>` : "";
+  }).join("");
+}
+
+const input = document.getElementById("q");
+const params = new URLSearchParams(location.search);
+input.value = params.get("q") || "";
+render(input.value);
+input.addEventListener("input", () => render(input.value));
+if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
+
+document.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", async () => {
+  try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = "Copied"; }
+  catch { b.textContent = "Select and copy"; }
+  setTimeout(() => (b.textContent = "Copy"), 1600);
+}));
+</script>
+</body>
+</html>
