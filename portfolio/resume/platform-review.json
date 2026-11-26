@@ -1,0 +1,24 @@
+{
+  "title": "Software Engineer | AI Platforms & Developer Tools",
+  "summary": "I build and operate production healthcare APIs, distributed execution systems and AI evaluation tooling. My open-source work includes Codex MemoryD for agent recall, RCC and Actions Runtime for reproducible automation and tool serving, and portable agent plugins and skills.",
+  "projects": [
+    ["Agent infrastructure and developer tools", [
+      "[Codex MemoryD|23] — Built a local Rust service using Axum, Tokio and SQLite. Coding agents can retrieve past work with source citations and time-based recall. Added a Model Context Protocol (MCP) interface and released native Linux and macOS binaries.",
+      "[RCC|10] — Maintain the Go-based Robocorp continuation. Added native uv support and portable Python environment artifacts for repeatable online and offline execution.",
+      "[Actions Runtime|13] — Maintain the Python runtime that exposes functions as HTTP and MCP tools. Extended recovery so workload artifacts remain available after failures and restarts.",
+      "[Agent Plugins & Skills|24] — Built portable plugins for Codex, Claude and Hermes. The [RCC plugin|25] includes executable verification and MCP tools to scaffold, validate and run automation projects."
+    ]],
+    ["Workspace and platform tooling", [
+      "[Josh Room|21] — Shipped a VS Code extension and Python runtime for restoring named, encrypted workspace snapshots across machines, with Git history and a recovery catalog.",
+      "[Josh’s All the Things (JATT)|22] — Built Hauler bundles that move development setups with workspaces, optional runtime environments and container images.",
+      "[Review|26] — Built an isolated terminal workbench for reviewing GitHub changes and making bounded repairs with operator confirmation.",
+      "Linux systems — Build immutable OS images, reusable filesystem payloads and portable graphical workspaces across Dudley OS, Omarchy bootc, DSB Common and Webtop OS."
+    ]],
+    ["Upstream contributions", [
+      "[Hive Commons|3] — Authored reconciliation and external software-factory RFCs adopted in Hive v4/v5. Scoped the 16-issue v4 epic and proposed separate admission, verification and publication steps.",
+      "[Project Bluefin|5] — Contributed 58 merged PRs across eight repositories, including review-run state machines and stale-revision protection, plus container composition, native ARM64 qualification and CI reliability. Proposed desktop testing and validation approaches.",
+      "[Hauler|20] — Fixed local image imports to honor the selected Docker CLI context and connect to the intended daemon. Added regression tests and verified a real image import.",
+      "[Devsy Harvester provider|27] — Originally built the Go provider that provisions Linux development VMs on Harvester. Devsy credits the original work upstream."
+    ]]
+  ]
+}

@@ -1,0 +1,20 @@
+\geometry{top=0.45in,bottom=0.34in,left=0.74in,right=0.49in}
+\setmainfont{texgyrepagella-regular.otf}[BoldFont=texgyrepagella-bold.otf,ItalicFont=texgyrepagella-italic.otf]
+\definecolor{accent}{HTML}{32473B}
+\definecolor{muted}{HTML}{474747}
+\newcommand{\bodyface}{\fontsize{10.8}{12.4}\selectfont}
+\newcommand{\masthead}[4]{%
+  {\bfseries\fontsize{31}{32}\selectfont#1\par}
+  {\itshape\fontsize{11.4}{13}\selectfont#2\par}
+  \vspace{2pt}\proof{#3}\vspace{7pt}
+  {\leftskip=16pt\rightskip=14pt #4\par}}
+\newcommand{\sectiontitle}[1]{\par\vspace{7pt}%
+  \noindent\llap{\textcolor{accent}{\rule[2pt]{8pt}{0.5pt}}\hspace{8pt}}%
+  {\bfseries\color{accent}\fontsize{10.2}{12}\selectfont #1\par}}
+\newcommand{\namedproject}[3]{\par\vspace{2pt}\textbf{#1}\enspace{\color{muted}—}\enspace #2\par
+  {\leftskip=12pt\proof{#3}}}
+\newcommand{\skill}[2]{{\fontsize{10}{11.5}\selectfont\textbf{#1}\enspace{\color{muted}—}\enspace #2\par}}
+
+\newenvironment{workbody}{\par\leftskip=9pt\relax}{\par}
+\renewcommand{\earlier}[1]{{\leftskip=9pt #1\par}}
+\newcommand{\skillsbody}[1]{{\fontsize{10.1}{11.1}\selectfont #1\par}}

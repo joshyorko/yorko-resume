@@ -1,0 +1,12 @@
+\geometry{top=0.66in,bottom=0.62in,left=0.72in,right=0.72in,footskip=18pt}
+\renewcommand{\masthead}[4]{%
+  {\bfseries\fontsize{25}{29}\selectfont#1\par}
+  \vspace{2pt}{\fontsize{12}{15}\selectfont#2\par}
+  \proof{#3}\vspace{8pt}#4\par}
+\makeatletter
+\def\ps@resumereview{%
+  \let\@oddhead\@empty
+  \def\@oddfoot{\hfil\fontsize{9}{11}\selectfont\color{muted}\resumename\enspace·\enspace\thepage\hfil}%
+  \let\@evenhead\@oddhead
+  \let\@evenfoot\@oddfoot}
+\makeatother
