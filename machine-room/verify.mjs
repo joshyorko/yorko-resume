@@ -5,7 +5,7 @@ const report=[];
 try{for(const width of [1440,390]){
  const page=await browser.newPage({viewport:{width,height:width===390?844:900},hasTouch:width===390,reducedMotion:width===390?'reduce':'no-preference'});
  page.setDefaultTimeout(6500);const requests=[],errors=[];page.on('request',r=>requests.push(r.url()));page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error'&&m.text().includes('Shader'))errors.push(m.text())});
- await page.goto(base);await page.getByRole('button',{name:'Explore in 3D'}).click();await page.waitForSelector('canvas');await page.screenshot({path:'proof/hall-'+width+'.png'});const cold=requests.length;
+ await page.goto(base);assert.equal(await page.locator('h1').textContent(),'Josh Yorko');assert.equal(await page.title(),'Josh Yorko | Software engineering portfolio');assert.match(await page.locator('html').getAttribute('data-build'),/^[0-9a-f]{20}$/);await page.getByRole('button',{name:'Explore in 3D'}).click();await page.waitForSelector('canvas');await page.screenshot({path:'proof/hall-'+width+'.png'});const cold=requests.length;
  assert(!requests.some(u=>u.endsWith('.wasm')));assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
  await page.reload();await page.getByRole('button',{name:'Explore in 3D'}).click();await page.waitForSelector('canvas');const warm=requests.length-cold;
  await page.addScriptTag({path:'node_modules/axe-core/axe.min.js'});const axe=await page.evaluate(async()=> (await window.axe.run()).violations.map(v=>v.id));assert.deepEqual(axe,[]);

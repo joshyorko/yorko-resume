@@ -15,7 +15,7 @@
     "coldRequests": 7,
     "verifiedCacheEntries": 40,
     "offlineSQLiteRows": 3,
-    "portableActionMs": 0.10000000149011612,
+    "portableActionMs": 0,
     "sessionExport": "machine-room-browser-session.v1",
     "offlinePolicy": "accepted",
     "offlineWebGL": true,
