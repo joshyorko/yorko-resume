@@ -28,3 +28,21 @@ function filter() {
 field.addEventListener('input', filter);
 controls.hidden = false;
 filter();
+
+function revealSkill(fragment) {
+  const target = document.getElementById(fragment.slice(1));
+  if (!target?.classList.contains('skill') || !target.hidden) return;
+  field.value = '';
+  filter();
+  target.scrollIntoView();
+}
+
+window.addEventListener('hashchange', () => revealSkill(location.hash));
+// Selecting the current fragment again does not emit hashchange.
+document.addEventListener('click', event => {
+  const link = event.target.closest?.('a[href]');
+  if (!event.defaultPrevented && !event.ctrlKey && !event.metaKey && !event.altKey && !event.shiftKey &&
+      link?.origin === location.origin && link.pathname === location.pathname && link.hash === location.hash) {
+    revealSkill(link.hash);
+  }
+});

@@ -190,6 +190,20 @@ try {
     }
     report.jump.push({ width, simulatedKeyboardViewport: width === 390 });
   }
+  await menu.goto(base + '/skills/#skill-37signals-hotwire');
+  const catalogFilter = menu.getByRole('searchbox');
+  for (const [filter, destination] of [['hotwire', 'rcc-core'], ['hotwire', 'rcc-core']]) {
+    await catalogFilter.fill(filter);
+    await menu.locator('#skill-' + destination).waitFor({ state: 'hidden' });
+    await menu.getByRole('button', { name: 'Jump to…' }).click();
+    const query = menu.getByRole('combobox');
+    await query.fill(destination);
+    await query.press('Enter');
+    await menu.locator('#skill-' + destination).waitFor({ timeout: 4000 });
+    assert.equal(new URL(menu.url()).hash, '#skill-' + destination);
+    assert.equal(await catalogFilter.inputValue(), '');
+  }
+  report.samePageSkillJump = 'different-and-same-fragment';
   await menu.context().close();
 
   async function checkLab(tab) {

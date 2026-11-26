@@ -157,6 +157,7 @@
     }
   ],
   "browser": "158.0.8127.88",
+  "samePageSkillJump": "different-and-same-fragment",
   "offline": {
     "runs": 2,
     "reloadClearedReceipts": true,
