@@ -1,2 +1,0 @@
-replicaSets: 1
-pullPolicy: Always

@@ -32,3 +32,7 @@ R applies the summary and named projects in [review-content.json](review-content
 S is the current review-only candidate. Its project wording is in `clean-projects.json` and its additional destinations are in `clean-links.json`. Approving S requires a separate promotion of the review copy into the shared public content and a verified PDF replacement.
 
 The current application candidate is T.pdf. See [hiring and evidence notes](HIRING-REVIEW.md).
+
+## Approved public copy
+
+The canonical download is the exact T.pdf from artifact 15145118815. The build checks its approved digest. The website uses platform-review.json for the headline, summary and project text, alongside the existing employment and contact data. Keep the approved bytes from the artifact for publication. Candidate regeneration is for review; the earlier A through S renders remain historical.

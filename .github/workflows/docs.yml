@@ -6,6 +6,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      approved_revision:
+        description: Full reviewed main commit
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -19,37 +24,30 @@ jobs:
         with:
           node-version: 22
       - run: node portfolio/compat/build.mjs "$RUNNER_TEMP/pages"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-pages-artifact@v4
         with:
-          name: github-pages-compatibility
           path: ${{ runner.temp }}/pages
-          include-hidden-files: true
 
   publish:
-    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && github.sha == inputs.approved_revision
     needs: build
     runs-on: ubuntu-latest
-    environment: github-pages-compatibility
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     concurrency: github-pages-compatibility
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     steps:
-      - name: Confirm operator enablement
-        env:
-          ENABLED: ${{ vars.PAGES_COMPATIBILITY_PUBLISH_ENABLED }}
-        run: test "$ENABLED" = true
+      - id: deployment
+        uses: actions/deploy-pages@v4
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - uses: actions/download-artifact@v4
-        with:
-          name: github-pages-compatibility
-          path: ${{ runner.temp }}/pages
-      - uses: peaceiris/actions-gh-pages@v3
-        with:
-          deploy_key: ${{ secrets.PAGES_COMPATIBILITY_DEPLOY_KEY }}
-          publish_dir: ${{ runner.temp }}/pages
-          publish_branch: gh-pages
-      - name: Verify published homepage and résumé
-        run: node portfolio/compat/check-live.mjs "$RUNNER_TEMP/pages"
+      - run: node portfolio/compat/build.mjs "$RUNNER_TEMP/pages"
+      - run: node portfolio/compat/check-live.mjs "$RUNNER_TEMP/pages"
