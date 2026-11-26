@@ -36,7 +36,11 @@ const server = createServer(async (req, res) => {
 });
 await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
 const base = 'http://127.0.0.1:' + server.address().port;
-const report = { viewports: [], axeViolations: {}, navigation: [], transfer: {} };
+const report = { viewports: [], axeViolations: {}, navigation: [], transfer: {}, jump: [] };
+async function jumpTo(page, label) {
+  await page.getByRole('button', { name: 'Jump to…' }).click();
+  await page.getByRole('option', { name: label, exact: true }).click();
+}
 let browser;
 try {
   browser = await chromium.launch({ executablePath: process.env.CHROME || '/usr/bin/google-chrome', chromiumSandbox: true });
@@ -55,7 +59,8 @@ try {
     report.navigation.push(label);
   }
   await noJS.goto(base);
-  await noJS.getByRole('link', { name: 'Search skills' }).click();
+  await noJS.getByRole('navigation').getByRole('link', { name: 'Plugins & Skills' }).click();
+  await noJS.getByRole('link', { name: 'Browse and search skills' }).click();
   assert.equal(await noJS.locator('.skill:visible').count(), 22);
   assert.equal(await noJS.locator('#skill-controls').isVisible(), false);
   await noJS.getByRole('link', { name: '37signals-product-design', exact: true }).waitFor();
@@ -94,6 +99,7 @@ try {
         await page.screenshot({ path: fileURLToPath(new URL(`${label}-top-${width}.png`, proof)) });
       }
       if (route === '/') {
+        await page.getByRole('button', { name: 'Jump to…' }).waitFor();
         await page.screenshot({ path: fileURLToPath(new URL(`home-${width}.png`, proof)) });
 
       }
@@ -114,7 +120,7 @@ try {
   assert.equal(await page.locator(':focus').textContent(), 'Skip to content');
   await page.keyboard.press('Enter');
   assert.equal(await page.locator(':focus').getAttribute('id'), 'main');
-  await page.getByRole('navigation').getByRole('link', { name: 'Plugins & Skills' }).click();
+  await jumpTo(page, 'Plugins & Skills');
   await page.screenshot({ path: fileURLToPath(new URL('plugins-390.png', proof)) });
   await page.getByRole('link', { name: 'Browse and search skills' }).click();
   const search = page.getByRole('searchbox', { name: 'Search skills' });
@@ -126,8 +132,65 @@ try {
   assert.match(await page.getByRole('status').textContent(), /No matching skills/);
   await search.fill('');
   assert.equal(await page.locator('.skill:visible').count(), 22);
-  await page.getByRole('navigation').getByRole('link', { name: 'Field Notes' }).click();
+  await jumpTo(page, 'Field Notes');
   await page.getByRole('link', { name: 'Open Agent Lab' }).click();
+
+  const menu = await browser.newPage({ reducedMotion: 'reduce' });
+  for (const [width, height] of [[360, 800], [390, 844], [411, 891], [1440, 900]]) {
+    await menu.setViewportSize({ width, height });
+    await menu.goto(base);
+    const opener = menu.getByRole('button', { name: 'Jump to…' });
+    const query = menu.getByRole('combobox');
+    const dialog = menu.getByRole('dialog');
+    await opener.waitFor();
+    assert((await opener.boundingBox()).height >= 44);
+    await opener.click();
+    await menu.waitForFunction(() => document.activeElement?.id === 'jump-input');
+    assert.equal(await menu.evaluate(() => document.getAnimations().length), 0);
+    const capture = async state => {
+      if (width === 390 || width === 1440) {
+        await menu.screenshot({ path: fileURLToPath(new URL(`jump-${width}-${state}.png`, proof)) });
+      }
+    };
+    await capture('open');
+    await menu.evaluate(await readFile(require.resolve('axe-core/axe.min.js'), 'utf8'));
+    assert.deepEqual(await menu.evaluate(async () => (await globalThis.axe.run()).violations.map(({id}) => id)), []);
+    await query.fill('zzzzzzzz');
+    assert(await menu.getByText('No matches. Try a project or skill name.').isVisible());
+    await capture('empty');
+    await query.fill('hotwire');
+    assert.equal(await menu.getByRole('option', { name: '37signals-hotwire', exact: true }).getAttribute('aria-selected'), 'true');
+    await capture('filter');
+    await query.press('ArrowDown');
+    assert.equal(await query.getAttribute('aria-activedescendant'), 'jump-option-1');
+    await query.press('ArrowUp');
+    await query.press('Enter');
+    await menu.waitForURL('**/skills/**');
+    assert.equal(new URL(menu.url()).hash, '#skill-37signals-hotwire');
+    await menu.getByRole('searchbox').focus();
+    await menu.keyboard.press('Control+k');
+    assert(!(await dialog.isVisible()));
+    await menu.goBack();
+    await menu.keyboard.press('Control+k');
+    await menu.waitForFunction(() => document.activeElement?.id === 'jump-input');
+    await menu.keyboard.press('Escape');
+    await menu.waitForFunction(() => document.activeElement?.id === 'jump-open');
+    await menu.keyboard.press('Meta+k');
+    await menu.waitForFunction(() => document.activeElement?.id === 'jump-input');
+    await menu.mouse.click(2, 2);
+    await menu.waitForFunction(() => document.activeElement?.id === 'jump-open');
+    if (width === 390) {
+      await opener.click();
+      await menu.setViewportSize({ width, height: 420 });
+      await menu.waitForFunction(() => document.querySelector('#jump-dialog').getBoundingClientRect().bottom < 420);
+      await query.fill('josh room');
+      await query.press('Enter');
+      await menu.waitForURL('**/projects/**');
+      assert.equal(new URL(menu.url()).hash, '#josh-room');
+    }
+    report.jump.push({ width, simulatedKeyboardViewport: width === 390 });
+  }
+  await menu.context().close();
 
   async function checkLab(tab) {
     await tab.getByRole('button', { name: 'Check manifest' }).click();
@@ -188,7 +251,7 @@ try {
   assert(await constrained.getByRole('heading', { name: 'Josh Yorko' }).isVisible());
   assert.equal(await constrained.evaluate(() => document.getAnimations().length), 0);
   await constrained.screenshot({ path: fileURLToPath(new URL('art-blocked-390.png', proof)) });
-  await constrained.getByRole('navigation').getByRole('link', { name: 'Plugins & Skills' }).click();
+  await jumpTo(constrained, 'Plugins & Skills');
   assert.equal(new URL(constrained.url()).pathname, '/plugins/');
   report.constrainedFallback = { width: 390, cpuSlowdown: 4, latencyMs: 150, artBlocked: true };
   await constrained.context().close();
@@ -205,12 +268,12 @@ try {
             path: new URL(name).pathname, transferSize, encodedBodySize,
           })));
       report.transfer[profile][state] = requests;
-      assert.equal(requests.length, 3);
-      assert(requests.every(({path}) => !path.endsWith('.mjs')));
+      assert.equal(requests.length, 5);
+      assert.deepEqual(requests.filter(({path}) => path.endsWith('.mjs')).map(({path}) => path).sort(), ['/jump-index.mjs', '/jump.mjs']);
       assert(requests.some(({path}) => path.endsWith(profile === 'mobile' ? 'orbit-small.webp' : 'orbit.webp')));
     }
     const coldBytes = report.transfer[profile].cold.reduce((total, item) => total + item.transferSize, 0);
-    assert(coldBytes < (profile === 'mobile' ? 19 : 38) * 1024, profile + ' cold homepage exceeds asset envelope');
+    assert(coldBytes < (profile === 'mobile' ? 38 : 57) * 1024, profile + ' cold homepage exceeds asset envelope');
     await coldPage.context().close();
   }
   await writeFile(new URL('browser.json', proof), JSON.stringify(report, null, 2) + '\n');

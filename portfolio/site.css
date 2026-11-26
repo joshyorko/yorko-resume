@@ -163,8 +163,10 @@ output { display: block; margin-top: .65rem; }
 
 .interior {
   background:
+    radial-gradient(#c0c4db08 .5px, transparent .75px),
     radial-gradient(ellipse 34rem 19rem at calc(50% + 18rem) -3rem, #263259 0%, transparent 95%),
     radial-gradient(ellipse 45rem 9rem at 65% -3rem, transparent 73%, #5d71af40 75%, transparent 78%);
+  background-size: 4px 4px, auto, auto;
 }
 .interior main { padding-top: clamp(1.85rem, 5vw, 3.05rem); }
 .interior .intro { color: var(--muted); max-width: 52ch; }

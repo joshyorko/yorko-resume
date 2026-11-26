@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
+import { jumpDialog, jumpTrigger } from './jump-markup.mjs';
 import { projects, systems } from './data/work.mjs';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
@@ -31,12 +32,32 @@ const routes = [
   ['notes/', 'Field Notes'],
   ['resume/', 'Résumé'],
 ];
+const routeWords = {
+  '/': 'start homepage',
+  '/plugins/': 'extensions marketplace installation automation Codex Claude Hermes',
+  '/projects/': 'software source contributions',
+  '/systems/': 'Linux workstation bootc images',
+  '/lab/': 'Actions WASM MemoryD proof offline receipts',
+  '/notes/': 'field notes proof evidence releases',
+  '/resume/': 'resume CV experience work',
+  '/skills/': 'skill catalog search index',
+};
+const jumpEntries = [
+  ...[...routes, ['skills/', 'Skill catalog'], ['', 'Home']].map(([path, label]) =>
+    [label.replace('&amp;', '&'), '/' + path, 'Pages', routeWords['/' + path], true]),
+  ...projects.map(([id, name, description]) =>
+    [name, '/projects/#' + id, 'Projects', description, ['rcc', 'josh-room', 'memoryd'].includes(id)]),
+  ...catalog.plugins.flatMap(({name, skills}) => skills.map(skill =>
+    [skill.name, '/skills/#skill-' + skill.name, 'Skills', name + ' ' + skill.description, false])),
+  ['Check an Actions manifest', '/lab/#actions-check', 'Lab', 'WASM boundary manifest proof', false],
+  ['Inspect a MemoryD export', '/lab/#memory-check', 'Lab', 'synthetic bundle digest receipt offline', false],
+];
 const esc = value => String(value).replace(/[&<>"']/g, char => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
 }[char]));
 const link = (label, url) => `<a href="${esc(url)}">${esc(label)}</a>`;
 const links = entries => `<p class="links">${entries.map(([label, url]) => link(label, url)).join(' ')}</p>`;
-const css = await read('site.css');
+const css = await read('site.css') + '\n' + await read('jump.css');
 const hash = value => createHash('sha256').update(value).digest('base64');
 
 function page({ title, description, route = '', content, script = '', showNav = route !== '' }) {
@@ -53,12 +74,14 @@ ${script ? `<script type="module" src="${script}"></script>` : ''}
 </head>
 <body${route === '' ? ' class="home-page"' : ' class="interior"'}>
 <a class="skip" href="#main">Skip to content</a>
+${jumpTrigger}
 ${showNav ? `<header class="shell site-header"><nav aria-label="Main">
 <a class="identity" href="/" ${route === '' ? 'aria-current="page"' : ''}>${route === '' ? 'Home' : 'Josh Yorko'}</a>
 ${routes.map(([path, name]) => `<a href="/${path}"${route === path ? ' aria-current="page"' : route === 'skills/' && path === 'plugins/' ? ' aria-current="location"' : ''}>${name}</a>`).join('\n')}
 </nav></header>` : ''}
 <main id="main" class="${route === '' ? 'home-shell' : 'shell'}" tabindex="-1">${content}</main>
 <footer class="shell site-footer"><a href="https://github.com/joshyorko">GitHub</a></footer>
+${jumpDialog}
 </body>
 </html>
 `;
@@ -70,7 +93,7 @@ const home = `<div class="orbit">
 <div class="orbit-intro">
 <h1>Josh Yorko</h1>
 <p class="orbit-summary">Software engineer building reproducible environments, portable workspaces, and coding-agent tools.</p>
-<p class="orbit-links"><a href="/skills/">Search skills <span aria-hidden="true">→</span></a><a href="/lab/#actions-check">Run a local proof <span aria-hidden="true">→</span></a></p>
+<p class="orbit-links"><a href="/plugins/">Plugins &amp; Skills <span aria-hidden="true">→</span></a><a href="/projects/">Projects <span aria-hidden="true">→</span></a></p>
 </div>
 <picture class="orbital-art">
 <img src="/media/orbit-small.webp" srcset="/media/orbit-small.webp 568w, /media/orbit.webp 1120w"
@@ -163,6 +186,8 @@ await write('404.html', page({
   content: title('Page unavailable', 'The requested page was not found.') + '<p class="section"><a href="/">Return to the homepage</a></p>',
 }));
 await write('search.mjs', await read('search.mjs'));
+await write('jump.mjs', await read('jump.mjs'));
+await write('jump-index.mjs', 'export default ' + JSON.stringify(jumpEntries) + ';\n');
 
 const lab = await read('lab/content.html');
 const labBody = lab.replace('<!--offline-->', '<p class="section"><a href="/lab/offline.html" download="josh-yorko-agent-lab-v1.html">Download Agent Lab v1 for offline use</a> · <a href="/lab/SHA256SUMS">SHA-256 checksum</a></p>');
