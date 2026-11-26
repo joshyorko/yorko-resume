@@ -1,0 +1,983 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Portable agent plugins and 22 public skills maintained in joshyorko/plugins for 37signals Rails and product work, RCC automation, Fizzy, and Luna Factory.">
+<title>Plugins &amp; Skills, Josh Yorko</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: dark;
+  --canvas: #101114;
+  --plate: #17191E;
+  --plate-hover: #1D2027;
+  --well: #0C0D10;
+  --ink: #F2EFE9;
+  --ink-link: #CFCAC0;
+  --ink-muted: #989790;
+  --ink-faint: #6F6E69;
+  --accent: #D4B475;
+  --line: #252830;
+  --ok: #78BFA0;
+  --font-display: 'Bricolage Grotesque', 'Adwaita Sans', 'Liberation Sans', sans-serif;
+  --font-body: 'IBM Plex Sans', 'Adwaita Sans', 'Liberation Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'BlexMono Nerd Font', 'JetBrainsMono NF', ui-monospace, monospace;
+  --measure: 55rem;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--canvas);
+  background-image: radial-gradient(720px 300px at 12% 0%, rgba(212, 180, 117, 0.045), transparent 72%);
+  color: var(--ink);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 150ms ease, border-color 150ms ease, background-color 150ms ease;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.skip {
+  position: fixed;
+  top: 0.75rem;
+  left: 1rem;
+  padding: 0.5rem 0.9rem;
+  background: var(--ink);
+  color: var(--canvas);
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: 4px;
+  z-index: 100;
+  transform: translateY(-200%);
+}
+.skip:focus { transform: translateY(0); }
+
+.shell {
+  width: min(var(--measure), 100% - clamp(2rem, 6vw, 3.5rem));
+  margin-inline: auto;
+}
+
+/* Header */
+.site-header {
+  padding-block: 0.9rem 0.85rem;
+  border-bottom: 1px solid rgba(37, 40, 48, 0.65);
+}
+
+.header-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.55rem 1rem;
+  flex-wrap: wrap;
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.02rem;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 0.72rem;
+}
+
+.site-nav a {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+  padding-block: 0.2rem;
+  white-space: nowrap;
+  position: relative;
+}
+
+.site-nav a:hover,
+.site-nav a[aria-current="page"] {
+  color: var(--ink);
+}
+
+.site-nav a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.15rem;
+  height: 1.5px;
+  background: var(--accent);
+}
+
+/* Page Intro */
+.page-head {
+  padding-block: clamp(1.3rem, 4vw, 2.55rem) 1.2rem;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.page-head h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.95rem, 5.2vw, 2.8rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.page-lead {
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.56;
+  color: var(--ink-muted);
+  max-width: 60ch;
+}
+
+.page-lead code {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  color: var(--ink-link);
+}
+
+.provenance-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 1.1rem;
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+}
+
+.provenance-row code {
+  font-family: var(--font-mono);
+  font-size: 0.77rem;
+  color: var(--accent);
+}
+
+.provenance-row a {
+  color: var(--ink-link);
+  font-weight: 500;
+}
+
+.provenance-row a:hover { color: var(--accent); }
+
+/* Install Strip */
+.install-plate {
+  background: var(--plate);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.install-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-bottom: 1px solid var(--line);
+  background: rgba(16, 17, 20, 0.35);
+}
+
+.install-tab {
+  appearance: none;
+  border: 0;
+  border-right: 1px solid rgba(37, 40, 48, 0.55);
+  background: transparent;
+  color: var(--ink-muted);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 0.62rem 0.45rem;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  position: relative;
+}
+
+.install-tab:last-child { border-right: 0; }
+.install-tab:hover { color: var(--ink); }
+
+.install-tab[aria-selected="true"] {
+  color: var(--ink);
+  background: var(--plate);
+}
+
+.install-tab[aria-selected="true"]::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: var(--accent);
+}
+
+.install-body {
+  padding: 0.85rem 0.95rem 0.92rem;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.install-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.55rem;
+  padding: 0.5rem 0.55rem 0.5rem 0.75rem;
+  background: var(--well);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  min-width: 0;
+}
+
+.install-row code {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--ink);
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(to right, #000 90%, transparent 100%);
+  mask-image: linear-gradient(to right, #000 90%, transparent 100%);
+}
+.install-row code::-webkit-scrollbar { display: none; }
+
+.install-prompt {
+  color: var(--ink-faint);
+  margin-right: 0.4rem;
+  user-select: none;
+}
+
+.install-hint {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.48;
+  color: var(--ink-muted);
+}
+
+.copy-btn {
+  appearance: none;
+  flex-shrink: 0;
+  border: 1px solid var(--line);
+  background: var(--plate);
+  color: var(--ink-link);
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 500;
+  padding: 0.28rem 0.58rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.copy-btn:hover {
+  color: var(--ink);
+  border-color: #464B59;
+}
+
+.copy-btn.copied {
+  color: var(--ok);
+  border-color: rgba(120, 191, 160, 0.45);
+}
+
+/* Filter Bar */
+.controls {
+  margin-top: 1.45rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.5rem 5.4rem 0.5rem 0.85rem;
+  background: var(--plate);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  font-family: var(--font-body);
+  font-size: 0.89rem;
+}
+
+.search-input::placeholder { color: var(--ink-faint); }
+.search-input:focus { border-color: var(--accent); outline: none; }
+
+.search-meta {
+  position: absolute;
+  right: 0.65rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.result-count {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--ink-faint);
+  pointer-events: none;
+}
+
+.clear-search {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 0.2rem 0.35rem;
+  cursor: pointer;
+}
+
+.clear-search:hover { color: var(--ink); }
+.clear-search[hidden] { display: none; }
+
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.filter-chip {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink-muted);
+  font-family: var(--font-body);
+  font-size: 0.81rem;
+  font-weight: 500;
+  padding: 0.34rem 0.66rem;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.filter-chip span {
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+  color: var(--ink-faint);
+}
+
+.filter-chip:hover {
+  color: var(--ink);
+  border-color: #464B59;
+}
+
+.filter-chip[aria-pressed="true"] {
+  background: var(--plate);
+  color: var(--ink);
+  border-color: var(--accent);
+}
+
+.filter-chip[aria-pressed="true"] span { color: var(--accent); }
+
+/* Catalog Sections */
+.catalog {
+  margin-top: 1.75rem;
+  display: grid;
+  gap: 2.5rem;
+}
+
+.plugin-group {
+  scroll-margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.15rem;
+}
+
+.plugin-group[hidden] { display: none; }
+
+.group-aside {
+  display: grid;
+  gap: 0.4rem;
+  align-content: start;
+}
+
+.group-title-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.group-aside h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.28rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+
+.group-version {
+  font-family: var(--font-mono);
+  font-size: 0.77rem;
+  color: var(--accent);
+}
+
+.group-clients {
+  margin: 0;
+  font-size: 0.81rem;
+  color: var(--ink-faint);
+}
+
+.group-desc {
+  margin: 0.12rem 0 0;
+  font-size: 0.89rem;
+  line-height: 1.55;
+  color: var(--ink-muted);
+  max-width: 44ch;
+}
+
+.group-links {
+  margin-top: 0.3rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.group-links a { color: var(--accent); }
+.group-links a:hover { color: var(--ink); }
+
+.skill-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.skill-row {
+  scroll-margin-top: 1.5rem;
+  padding: 0.65rem 0.75rem 0.7rem 0.95rem;
+  border-left: 1.5px solid var(--line);
+  border-radius: 0 5px 5px 0;
+  transition: background-color 140ms ease, border-color 140ms ease;
+}
+
+.skill-row:hover,
+.skill-row:target {
+  background: rgba(23, 25, 30, 0.72);
+  border-left-color: var(--accent);
+}
+
+.skill-row[hidden] { display: none; }
+
+.skill-row-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.65rem;
+}
+
+.skill-name {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--ink);
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.skill-name:hover { color: var(--accent); }
+
+.skill-copy {
+  appearance: none;
+  border: 1px solid rgba(37, 40, 48, 0.9);
+  background: transparent;
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: 0.71rem;
+  padding: 0.14rem 0.44rem;
+  border-radius: 3px;
+  cursor: pointer;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.skill-copy:hover {
+  color: var(--ink);
+  border-color: #464B59;
+}
+
+.skill-copy.copied {
+  color: var(--ok);
+  border-color: rgba(120, 191, 160, 0.45);
+}
+
+.skill-desc {
+  margin: 0.28rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.52;
+  color: var(--ink-muted);
+  max-width: 58ch;
+}
+
+.empty-state {
+  padding: 1.4rem 1.2rem;
+  background: var(--plate);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.empty-state[hidden] { display: none; }
+.empty-state h3 { margin: 0; font-family: var(--font-display); font-size: 1.05rem; color: var(--ink); }
+.empty-state p { margin: 0.35rem 0 0.85rem; font-size: 0.89rem; color: var(--ink-muted); }
+
+.reset-btn {
+  appearance: none;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--font-body);
+  font-size: 0.83rem;
+  font-weight: 500;
+  padding: 0.4rem 0.85rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.reset-btn:hover { background: var(--accent); color: var(--canvas); }
+
+.spec-band {
+  margin-top: 2.75rem;
+  padding-top: 1.55rem;
+  border-top: 1px solid rgba(37, 40, 48, 0.7);
+  display: grid;
+  gap: 0.55rem;
+}
+
+.spec-band h2 { margin: 0; font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; color: var(--ink); }
+.spec-band p { margin: 0; font-size: 0.89rem; line-height: 1.58; color: var(--ink-muted); max-width: 66ch; }
+.spec-band code { font-family: var(--font-mono); font-size: 0.79rem; color: var(--ink-link); }
+
+.spec-links {
+  margin-top: 0.3rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  font-size: 0.84rem;
+  font-weight: 500;
+}
+
+.spec-links a { color: var(--accent); }
+.spec-links a:hover { color: var(--ink); }
+
+.site-footer {
+  margin-top: 2.75rem;
+  padding-block: 1.2rem 2rem;
+  border-top: 1px solid rgba(37, 40, 48, 0.65);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.83rem;
+  color: var(--ink-muted);
+}
+
+.footer-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.15rem; }
+.footer-links a:hover { color: var(--ink); }
+
+@media (min-width: 45rem) {
+  .site-header { padding-block: 1.05rem 0.95rem; }
+  .site-nav { gap: 1.3rem; }
+  .site-nav a { font-size: 0.87rem; }
+
+  .install-tabs { display: flex; }
+  .install-tab { padding: 0.65rem 1.05rem; font-size: 0.82rem; }
+  .install-row code { -webkit-mask-image: none; mask-image: none; }
+
+  .controls {
+    grid-template-columns: minmax(16rem, 23rem) minmax(0, 1fr);
+    align-items: center;
+  }
+
+  .filter-chips { justify-content: flex-end; }
+
+  .plugin-group {
+    grid-template-columns: 17.25rem minmax(0, 1fr);
+    gap: 2.25rem;
+    align-items: start;
+  }
+
+  .group-aside { position: sticky; top: 1.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="shell header-row">
+    <a class="brand" href="./index.html">Josh Yorko</a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="./plugins.html" aria-current="page">Plugins</a>
+      <a href="./index.html#work">Work</a>
+      <a href="./index.html#systems">Systems</a>
+      <a href="./notes.html">Notes</a>
+      <a href="./notes.html#influences">Influences</a>
+      <a href="./notes.html#resume">Résumé</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="shell" tabindex="-1">
+  <section class="page-head" aria-labelledby="catalog-heading">
+    <h1 id="catalog-heading">Plugins &amp; Skills</h1>
+    <p class="page-lead">Reusable instructions, workflows, and optional MCP configurations packaged under Portable Agent Plugins 1.0.0. Every entry links directly to its pinned public <code>SKILL.md</code> source.</p>
+    <div class="provenance-row">
+      <span>Snapshot <code>e24cd596ef41</code></span>
+      <span>4 plugins, 22 skills</span>
+      <a href="https://github.com/joshyorko/plugins">github.com/joshyorko/plugins</a>
+    </div>
+  </section>
+
+  <section class="install-plate" aria-label="Install commands">
+    <div class="install-tabs" role="tablist" aria-label="Install method">
+      <button class="install-tab" type="button" role="tab" aria-selected="true" data-install="unix">Unix</button>
+      <button class="install-tab" type="button" role="tab" aria-selected="false" data-install="ps">PowerShell</button>
+      <button class="install-tab" type="button" role="tab" aria-selected="false" data-install="hermes">Hermes</button>
+      <button class="install-tab" type="button" role="tab" aria-selected="false" data-install="fizzy">Fizzy CLI</button>
+    </div>
+    <div class="install-body">
+      <div class="install-row">
+        <code><span class="install-prompt" aria-hidden="true">$</span><span id="install-cmd">curl -fsSL https://raw.githubusercontent.com/joshyorko/plugins/main/install.sh | bash</span></code>
+        <button class="copy-btn" type="button" id="install-copy">Copy</button>
+      </div>
+      <p class="install-hint" id="install-hint">macOS and Linux bootstrapper. Installs the repository once per machine and exposes its plugins and skills globally.</p>
+    </div>
+  </section>
+
+  <section class="controls" aria-label="Filter skill catalog">
+    <div class="search-wrap">
+      <label class="skip" for="skill-search">Filter skills</label>
+      <input class="search-input" id="skill-search" type="search" placeholder="Filter: Hotwire, Holotree, MCP" maxlength="120" autocomplete="off">
+      <div class="search-meta">
+        <button class="clear-search" id="clear-search" type="button" hidden>Clear</button>
+        <p class="result-count" id="result-count" role="status" aria-live="polite">22 / 22</p>
+      </div>
+    </div>
+    <div class="filter-chips" role="group" aria-label="Filter by plugin">
+      <button class="filter-chip" type="button" aria-pressed="true" data-filter="all">All <span>22</span></button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-filter="37signals">37signals <span>10</span></button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-filter="rcc">RCC <span>9</span></button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-filter="luna-factory">Luna Factory <span>2</span></button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-filter="fizzy">Fizzy <span>1</span></button>
+    </div>
+  </section>
+
+  <div class="catalog" id="catalog-root"></div>
+
+  <div class="empty-state" id="empty-state" hidden>
+    <h3>No skills match that filter</h3>
+    <p>Try a broader keyword such as Rails, environment, work items, or reset back to all four plugins.</p>
+    <button class="reset-btn" type="button" id="reset-filters">Reset filters</button>
+  </div>
+
+  <section class="spec-band" aria-labelledby="spec-heading">
+    <h2 id="spec-heading">Portable Agent Plugins 1.0.0</h2>
+    <p>Canonical packages live under <code>plugins/</code> with portable <code>plugin.json</code> manifests, fixed-location <code>SKILL.md</code> files, and optional <code>mcp.json</code> declarations. Build scripts generate isolated compatibility views for Codex, Claude Code, and Hermes, and CI runs JSON Schema checks alongside the official Agent Skills <code>skills-ref</code> validator on every canonical skill.</p>
+    <div class="spec-links">
+      <a href="https://github.com/joshyorko/plugins/blob/e24cd596ef41e9294ad770d2b613bf77b42a8a68/marketplaces/catalog.json">Catalog manifest</a>
+      <a href="https://github.com/joshyorko/plugins/blob/e24cd596ef41e9294ad770d2b613bf77b42a8a68/docs/codex-bootstrap.md">Installation guide</a>
+      <a href="https://github.com/joshyorko/plugins/actions">Validation workflows</a>
+    </div>
+  </section>
+</main>
+
+<footer class="shell site-footer">
+  <span>Josh Yorko</span>
+  <div class="footer-links">
+    <a href="./index.html">Home</a>
+    <a href="./index.html#work">Work</a>
+    <a href="./notes.html">Notes</a>
+    <a href="./notes.html#influences">Influences</a>
+    <a href="./notes.html#resume">Résumé</a>
+    <a href="https://github.com/joshyorko">GitHub</a>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const REV = "e24cd596ef41e9294ad770d2b613bf77b42a8a68";
+  const PINNED = "https://github.com/joshyorko/plugins/blob/" + REV + "/";
+
+  const INSTALLS = {
+    unix: {
+      cmd: "curl -fsSL https://raw.githubusercontent.com/joshyorko/plugins/main/install.sh | bash",
+      hint: "macOS and Linux bootstrapper. Installs the repository once per machine and exposes its plugins and skills globally."
+    },
+    ps: {
+      cmd: "irm https://raw.githubusercontent.com/joshyorko/plugins/main/install.ps1 | iex",
+      hint: "Windows PowerShell bootstrapper. Supports pinned release installs via AGENT_SKILLS_REF."
+    },
+    hermes: {
+      cmd: "hermes plugins install joshyorko/plugins/plugins/37signals --enable",
+      hint: "Hermes loads plugin skills explicitly with a namespace prefix, such as /skill 37signals:37signals-rails-implement."
+    },
+    fizzy: {
+      cmd: "brew install joshyorko/tools/fizzy-cli-master",
+      hint: "Installs the Fizzy CLI from joshyorko/homebrew-tools before connecting your own Fizzy account."
+    }
+  };
+
+  const CATALOG = [
+    {
+      id: "37signals",
+      title: "37signals",
+      version: "v0.1.0",
+      clients: "Codex, Claude Code, Hermes",
+      description: "Community-maintained, 37signals-inspired guidance for Rails, Hotwire, product design, shaping, and scope judgment. Independent of 37signals and Basecamp.",
+      manifest: PINNED + "plugins/37signals/plugin.json",
+      skills: [
+        { name: "37signals-communication", desc: "Use when drafting or reviewing async updates, decision memos, tradeoffs, or status.", source: "plugins/37signals/skills/37signals-communication/SKILL.md" },
+        { name: "37signals-hotwire", desc: "Use when designing, implementing, or reviewing Rails UI with Hotwire, Turbo, Stimulus, or server rendering.", source: "plugins/37signals/skills/37signals-hotwire/SKILL.md" },
+        { name: "37signals-product-design", desc: "Use when designing or reviewing product UI, flows, onboarding, settings, empty states, copy, or screens.", source: "plugins/37signals/skills/37signals-product-design/SKILL.md" },
+        { name: "37signals-product-refresh", desc: "Use when improving an existing product, screen, workflow, onboarding, settings, or stale feature.", source: "plugins/37signals/skills/37signals-product-refresh/SKILL.md" },
+        { name: "37signals-rails-implement", desc: "Use when implementing or extending Rails features across models, REST, Hotwire, jobs, tenancy, and tests.", source: "plugins/37signals/skills/37signals-rails-implement/SKILL.md" },
+        { name: "37signals-rails-refactor", desc: "Use when simplifying Rails code without behavior change, especially indirection, verbs, or scattered domain logic.", source: "plugins/37signals/skills/37signals-rails-refactor/SKILL.md" },
+        { name: "37signals-rails-review", desc: "Use when reviewing Rails code, PRs, or architecture for conventions, Hotwire defaults, and correctness risks.", source: "plugins/37signals/skills/37signals-rails-review/SKILL.md" },
+        { name: "37signals-scope-judgment", desc: "Use when simplifying product plans, roadmaps, feature sets, process, meetings, AI workflows, or strategy.", source: "plugins/37signals/skills/37signals-scope-judgment/SKILL.md" },
+        { name: "37signals-shape-up", desc: "Use when shaping a raw product idea, request, spike, project, or bet into a bounded Shape Up pitch.", source: "plugins/37signals/skills/37signals-shape-up/SKILL.md" },
+        { name: "dhh-rails-judgment", desc: "Use when evaluating Rails architecture through DHH or Rails Doctrine judgment.", source: "plugins/37signals/skills/dhh-rails-judgment/SKILL.md" }
+      ]
+    },
+    {
+      id: "rcc",
+      title: "RCC",
+      version: "v0.6.1",
+      clients: "Codex, Claude Code, Hermes",
+      description: "Guidance for reproducible automation, environment artifacts, Robot Framework, work items, and Actions packaging built around Robocorp RCC. The Actions and Robot Bootstrapper MCP is opt-in.",
+      manifest: PINNED + "plugins/rcc/plugin.json",
+      skills: [
+        { name: "rcc", desc: "Route RCC-family work across core, Environment Artifacts, providers, robots, work items, Action Server, CI/cache, and maintenance automation.", source: "plugins/rcc/skills/rcc/SKILL.md" },
+        { name: "rcc-core", desc: "Use for RCC itself: commands, install, source, Holotree/cache, Environment Artifacts, providers, trust, coordination, endpoints, templates, and bundles.", source: "plugins/rcc/skills/rcc-core/SKILL.md" },
+        { name: "rcc-robots", desc: "Use for RCC automation projects, robot.yaml, conda.yaml, Holotree, Environment Artifact use, freezes, bundles, templates, envs, and tasks.", source: "plugins/rcc/skills/rcc-robots/SKILL.md" },
+        { name: "action-server", desc: "Use when authoring or debugging ACTIONS packages, package.yaml, actions-core, actions-runtime, MCP, secrets, tests, or Docker/Compose builds and deployments.", source: "plugins/rcc/skills/action-server/SKILL.md" },
+        { name: "rcc-robot-framework", desc: "Use when authoring, reviewing, running, or debugging Robot Framework .robot suites, resources, custom Python libraries, Robot CLI or Rebot results, or RCC's robot_tests acceptance harness.", source: "plugins/rcc/skills/rcc-robot-framework/SKILL.md" },
+        { name: "rcc-rpaframework", desc: "Use when selecting, authoring, reviewing, or debugging RPA Framework libraries and RPA.* keywords in RCC-managed Robot Framework or Python automation projects.", source: "plugins/rcc/skills/rcc-rpaframework/SKILL.md" },
+        { name: "rcc-workitems", desc: "Use for RCC work item queues, robocorp.workitems, actions-work-items, producer/consumer flows, envs, and adapters.", source: "plugins/rcc/skills/rcc-workitems/SKILL.md" },
+        { name: "rcc-ci-maintenance", desc: "Use for RCC in GitHub Actions, Environment Artifact promotion/prewarm, ROBOCORP_HOME cache, pinned installs, maintenance, bot PRs, and cache hygiene.", source: "plugins/rcc/skills/rcc-ci-maintenance/SKILL.md" },
+        { name: "verify-rcc", desc: "Verify the RCC plugin from its source checkout on Linux: drive real RCC CLI health, onboarding and local SDK fixtures, offline Tealdeer, and packaged skill discovery with retained evidence.", source: "plugins/rcc/skills/verify-rcc/SKILL.md" }
+      ]
+    },
+    {
+      id: "luna-factory",
+      title: "Luna Factory",
+      version: "v0.2.1",
+      clients: "Codex native runtime",
+      description: "Authored orchestration skill, local Rust MCP control plane, and MCP Apps workbench. Not an operational dependency of this site; v0.2.1 is a corrective package release and live native execution or host acceptance remain separate operator qualification gates.",
+      manifest: PINNED + "plugins/luna-factory/plugin.json",
+      extraLink: { label: "v0.2.1 release", href: "https://github.com/joshyorko/plugins/releases/tag/v0.2.1" },
+      skills: [
+        { name: "luna-factory", desc: "Use when a substantial objective has potentially independent workstreams and the user wants Luna-first cost control, native Codex subagents, evidence-backed completion, or bounded Sol escalation.", source: "plugins/luna-factory/skills/luna-factory/SKILL.md" },
+        { name: "setup", desc: "Guide a user through safe, operator-approved Luna Factory plugin setup.", source: "plugins/luna-factory/skills/setup/SKILL.md" }
+      ]
+    },
+    {
+      id: "fizzy",
+      title: "Fizzy",
+      version: "v0.1.2",
+      clients: "Codex, Claude Code, Hermes",
+      description: "Work with self-hosted Fizzy boards, cards, and comments through the Fizzy CLI or MCP connector. The connector needs your own account and authorization.",
+      manifest: PINNED + "plugins/fizzy/plugin.json",
+      skills: [
+        { name: "fizzy", desc: "Use for Fizzy boards, cards, comments, setup, self-hosting, CLI, MCP, connectors, and workflows.", source: "plugins/fizzy/skills/fizzy/SKILL.md" }
+      ]
+    }
+  ];
+
+  const root = document.getElementById("catalog-root");
+  const searchInput = document.getElementById("skill-search");
+  const clearBtn = document.getElementById("clear-search");
+  const filterChips = Array.from(document.querySelectorAll(".filter-chip"));
+  const resultCount = document.getElementById("result-count");
+  const emptyState = document.getElementById("empty-state");
+  const resetBtn = document.getElementById("reset-filters");
+
+  let activePlugin = "all";
+  let query = "";
+
+  function copyText(text, btn, defaultLabel) {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).catch(() => {});
+      }
+    } catch (_) {}
+    btn.textContent = "Copied";
+    btn.classList.add("copied");
+    clearTimeout(btn._t);
+    btn._t = setTimeout(() => {
+      btn.textContent = defaultLabel;
+      btn.classList.remove("copied");
+    }, 1500);
+  }
+
+  CATALOG.forEach((plugin) => {
+    const section = document.createElement("section");
+    section.className = "plugin-group";
+    section.id = plugin.id;
+    section.dataset.plugin = plugin.id;
+    section.setAttribute("aria-labelledby", plugin.id + "-heading");
+
+    const aside = document.createElement("div");
+    aside.className = "group-aside";
+    aside.innerHTML =
+      `<div class="group-title-line"><h2 id="${plugin.id}-heading">${plugin.title}</h2><span class="group-version">${plugin.version}</span></div>` +
+      `<p class="group-clients">${plugin.clients}</p>` +
+      `<p class="group-desc">${plugin.description}</p>` +
+      `<div class="group-links"><a href="${plugin.manifest}">Manifest</a>` +
+      (plugin.extraLink ? `<a href="${plugin.extraLink.href}">${plugin.extraLink.label}</a>` : "") +
+      `</div>`;
+
+    const list = document.createElement("ul");
+    list.className = "skill-rows";
+
+    plugin.skills.forEach((skill) => {
+      const li = document.createElement("li");
+      li.className = "skill-row";
+      li.id = "skill-" + skill.name;
+      li.dataset.search = (plugin.id + " " + plugin.title + " " + skill.name + " " + skill.desc).toLowerCase();
+
+      const top = document.createElement("div");
+      top.className = "skill-row-top";
+
+      const link = document.createElement("a");
+      link.className = "skill-name";
+      link.href = PINNED + skill.source;
+      link.textContent = skill.name;
+
+      const copyBtn = document.createElement("button");
+      copyBtn.type = "button";
+      copyBtn.className = "skill-copy";
+      copyBtn.textContent = "Copy $";
+      copyBtn.setAttribute("aria-label", "Copy $" + skill.name + " trigger");
+      copyBtn.addEventListener("click", () => copyText("$" + skill.name, copyBtn, "Copy $"));
+
+      const desc = document.createElement("p");
+      desc.className = "skill-desc";
+      desc.textContent = skill.desc;
+
+      top.append(link, copyBtn);
+      li.append(top, desc);
+      list.appendChild(li);
+    });
+
+    section.append(aside, list);
+    root.appendChild(section);
+  });
+
+  function applyFilter() {
+    const q = query.trim().toLowerCase();
+    clearBtn.hidden = q.length === 0;
+    let visibleTotal = 0;
+
+    document.querySelectorAll(".plugin-group").forEach((section) => {
+      const pluginMatch = activePlugin === "all" || section.dataset.plugin === activePlugin;
+      let visibleInGroup = 0;
+      section.querySelectorAll(".skill-row").forEach((row) => {
+        const textMatch = q === "" || row.dataset.search.includes(q);
+        const show = pluginMatch && textMatch;
+        row.hidden = !show;
+        if (show) visibleInGroup += 1;
+      });
+      section.hidden = visibleInGroup === 0;
+      visibleTotal += visibleInGroup;
+    });
+
+    resultCount.textContent = visibleTotal + " / 22";
+    emptyState.hidden = visibleTotal > 0;
+  }
+
+  filterChips.forEach((chip) => {
+    chip.addEventListener("click", () => {
+      activePlugin = chip.dataset.filter;
+      filterChips.forEach((c) => c.setAttribute("aria-pressed", c === chip ? "true" : "false"));
+      applyFilter();
+    });
+  });
+
+  searchInput.addEventListener("input", () => {
+    query = searchInput.value;
+    applyFilter();
+  });
+
+  clearBtn.addEventListener("click", () => {
+    searchInput.value = "";
+    query = "";
+    applyFilter();
+    searchInput.focus();
+  });
+
+  resetBtn.addEventListener("click", () => {
+    activePlugin = "all";
+    query = "";
+    searchInput.value = "";
+    filterChips.forEach((c) => c.setAttribute("aria-pressed", c.dataset.filter === "all" ? "true" : "false"));
+    applyFilter();
+  });
+
+  const installTabs = Array.from(document.querySelectorAll(".install-tab"));
+  const installCmd = document.getElementById("install-cmd");
+  const installHint = document.getElementById("install-hint");
+  const installCopy = document.getElementById("install-copy");
+
+  installTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const cfg = INSTALLS[tab.dataset.install];
+      if (!cfg) return;
+      installTabs.forEach((t) => t.setAttribute("aria-selected", t === tab ? "true" : "false"));
+      installCmd.textContent = cfg.cmd;
+      installHint.textContent = cfg.hint;
+      installCopy.textContent = "Copy";
+      installCopy.classList.remove("copied");
+    });
+  });
+
+  installCopy.addEventListener("click", () => copyText(installCmd.textContent, installCopy, "Copy"));
+})();
+</script>
+</body>
+</html>

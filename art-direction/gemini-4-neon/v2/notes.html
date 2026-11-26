@@ -1,0 +1,835 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Field Notes, upstream influences and credits, and concise résumé background for Josh Yorko.">
+<title>Field Notes &amp; Influences, Josh Yorko</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: dark;
+  --canvas: #101114;
+  --plate: #17191E;
+  --well: #0C0D10;
+  --ink: #F2EFE9;
+  --ink-link: #CFCAC0;
+  --ink-muted: #989790;
+  --ink-faint: #6F6E69;
+  --accent: #D4B475;
+  --line: #252830;
+  --font-display: 'Bricolage Grotesque', 'Adwaita Sans', 'Liberation Sans', sans-serif;
+  --font-body: 'IBM Plex Sans', 'Adwaita Sans', 'Liberation Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'BlexMono Nerd Font', 'JetBrainsMono NF', ui-monospace, monospace;
+  --measure: 55rem;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--canvas);
+  background-image: radial-gradient(720px 300px at 12% 0%, rgba(212, 180, 117, 0.045), transparent 72%);
+  color: var(--ink);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 150ms ease, border-color 150ms ease, background-color 150ms ease;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.skip {
+  position: fixed;
+  top: 0.75rem;
+  left: 1rem;
+  padding: 0.5rem 0.9rem;
+  background: var(--ink);
+  color: var(--canvas);
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: 4px;
+  z-index: 100;
+  transform: translateY(-200%);
+}
+.skip:focus { transform: translateY(0); }
+
+.shell {
+  width: min(var(--measure), 100% - clamp(2rem, 6vw, 3.5rem));
+  margin-inline: auto;
+}
+
+/* Header */
+.site-header {
+  padding-block: 0.9rem 0.85rem;
+  border-bottom: 1px solid rgba(37, 40, 48, 0.65);
+}
+
+.header-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.55rem 1rem;
+  flex-wrap: wrap;
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.02rem;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 0.72rem;
+}
+
+.site-nav a {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+  padding-block: 0.2rem;
+  white-space: nowrap;
+  position: relative;
+}
+
+.site-nav a:hover,
+.site-nav a[aria-current="page"] {
+  color: var(--ink);
+}
+
+.site-nav a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.15rem;
+  height: 1.5px;
+  background: var(--accent);
+}
+
+/* Intro */
+.page-head {
+  padding-block: clamp(1.35rem, 4vw, 2.55rem) 1.25rem;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.page-head h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.95rem, 5.2vw, 2.8rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.page-lead {
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.56;
+  color: var(--ink-muted);
+  max-width: 62ch;
+}
+
+.jump-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 1.2rem;
+  font-size: 0.84rem;
+  font-weight: 500;
+}
+
+.jump-links a { color: var(--accent); }
+.jump-links a:hover { color: var(--ink); }
+
+/* Filter Bar */
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem 1rem;
+  margin-bottom: 1.45rem;
+}
+
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.filter-chip {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink-muted);
+  font-family: var(--font-body);
+  font-size: 0.81rem;
+  font-weight: 500;
+  padding: 0.34rem 0.68rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.filter-chip:hover { color: var(--ink); border-color: #464B59; }
+
+.filter-chip[aria-pressed="true"] {
+  background: var(--plate);
+  color: var(--ink);
+  border-color: var(--accent);
+}
+
+.entry-count {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+}
+
+/* Chronological Public Log */
+.log-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.35rem;
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.3rem 1.75rem;
+  padding-left: 0.95rem;
+  border-left: 1.5px solid var(--line);
+  transition: border-color 150ms ease;
+}
+
+.log-entry:hover {
+  border-left-color: var(--accent);
+}
+
+.log-entry[hidden] { display: none; }
+
+.log-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.log-ref {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--accent);
+}
+
+.log-kind {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-faint);
+}
+
+.log-entry h2 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+.log-entry p {
+  margin: 0.28rem 0 0;
+  font-size: 0.89rem;
+  line-height: 1.55;
+  color: var(--ink-muted);
+  max-width: 60ch;
+}
+
+.log-links {
+  margin-top: 0.45rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.05rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.log-links a { color: var(--ink-link); }
+.log-links a:hover { color: var(--accent); }
+
+.draft-entry {
+  background: var(--plate);
+  border: 1px dashed #343947;
+  border-left: 2px solid var(--ink-faint);
+  border-radius: 5px;
+  padding: 0.9rem 1rem;
+}
+
+.draft-entry .log-ref {
+  color: var(--ink-muted);
+}
+
+/* Band Sections */
+.band {
+  margin-top: clamp(2.5rem, 5.5vw, 3.75rem);
+  padding-top: clamp(1.65rem, 3.5vw, 2.25rem);
+  border-top: 1px solid rgba(37, 40, 48, 0.65);
+  scroll-margin-top: 1.25rem;
+}
+
+.band-head {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 1.35rem;
+}
+
+.band-head h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.32rem, 2.8vw, 1.6rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+
+.band-head p {
+  margin: 0;
+  font-size: 0.89rem;
+  color: var(--ink-muted);
+  max-width: 62ch;
+}
+
+/* Influences & Credits */
+.influence-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+.influence-item h3 {
+  margin: 0;
+  font-size: 0.97rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.influence-item p {
+  margin: 0.25rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.54;
+  color: var(--ink-muted);
+  max-width: 50ch;
+}
+
+.tech-block {
+  margin-top: 1.55rem;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.tech-block h3 {
+  margin: 0;
+  font-size: 0.93rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.tech-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tech-list li {
+  padding: 0.24rem 0.56rem;
+  background: var(--plate);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--ink-link);
+}
+
+.draft-outline {
+  margin-top: 1.35rem;
+  padding: 0.9rem 1rem;
+  background: var(--plate);
+  border: 1px dashed #343947;
+  border-radius: 5px;
+}
+
+.draft-outline p {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+.draft-outline strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* Resume Section */
+.resume-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.7rem;
+}
+
+.role-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.05rem;
+}
+
+.role-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.14rem;
+}
+
+.role-dates {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.role-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.role-org {
+  color: var(--ink-muted);
+  font-weight: 400;
+}
+
+.role-scope {
+  margin: 0.14rem 0 0;
+  font-size: 0.87rem;
+  color: var(--ink-muted);
+}
+
+.resume-aside {
+  display: grid;
+  gap: 1.1rem;
+  align-content: start;
+}
+
+.aside-block h3 {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.aside-block p {
+  margin: 0.25rem 0 0;
+  font-size: 0.87rem;
+  line-height: 1.54;
+  color: var(--ink-muted);
+}
+
+.aside-links {
+  margin-top: 0.35rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 1.15rem;
+  font-size: 0.84rem;
+  font-weight: 500;
+}
+
+.aside-links a { color: var(--accent); }
+.aside-links a:hover { color: var(--ink); }
+
+.site-footer {
+  margin-top: 2.75rem;
+  padding-block: 1.2rem 2rem;
+  border-top: 1px solid rgba(37, 40, 48, 0.65);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.83rem;
+  color: var(--ink-muted);
+}
+
+.footer-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.15rem; }
+.footer-links a:hover { color: var(--ink); }
+
+@media (min-width: 45rem) {
+  .site-header { padding-block: 1.05rem 0.95rem; }
+  .site-nav { gap: 1.3rem; }
+  .site-nav a { font-size: 0.87rem; }
+
+  .log-entry {
+    grid-template-columns: 11.5rem minmax(0, 1fr);
+    align-items: baseline;
+  }
+
+  .log-meta {
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .influence-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.45rem 2.4rem;
+  }
+
+  .resume-layout {
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    gap: 2.4rem;
+  }
+
+  .role-row {
+    grid-template-columns: 9.25rem minmax(0, 1fr);
+    gap: 0.25rem 1rem;
+    align-items: baseline;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="shell header-row">
+    <a class="brand" href="./index.html">Josh Yorko</a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="./plugins.html">Plugins</a>
+      <a href="./index.html#work">Work</a>
+      <a href="./index.html#systems">Systems</a>
+      <a href="./notes.html" aria-current="page">Notes</a>
+      <a href="#influences">Influences</a>
+      <a href="#resume">Résumé</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="shell" tabindex="-1">
+  <section class="page-head" aria-labelledby="notes-title">
+    <h1 id="notes-title">Field Notes</h1>
+    <p class="page-lead">A public record of software releases, upstream contributions, bounded experiments, and lessons learned. Every technical claim links directly to its pinned public repository, pull request, or release tag.</p>
+    <div class="jump-links">
+      <a href="#influences">Jump to Influences</a>
+      <a href="#resume">Jump to Résumé</a>
+    </div>
+  </section>
+
+  <!-- Filterable Public Log -->
+  <div class="filter-row" aria-label="Filter field notes">
+    <div class="filter-chips" role="group" aria-label="Filter entries by type">
+      <button class="filter-chip" type="button" aria-pressed="true" data-kind="all">All</button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-kind="release">Releases</button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-kind="upstream">Upstream</button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-kind="experiment">Experiments</button>
+      <button class="filter-chip" type="button" aria-pressed="false" data-kind="draft">Drafts</button>
+    </div>
+    <p class="entry-count" id="entry-count" role="status" aria-live="polite">7 entries</p>
+  </div>
+
+  <ol class="log-list" id="log-list">
+    <li class="log-entry" data-kind="release">
+      <div class="log-meta">
+        <span class="log-ref">e24cd596ef41</span>
+        <span class="log-kind">release</span>
+      </div>
+      <div>
+        <h2>Portable Agent Plugins 1.0.0 catalog and CI checks</h2>
+        <p>Packaged 4 plugins and 22 canonical SKILL.md files under plugins/ with generated compatibility layers for Codex, Claude Code, and Hermes. Validation runs JSON Schema checks and the official skills-ref validator in GitHub Actions.</p>
+        <div class="log-links">
+          <a href="./plugins.html">Browse catalog</a>
+          <a href="https://github.com/joshyorko/plugins/blob/e24cd596ef41e9294ad770d2b613bf77b42a8a68/marketplaces/catalog.json">Catalog manifest</a>
+          <a href="https://github.com/joshyorko/plugins/actions">CI workflows</a>
+        </div>
+      </div>
+    </li>
+
+    <li class="log-entry" data-kind="release">
+      <div class="log-meta">
+        <span class="log-ref">v0.2.1</span>
+        <span class="log-kind">release</span>
+      </div>
+      <div>
+        <h2>Luna Factory corrective package release and qualification boundary</h2>
+        <p>Published the local Rust MCP control plane, canonical orchestration skill, and MCP Apps workbench as an authored project. Kept build and protocol checks explicitly separate from live native Codex execution and host acceptance gates.</p>
+        <div class="log-links">
+          <a href="https://github.com/joshyorko/plugins/releases/tag/v0.2.1">v0.2.1 release</a>
+          <a href="./plugins.html#luna-factory">Plugin details</a>
+        </div>
+      </div>
+    </li>
+
+    <li class="log-entry" data-kind="upstream">
+      <div class="log-meta">
+        <span class="log-ref">PR #191, #350, #489</span>
+        <span class="log-kind">upstream</span>
+      </div>
+      <div>
+        <h2>Revision-bound mutation plans and admission checks in Bluefin</h2>
+        <p>Contributed changes to projectbluefin/contribute binding mutation plans to specific revisions, computing re-review deltas, and verifying fresh admission checks before mutations proceed.</p>
+        <div class="log-links">
+          <a href="https://github.com/projectbluefin/contribute/pull/191">PR #191</a>
+          <a href="https://github.com/projectbluefin/contribute/pull/350">PR #350</a>
+          <a href="https://github.com/projectbluefin/contribute/pull/489">PR #489</a>
+        </div>
+      </div>
+    </li>
+
+    <li class="log-entry" data-kind="release">
+      <div class="log-meta">
+        <span class="log-ref">v18.19.11 / 1.1.1</span>
+        <span class="log-kind">release</span>
+      </div>
+      <div>
+        <h2>Community builds of Robocorp RCC and Actions Runtime</h2>
+        <p>Maintained community forks and releases for reproducible Holotree environments in RCC and HTTP/MCP action execution in Actions Runtime, plus Codex Action Server integration in PR #30.</p>
+        <div class="log-links">
+          <a href="https://github.com/joshyorko/rcc/releases/tag/v18.19.11">RCC v18.19.11</a>
+          <a href="https://github.com/joshyorko/actions/releases/tag/actions-runtime-1.1.1">Actions 1.1.1</a>
+          <a href="https://github.com/joshyorko/codex-action-server/pull/30">CAS PR #30</a>
+        </div>
+      </div>
+    </li>
+
+    <li class="log-entry" data-kind="experiment">
+      <div class="log-meta">
+        <span class="log-ref">v0.1.0 + WASM</span>
+        <span class="log-kind">experiment</span>
+      </div>
+      <div>
+        <h2>MemoryD local recall bundles and browser-native digest verifier</h2>
+        <p>Released MemoryD v0.1.0 for canonical local recall exports and built a standalone browser-local verifier combining a 96-byte WASM Actions manifest boundary check with SHA-256 verification on a pinned synthetic bundle.</p>
+        <div class="log-links">
+          <a href="https://github.com/joshyorko/codex-memoryd/releases/tag/v0.1.0">MemoryD v0.1.0</a>
+          <a href="https://github.com/joshyorko/yorko-resume/tree/631481871d22d7b053c1aae23a84cc7d14d04b09/portfolio/lab">Agent Lab source</a>
+        </div>
+      </div>
+    </li>
+
+    <li class="log-entry" data-kind="upstream">
+      <div class="log-meta">
+        <span class="log-ref">PR #928 + Devsy</span>
+        <span class="log-kind">upstream</span>
+      </div>
+      <div>
+        <h2>Hauler Docker context fix and Devsy Harvester provider handoff</h2>
+        <p>Fixed Docker context selection in upstream Hauler (hauler-dev/hauler#928) and transferred the Harvester VM devcontainer provider to upstream Devsy maintenance with preserved attribution.</p>
+        <div class="log-links">
+          <a href="https://github.com/hauler-dev/hauler/pull/928">Hauler PR #928</a>
+          <a href="https://github.com/devsy-org/devsy-provider-harvester#license-and-attribution">Devsy attribution</a>
+        </div>
+      </div>
+    </li>
+
+    <li class="log-entry draft-entry" data-kind="draft">
+      <div class="log-meta">
+        <span class="log-ref">Draft outline</span>
+        <span class="log-kind">owner to author</span>
+      </div>
+      <div>
+        <h2>[Draft] What the retired 3D warehouse and directory prototypes taught about scope</h2>
+        <p>Outline slot for Josh's own write-up on retiring both earlier portfolio directions (a535909 and 6314818) and keeping local-first proof inside actual tools instead of landing-page chrome. Not published until written and verified by the owner.</p>
+        <div class="log-links">
+          <a href="https://github.com/joshyorko/yorko-resume/blob/a535909574cb94b169040e05b54ae198fe77673a/machine-room/proof/checks.json">Archived Machine Room checks</a>
+        </div>
+      </div>
+    </li>
+  </ol>
+
+  <!-- Influences & Credits -->
+  <section class="band" id="influences" aria-labelledby="influences-heading">
+    <div class="band-head">
+      <h2 id="influences-heading">Influences and credits</h2>
+      <p>Owner-stated influences, upstream creators credited directly, and core technologies in active work. Personal commentary and reading notes remain marked as draft outlines for Josh to author.</p>
+    </div>
+
+    <ul class="influence-grid">
+      <li class="influence-item">
+        <h3>Juha and Robocorp</h3>
+        <p>Originators of RCC, Hololib/Holotree, and reproducible automation packaging. Community forks joshyorko/rcc and joshyorko/actions build directly on their upstream architecture.</p>
+      </li>
+      <li class="influence-item">
+        <h3>Jason Fried, DHH, and 37signals</h3>
+        <p>Calm product design, scope discipline, plain-language interfaces, independent software, and Linux advocacy. The 37signals plugin suite is community-maintained and independent of Basecamp.</p>
+      </li>
+      <li class="influence-item">
+        <h3>Ernest Hemingway</h3>
+        <p>Economy of language and direct substance over decorative flourish.</p>
+      </li>
+      <li class="influence-item">
+        <h3>ThePrimeagen and Jeff Delaney (Fireship)</h3>
+        <p>Developer craft culture and compact, engaging technical explanation.</p>
+      </li>
+    </ul>
+
+    <div class="tech-block">
+      <h3>Technologies and systems focus</h3>
+      <ul class="tech-list">
+        <li>Robot Framework / RCC / Hololib</li>
+        <li>OCI / bootc / Hauler</li>
+        <li>Kubernetes / Harvester</li>
+        <li>Apptainer</li>
+        <li>Linux</li>
+        <li>MCP &amp; Agent Skills</li>
+        <li>SQLite</li>
+        <li>WebAssembly</li>
+        <li>Local inference</li>
+        <li>Structured context &amp; ontology</li>
+      </ul>
+    </div>
+
+    <div class="draft-outline">
+      <p><strong>[Draft outline for owner verification]</strong> Longer personal notes on books, interactive computing references, and developer sites worth studying are intentionally omitted here until written in Josh's own voice.</p>
+    </div>
+  </section>
+
+  <!-- Concise Recruiter Résumé -->
+  <section class="band" id="resume" aria-labelledby="resume-heading">
+    <div class="band-head">
+      <h2 id="resume-heading">Résumé</h2>
+      <p>Direct career summary and public documents.</p>
+    </div>
+
+    <div class="resume-layout">
+      <ol class="role-list">
+        <li class="role-row">
+          <span class="role-dates">Jun 2023 to present</span>
+          <div>
+            <h3 class="role-title">Advisor Application Developer <span class="role-org">at Gainwell Technologies</span></h3>
+            <p class="role-scope">Backend, data, and platform engineering.</p>
+          </div>
+        </li>
+        <li class="role-row">
+          <span class="role-dates">Jun 2022 to Mar 2023</span>
+          <div>
+            <h3 class="role-title">Senior Data Engineer / Software Engineer <span class="role-org">at Gainwell Technologies</span></h3>
+            <p class="role-scope">Data engineering and software development.</p>
+          </div>
+        </li>
+        <li class="role-row">
+          <span class="role-dates">Mar 2021 to Oct 2022</span>
+          <div>
+            <h3 class="role-title">Implementations Specialist <span class="role-org">at Lambent Spaces</span></h3>
+            <p class="role-scope">SQL and Python automation for customer implementations.</p>
+          </div>
+        </li>
+        <li class="role-row">
+          <span class="role-dates">May 2019 to Mar 2021</span>
+          <div>
+            <h3 class="role-title">Data Analyst (Desktop Support) <span class="role-org">at CVS Health</span></h3>
+            <p class="role-scope">Deployment reporting and Dash/Plotly operational reports.</p>
+          </div>
+        </li>
+        <li class="role-row">
+          <span class="role-dates">Jan 2017 to Apr 2019</span>
+          <div>
+            <h3 class="role-title">Client Onboarding Specialist <span class="role-org">at Spencer Technologies</span></h3>
+            <p class="role-scope">Client onboarding and technical delivery coordination.</p>
+          </div>
+        </li>
+      </ol>
+
+      <aside class="resume-aside" aria-label="Technical focus and public documents">
+        <div class="aside-block">
+          <h3>Technical focus</h3>
+          <p>Go, Python, Rust, Ruby on Rails, SQL, Kubernetes, MCP and HTTP services, bootc Linux images, test infrastructure, and reproducible developer environments.</p>
+        </div>
+        <div class="aside-block">
+          <h3>Education</h3>
+          <p>B.A. in English, Indiana State University.</p>
+        </div>
+        <div class="aside-block">
+          <h3>Public links</h3>
+          <div class="aside-links">
+            <a href="https://github.com/joshyorko/yorko-resume/blob/main/docs/assets/JoshYorkoResume.pdf">Download PDF résumé</a>
+            <a href="https://github.com/joshyorko">GitHub profile</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<footer class="shell site-footer">
+  <span>Josh Yorko</span>
+  <div class="footer-links">
+    <a href="./index.html">Home</a>
+    <a href="./plugins.html">Plugins</a>
+    <a href="./index.html#work">Work</a>
+    <a href="#influences">Influences</a>
+    <a href="#resume">Résumé</a>
+    <a href="https://github.com/joshyorko">GitHub</a>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const chips = Array.from(document.querySelectorAll(".filter-chip"));
+  const entries = Array.from(document.querySelectorAll(".log-entry"));
+  const countEl = document.getElementById("entry-count");
+
+  chips.forEach((chip) => {
+    chip.addEventListener("click", () => {
+      const kind = chip.dataset.kind;
+      chips.forEach((c) => c.setAttribute("aria-pressed", c === chip ? "true" : "false"));
+      let visible = 0;
+      entries.forEach((entry) => {
+        const show = kind === "all" || entry.dataset.kind === kind;
+        entry.hidden = !show;
+        if (show) visible += 1;
+      });
+      countEl.textContent = visible + (visible === 1 ? " entry" : " entries");
+    });
+  });
+})();
+</script>
+</body>
+</html>
