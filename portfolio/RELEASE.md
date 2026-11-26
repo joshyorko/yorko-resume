@@ -51,7 +51,7 @@ Confirm the active deployment and public routes after rollback. For a version pr
 
 ## GitHub Pages compatibility
 
-The legacy source is the root of gh-pages. For cutover, switch the repository Pages source to GitHub Actions, retain the gh-pages branch, and dispatch **GitHub Pages compatibility** on main with the full reviewed revision. The workflow uses the existing github-pages environment and GitHub's short-lived Pages credentials. It verifies the public homepage and legacy PDF against the build. To revert the compatibility cutover, restore the Pages source to the retained gh-pages branch root and verify both URLs. GitHub Pages settings are separate from the Cloudflare Worker.
+The legacy source is the root of gh-pages. For cutover, allow main in the existing github-pages deployment branch policy, switch the repository Pages source to GitHub Actions, retain the gh-pages branch, and dispatch **GitHub Pages compatibility** on main with the full reviewed revision. The workflow uses the existing github-pages environment and GitHub's short-lived Pages credentials. It verifies the public homepage and legacy PDF against the build. To revert the compatibility cutover, restore the Pages source to the retained gh-pages branch root and verify both URLs. GitHub Pages settings are separate from the Cloudflare Worker.
 
 ## Legacy inventory
 

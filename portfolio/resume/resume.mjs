@@ -18,6 +18,12 @@ const renderProject = entry => entry.split(/(\[[^\]]+\|\d+\])/).map((part, index
   return index === 1 && entry.startsWith('[') ? '<strong>' + anchor + '</strong>' : anchor;
 }).join('');
 
+const bulletList = bullets => '<ul>' + bullets.map(text => '<li>' + escape(text) + '</li>').join('') + '</ul>';
+const currentWork = bullets =>
+  '<h4>Production backend services</h4>' + bulletList([2, 0, 3].map(i => bullets[i])) +
+  '<h4>Distributed execution and AI evaluation</h4>' + bulletList([4, 1, 5, 6].map(i => bullets[i]));
+const skillLabels = ['Languages', 'Services and data', 'Infrastructure', 'AI and testing', 'Delivery'];
+
 export const resumeBody = `<article class="resume" aria-labelledby="resume-name">
 <header>
 <h1 id="resume-name">${escape(content.name)}</h1>
@@ -32,15 +38,14 @@ export const resumeBody = `<article class="resume" aria-labelledby="resume-name"
 
 ${content.jobs.map(({ heading, dates, role, bullets }, index) => `<div class="resume-job">
 <div class="resume-job-heading"><h3>${escape(heading)}</h3><p class="resume-dates">${escape(dates)}</p></div>
-${role ? `<p class="resume-role">${escape(role)}</p>\n` : ''}<ul>
-${(index === 0 ? [2, 0, 3, 4, 1, 5, 6].map(i => bullets[i]) : bullets).map(text => `<li>${escape(text)}</li>`).join('\n')}
-</ul>
+${role ? `<p class="resume-role">${escape(role)}</p>\n` : ''}${index === 0 ? currentWork(bullets) : bulletList(bullets)}
 </div>`).join('\n\n')}
 </section>
 
 <section>
 <h2>TECHNICAL SKILLS</h2>
-${content.skills.map(text => `<p class="resume-skills">${escape(text)}</p>`).join('\n')}
+${content.skills.flatMap(line => line.split(' · ')).map((text, index) =>
+  '<p class="resume-skills"><strong>' + skillLabels[index] + '</strong> — ' + escape(text) + '</p>').join('')}
 </section>
 <section>
 <h2>OPEN-SOURCE ENGINEERING</h2>
