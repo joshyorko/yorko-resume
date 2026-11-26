@@ -1,0 +1,13 @@
+{
+  "name": "yorko-portfolio-preview",
+  "private": true,
+  "scripts": {
+    "build": "node build.mjs",
+    "compare": "node build.mjs --compare",
+    "verify": "npm run build && npm run compare && node verify.mjs"
+  },
+  "devDependencies": {
+    "axe-core": "4.11.1",
+    "playwright-core": "1.64.0"
+  }
+}

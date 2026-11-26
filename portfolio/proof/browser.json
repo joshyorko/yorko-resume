@@ -1,0 +1,57 @@
+{
+  "viewports": [
+    360,
+    390,
+    411,
+    1440
+  ],
+  "axeViolations": {
+    "/": [],
+    "/plugins/": [],
+    "/skills/": [],
+    "/projects/": [],
+    "/systems/": [],
+    "/notes/": [],
+    "/resume/": [],
+    "/lab/": []
+  },
+  "navigation": [
+    "Plugins & Skills",
+    "Projects",
+    "Systems",
+    "Notes & Proof",
+    "Résumé"
+  ],
+  "transfer": {
+    "cold": [
+      {
+        "path": "/",
+        "transferSize": 2064,
+        "encodedBodySize": 1764
+      },
+      {
+        "path": "/site.css",
+        "transferSize": 5048,
+        "encodedBodySize": 4748
+      }
+    ],
+    "warm": [
+      {
+        "path": "/",
+        "transferSize": 300,
+        "encodedBodySize": 1764
+      },
+      {
+        "path": "/site.css",
+        "transferSize": 0,
+        "encodedBodySize": 4748
+      }
+    ]
+  },
+  "browser": "158.0.8127.88",
+  "offline": {
+    "runs": 2,
+    "reloadClearedReceipts": true,
+    "sha256": "f84aefc588e3380c4f8ae56828a767e53a20cf906e733a72de962865daeb84e7"
+  }
+}

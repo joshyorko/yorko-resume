@@ -1,1 +1,0 @@
-const field=document.querySelector('#search');field.oninput=()=>{const term=field.value.toLowerCase().trim();for(const item of document.querySelectorAll('article'))item.hidden=!item.textContent.toLowerCase().includes(term)};
