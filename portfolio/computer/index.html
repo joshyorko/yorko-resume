@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="A portable workspace that runs in this browser tab: open CSV, SQLite or JSON files, query them with SQL, and save everything as one SQLite file.">
+<title>Computer · Josh Yorko</title>
+<link rel="stylesheet" href="/computer/computer.css">
+<script src="/vendor/sql.js/sql-wasm.js" defer></script>
+<script type="module" src="/computer/app.mjs"></script>
+</head>
+<body data-tab="query">
+<a class="skip" href="#workspace">Skip to workspace</a>
+<div class="app" id="app">
+  <header class="bar">
+    <a class="back" href="/">← Josh Yorko</a>
+    <div class="ident">
+      <h1>Computer</h1>
+      <p class="ws" id="wsline" role="status">empty workspace</p>
+    </div>
+    <p class="local"><span class="dot" aria-hidden="true"></span>Runs in this tab. Files are never uploaded.</p>
+    <div class="baractions">
+      <label class="btn ghost" for="filein">Open files…</label>
+      <button class="btn primary" id="save" type="button" disabled>Save workspace</button>
+    </div>
+    <input type="file" id="filein" multiple accept=".csv,.tsv,.sqlite,.sqlite3,.db,.json,.txt,.md,text/*" class="visually-hidden" tabindex="-1" aria-label="Open files">
+  </header>
+
+  <nav class="tabs" id="tabs" aria-label="Workspace panels">
+    <button type="button" data-tab="files" aria-pressed="false">Files</button>
+    <button type="button" data-tab="query" aria-pressed="true">Query</button>
+    <button type="button" data-tab="inspect" aria-pressed="false">Inspect</button>
+    <button type="button" data-tab="snap" aria-pressed="false">Snapshots</button>
+  </nav>
+
+  <main class="grid" id="workspace" tabindex="-1">
+    <section class="panel files" data-panel="files" aria-labelledby="h-files">
+      <h2 id="h-files">Files</h2>
+      <div class="drop" id="drop">
+        <p><strong>Drop files here</strong> or <label for="filein" class="link">choose them</label>.</p>
+        <p class="small">CSV, TSV, SQLite, JSON arrays, plain text.</p>
+      </div>
+      <ul class="filelist" id="filelist"></ul>
+      <h2 class="sub" id="h-tables">Tables</h2>
+      <ul class="tablelist" id="tablelist" aria-labelledby="h-tables"><li class="none">No tables yet.</li></ul>
+    </section>
+
+    <section class="panel query" data-panel="query" aria-labelledby="h-query">
+      <div class="empty" id="empty">
+        <p class="eyebrow">A portable workspace</p>
+        <h2 class="hero" id="h-start">Open a CSV or SQLite file and ask it questions.</h2>
+        <p>Files stay in this tab. Each one gets a SHA-256 digest, CSV and JSON become tables, SQLite files are read directly, and the whole session saves as one SQLite file you can reopen here later.</p>
+        <noscript><p class="err">The computer needs JavaScript and WebAssembly. Everything else on this site works without them.</p></noscript>
+        <div class="emptyactions">
+          <label class="btn primary big" for="filein">Choose files…</label>
+          <button class="btn big" id="sample" type="button" disabled>Use the sample workspace</button>
+        </div>
+        <p class="small">The sample is three small tables built from public facts on this site: projects, dated notes, and the plugin skill catalog.</p>
+      </div>
+
+      <div class="workbench" id="workbench" hidden>
+        <h2 id="h-query">Query</h2>
+        <div class="examples" id="examples" role="group" aria-label="Example queries"></div>
+        <div class="editorwrap">
+          <textarea id="sql" spellcheck="false" autocomplete="off" aria-label="SQL query"></textarea>
+          <div class="runrow">
+            <span class="hint">SQLite · <kbd>Ctrl</kbd>+<kbd>Enter</kbd> runs</span>
+            <button class="btn primary" id="run" type="button">Run</button>
+          </div>
+        </div>
+        <div class="result" id="result" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <aside class="side" aria-label="Details">
+      <section class="panel inspect" data-panel="inspect" aria-labelledby="h-inspect">
+        <h2 id="h-inspect">Inspect</h2>
+        <div id="inspect"><p class="none">Select a file to see its digest, tables and first lines.</p></div>
+      </section>
+
+      <section class="panel snap" data-panel="snap" aria-labelledby="h-snap">
+        <h2 id="h-snap">Snapshots</h2>
+        <p class="small">Save writes one <code>.sqlite</code> file with your tables, the original files, their digests and your query history. Open it here again to pick up where you left off.</p>
+        <ol class="snaplist" id="snaplist"></ol>
+      </section>
+    </aside>
+  </main>
+  <footer class="foot">
+    <a href="/">Josh Yorko</a>
+    <a href="{{github}}">GitHub</a>
+    <a href="/vendor/sql.js/LICENSE">sql.js licence (MIT)</a>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</div>
+</body>
+</html>

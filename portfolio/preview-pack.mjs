@@ -12,14 +12,15 @@ const globalHeaders = Object.fromEntries(headerFile.split('\n/site.css')[0]
   .split('\n').slice(1).filter(Boolean).map(line => line.trim().split(/: (.*)/s).slice(0, 2)));
 const mime = {
   '.html': 'text/html; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8',
-  '.css': 'text/css; charset=utf-8', '.webp': 'image/webp',
+  '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
+  '.wasm': 'application/wasm', '.woff2': 'font/woff2', '.txt': 'text/plain; charset=utf-8',
 };
 const files = {};
 for (const name of (await readdir(dist, { recursive: true, withFileTypes: true }))
   .filter(item => item.isFile()).map(item => relative(fileURLToPath(dist), join(item.parentPath, item.name))).sort()) {
   if (name === '_headers') continue;
   const bytes = await readFile(new URL(name, dist));
-  const type = mime[extname(name)] ?? (name === 'lab/SHA256SUMS' ? 'text/plain; charset=utf-8' : '');
+  const type = mime[extname(name)] ?? (name.endsWith('/LICENSE') ? 'text/plain; charset=utf-8' : '');
   if (!type) throw new Error('Unexpected artifact: ' + name);
   files['/' + name] = [type, bytes.toString('base64'),
     '"' + createHash('sha256').update(bytes).digest('hex') + '"'];
@@ -46,7 +47,7 @@ export default {
     return new Response(body, {
       status: notModified ? 304 : found ? 200 : 404,
       headers: { ...headers, 'Content-Type': type, ETag: etag,
-        'Cache-Control': /^image/.test(type) ? 'public, max-age=3600' :
+        'Cache-Control': key.startsWith('/fonts/') || key.startsWith('/vendor/') ? 'public, max-age=86400' :
           type.startsWith('text/css') ? 'public, max-age=300' : 'no-cache',
         'X-Portfolio-Commit': '${revision}' },
     });

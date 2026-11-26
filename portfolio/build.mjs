@@ -1,9 +1,9 @@
-import { createHash } from 'node:crypto';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
 import { jumpDialog, jumpTrigger } from './jump-markup.mjs';
 import { projects, systems } from './data/work.mjs';
+import { draft, install, links as site, notes, path, questions, relations, upstream, work } from './data/site.mjs';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
 const output = join(root, 'dist');
@@ -13,11 +13,18 @@ const write = async (path, content) => {
   await mkdir(join(target, '..'), { recursive: true });
   await writeFile(target, content);
 };
+const copy = async (from, to = from) => {
+  await mkdir(join(output, to, '..'), { recursive: true });
+  await copyFile(join(root, from), join(output, to));
+};
+await rm(output, { recursive: true, force: true });
+
 const catalog = JSON.parse(await read('data/catalog.json'));
 const source = 'https://github.com/joshyorko/plugins';
 const pinned = `${source}/blob/${catalog.revision}/`;
 const rollback = 'a535909574cb94b169040e05b54ae198fe77673a';
 const archive = `https://github.com/joshyorko/yorko-resume/tree/${rollback}/machine-room`;
+const skillCount = catalog.plugins.reduce((total, plugin) => total + plugin.skills.length, 0);
 const pluginInfo = {
   '37signals': ['37signals', 'Community-maintained, 37signals-inspired guidance for Rails, Hotwire, and product work. Independent of 37signals and Basecamp.', 'Codex, Claude Code, Hermes'],
   fizzy: ['Fizzy', 'Work with boards and cards through the Fizzy CLI or MCP connector. The connector needs your own account and authorization.', 'Codex, Claude Code, Hermes'],
@@ -25,62 +32,73 @@ const pluginInfo = {
   'luna-factory': ['Luna Factory', 'A published orchestration skill, local Rust MCP control plane, and MCP Apps workbench. v0.2.1 is a corrective package release. Live native execution and ChatGPT host acceptance are separate operator qualification gates.', 'Native runtime for Codex'],
 };
 const routes = [
-  ['plugins/', 'Plugins &amp; Skills'],
+  ['computer/', 'Computer'],
   ['projects/', 'Projects'],
   ['systems/', 'Systems'],
-  ['lab/', 'Agent Lab'],
-  ['notes/', 'Field Notes'],
+  ['plugins/', 'Plugins &amp; Skills'],
+  ['notes/', 'Notes'],
   ['resume/', 'Résumé'],
 ];
 const routeWords = {
-  '/': 'start homepage',
+  '/': 'start homepage about',
+  '/computer/': 'workspace sqlite csv json query sql files offline wasm',
   '/plugins/': 'extensions marketplace installation automation Codex Claude Hermes',
-  '/projects/': 'software source contributions',
-  '/systems/': 'Linux workstation bootc images',
-  '/lab/': 'Actions WASM MemoryD proof offline receipts',
-  '/notes/': 'field notes proof evidence releases',
-  '/resume/': 'resume CV experience work',
+  '/projects/': 'software source contributions open source',
+  '/systems/': 'Linux workstation bootc images devcontainers',
+  '/notes/': 'notes log changes releases merged',
+  '/resume/': 'resume CV experience work career',
   '/skills/': 'skill catalog search index',
 };
+const sections = [
+  ['How I got here', '/#story', 'story career path CNA CVS Gainwell'],
+  ['Work in healthcare', '/#work', 'Gainwell APIs pipelines agents'],
+  ['Open source', '/#open-source', 'upstream maintained built Bluefin Hauler'],
+  ['Open questions', '/#questions', 'investigations research experiments'],
+];
 const jumpEntries = [
   ...[...routes, ['skills/', 'Skill catalog'], ['', 'Home']].map(([path, label]) =>
-    [label.replace('&amp;', '&'), '/' + path, 'Pages', routeWords['/' + path], true]),
+    [label.replace('&amp;', '&'), '/' + path, 'Pages', routeWords['/' + path], path !== 'skills/' && path !== 'systems/']),
+  ['Computer with the sample workspace', '/computer/?sample=1', 'Pages', 'demo example tables', false],
+  ...sections.map(([label, href, words]) => [label, href, 'On the homepage', words, false]),
   ...projects.map(([id, name, description]) =>
     [name, '/projects/#' + id, 'Projects', description, ['rcc', 'josh-room', 'memoryd'].includes(id)]),
   ...catalog.plugins.flatMap(({name, skills}) => skills.map(skill =>
     [skill.name, '/skills/#skill-' + skill.name, 'Skills', name + ' ' + skill.description, false])),
-  ['Check an Actions manifest', '/lab/#actions-check', 'Lab', 'WASM boundary manifest proof', false],
-  ['Inspect a MemoryD export', '/lab/#memory-check', 'Lab', 'synthetic bundle digest receipt offline', false],
 ];
 const esc = value => String(value).replace(/[&<>"']/g, char => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
 }[char]));
 const link = (label, url) => `<a href="${esc(url)}">${esc(label)}</a>`;
 const links = entries => `<p class="links">${entries.map(([label, url]) => link(label, url)).join(' ')}</p>`;
+const draftText = (text, tag = 'p', cls = '') => `<${tag} class="draft${cls ? ' ' + cls : ''}">${esc(text)}</${tag}>`;
+const date = iso => new Date(iso + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 const css = await read('site.css') + '\n' + await read('jump.css');
-const hash = value => createHash('sha256').update(value).digest('base64');
+const draftLegend = '<p class="draft-legend"><span class="draft-key">Draft</span> marks first-person copy that Josh has not approved yet.</p>';
 
-function page({ title, description, route = '', content, script = '', showNav = route !== '' }) {
+function page({ title, description, route = '', content, script = '' }) {
+  const home = route === '';
   return `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="dark">
+<meta name="color-scheme" content="light">
 <meta name="description" content="${esc(description)}">
 <title>${esc(title)}${title === 'Josh Yorko' ? '' : ' · Josh Yorko'}</title>
 <link rel="stylesheet" href="/site.css">
 ${script ? `<script type="module" src="${script}"></script>` : ''}
 </head>
-<body${route === '' ? ' class="home-page"' : ' class="interior"'}>
+<body class="${home ? 'home-page' : 'interior'}">
 <a class="skip" href="#main">Skip to content</a>
-${jumpTrigger}
-${showNav ? `<header class="shell site-header"><nav aria-label="Main">
-<a class="identity" href="/" ${route === '' ? 'aria-current="page"' : ''}>${route === '' ? 'Home' : 'Josh Yorko'}</a>
+<header class="site-header">
+<a class="identity" href="/"${home ? ' aria-current="page"' : ''}>Josh Yorko</a>
+<nav aria-label="Main">
 ${routes.map(([path, name]) => `<a href="/${path}"${route === path ? ' aria-current="page"' : route === 'skills/' && path === 'plugins/' ? ' aria-current="location"' : ''}>${name}</a>`).join('\n')}
-</nav></header>` : ''}
-<main id="main" class="${route === '' ? 'home-shell' : 'shell'}" tabindex="-1">${content}</main>
-<footer class="shell site-footer"><a href="https://github.com/joshyorko">GitHub</a></footer>
+</nav>
+${jumpTrigger}
+</header>
+<main id="main" class="${home ? 'home' : 'shell'}" tabindex="-1">${content}</main>
+<footer class="site-footer"><p>${link('GitHub', site.github)} ${link('Résumé', '/resume/')} ${link('Computer', '/computer/')}</p>${draftLegend}</footer>
 ${jumpDialog}
 </body>
 </html>
@@ -89,41 +107,91 @@ ${jumpDialog}
 
 const entry = (name, description, evidence, id = '') => `<li${id ? ` id="${id}"` : ''}><h2>${esc(name)}</h2><p class="description">${esc(description)}</p>${links(evidence)}</li>`;
 const title = (name, intro) => `<h1>${esc(name)}</h1><p class="intro">${esc(intro)}</p>`;
-const home = `<div class="orbit">
-<div class="orbit-intro">
-<h1>Josh Yorko</h1>
-<p class="orbit-summary">Software engineer building reproducible environments, portable workspaces, and coding-agent tools.</p>
-<p class="orbit-links"><a href="/plugins/">Plugins &amp; Skills <span aria-hidden="true">→</span></a><a href="/projects/">Projects <span aria-hidden="true">→</span></a></p>
-</div>
-<picture class="orbital-art">
-<img src="/media/orbit-small.webp" srcset="/media/orbit-small.webp 568w, /media/orbit.webp 1120w"
-sizes="(min-width: 53rem) 54vw, calc(100vw - 2.75rem)" width="1120" height="747" alt="" fetchpriority="high">
-</picture>
-<nav class="home-nav" aria-label="Main">
-<ul>
-${routes.map(([path, label]) => `<li><a href="/${path}">${label}</a></li>`).join('\n')}
-</ul>
-</nav>
-</div>
-<section class="selected" aria-labelledby="selected">
-<h2 id="selected">Selected software</h2>
-<ul>
-<li><a href="/projects/#rcc">RCC</a><p>Reproducible environments for automation.</p></li>
-<li><a href="/projects/#josh-room">Josh Room</a><p>Save and restore encrypted workspaces.</p></li>
-<li><a href="/projects/#memoryd">MemoryD</a><p>Durable local recall for coding agents.</p></li>
-</ul>
+const project = id => projects.find(item => item[0] === id);
+const system = name => systems.find(item => item[0] === name);
+const pr = (repo, number) => `<a href="https://github.com/${repo}/pull/${number}">#${number}</a>`;
+const chapter = (id, number, heading, body, note = '') => `<section class="chapter" id="${id}" aria-labelledby="${id}-title">
+<h2 id="${id}-title"><span aria-hidden="true">${number}</span> ${heading}</h2>
+<div class="chapter-body">${body}</div>
+${note ? `<div class="margin-note">${note}</div>` : '<span></span>'}
 </section>`;
+const builtEntry = (name, description, href, label) => `<li><h4>${esc(name)}</h4><p>${esc(description)} ${link(label, href)}</p></li>`;
+
+const homeContent = `<div class="split">
+<section class="person" aria-labelledby="who">
+<p class="label">The person</p>
+<h1 id="who">Josh Yorko</h1>
+${draftText(draft.role, 'p', 'role')}
+<ol class="path" aria-label="Career path">
+${path.map(([years, what, where]) => `<li><span class="years">${esc(years)}</span><span class="what">${esc(what)}${where ? `<span class="where">${esc(where)}</span>` : ''}</span></li>`).join('\n')}
+</ol>
+<p class="actions"><a class="button" href="/resume/">Résumé</a> <a class="button quiet" href="${esc(site.github)}">GitHub</a> <a class="button quiet" href="#story">How I got here <span aria-hidden="true">↓</span></a></p>
+</section>
+<section class="machine" aria-labelledby="machine-title">
+<p class="label">The computer</p>
+<h2 id="machine-title">Open a portable workspace.</h2>
+<p class="machine-intro">Open a CSV, SQLite or JSON file, ask it questions with SQL, and save the whole session as one SQLite file you can reopen here later. Files are read in this tab and never uploaded.</p>
+<div class="slots">
+<a class="slot primary" href="/computer/"><b>Open your own files</b><span>CSV, TSV, SQLite, or a JSON array of objects.</span></a>
+<a class="slot" href="/computer/?sample=1"><b>Try the sample workspace</b><span>Three tables from this site: projects, notes and skills.</span></a>
+</div>
+<ul class="works" aria-label="Works today">
+<li>A SHA-256 digest for every file</li>
+<li>SQLite compiled to WebAssembly</li>
+<li>Save and restore one <code>.sqlite</code> file</li>
+<li>Keeps working offline once loaded</li>
+</ul>
+</section>
+</div>
+${chapter('story', '01', 'How I got here', draft.story.map(text => draftText(text)).join('\n'),
+  '<p>A draft in Josh’s voice, from his own account, waiting for his edit.</p>')}
+${chapter('work', '02', 'Work in healthcare', `<p>At Gainwell Technologies since 2022, first in data engineering and now on backend, platform, automation and AI-agent work.</p>
+<dl class="work">${work.map(([term, text]) => `<dt>${esc(term)}</dt><dd>${esc(text)}</dd>`).join('')}</dl>`,
+  '<p>Described in public terms only. No internal names, data, or numbers.</p>')}
+${chapter('open-source', '03', 'Open source', `<p>Three kinds of work, kept apart so it’s clear whose project is whose.</p>
+<h3>Merged into other projects</h3>
+<ul class="upstream">${upstream.map(([name, theme, repo, prs]) => `<li><b>${esc(name)}</b>, ${esc(theme)}: ${prs.map(([number]) => pr(repo, number)).join(' ')}</li>`).join('\n')}</ul>
+<h3>Maintained</h3>
+<ul class="built">
+${builtEntry('RCC', 'Rebuilds the same automation environment from a description, on any machine. Robocorp created RCC; this is its independently maintained continuation.', project('rcc')[3][1][1], 'v18.19.11 release')}
+${builtEntry('Actions runtime', 'Exposes Python actions over HTTP or MCP. A maintained fork of tonnitommi/actions-sema4ai.', project('actions')[3][2][1], 'Runtime 1.1.1')}
+</ul>
+<h3>Built</h3>
+<ul class="built">
+${builtEntry('Josh Room and JAT', 'Save and restore encrypted workspace snapshots, and pack a workspace with its tools into one portable capsule.', 'https://github.com/joshyorko/josh-room', 'Josh Room')}
+${builtEntry('MemoryD', 'Local-first recall for coding agents, with exportable records.', project('memoryd')[3][1][1], 'v0.1.0 release')}
+${builtEntry('Dudley OS and Omarchy Bootc', 'Desktops built as bootable container images.', system('Dudley OS')[2][1][1], 'Dudley OS')}
+${builtEntry('Devsy Harvester provider', 'Devcontainers on Harvester VMs. I created it; Devsy maintains it now.', system('Devsy Harvester provider')[2][0][1], 'Upstream')}
+</ul>
+${links([['All projects', '/projects/'], ['Systems and images', '/systems/']])}`)}
+${chapter('plugins', '04', 'Plugins &amp; Skills', `<p>${catalog.plugins.length} plugins and ${skillCount} skills for coding agents: RCC and Robot Framework, Actions, Fizzy, 37signals-style product and Rails judgment, and Luna Factory.</p>
+<div class="install"><code id="install-command">${esc(install)}</code><button type="button" class="copy" data-copy="install-command" hidden>Copy</button></div>
+<p class="small">Codex bootstrap for macOS and Linux. ${link('Read the script', site.installScript)} before you run it.</p>
+<ul class="plugin-list">${catalog.plugins.map(({name, version, skills}) => `<li><a href="/plugins/#${name}">${pluginInfo[name][0]}</a> <span>v${version} · ${skills.length} ${skills.length === 1 ? 'skill' : 'skills'}</span></li>`).join('')}</ul>
+${links([['Browse and search skills', '/skills/'], ['Marketplace source', source]])}`,
+  `<p>Catalog pinned at ${link(catalog.revision.slice(0, 7), source + '/commit/' + catalog.revision)}.</p>`)}
+${chapter('questions', '05', 'Open questions', `<p>What I’m working on, each linked to the thing that answers it, or marked plainly when nothing does yet.</p>
+<ol class="questions">${questions.map(([question, status, text, evidence]) => `<li>
+<h3>${esc(question)}</h3>
+<p class="status" data-status="${esc(status.split(' ')[0])}">${esc(status)}</p>
+<p>${esc(text)}</p>
+${evidence.length ? links(evidence) : ''}
+</li>`).join('\n')}</ol>`)}
+${chapter('recent', '06', 'Recently', `<ol class="log">${notes.slice(0, 7).map(([iso, kind, text, ref, url]) => `<li><time datetime="${iso}">${date(iso)}</time><span class="kind">${esc(kind)}</span><span class="what">${esc(text)} ${link(ref, url)}</span></li>`).join('\n')}</ol>
+${links([['All notes', '/notes/']])}`,
+  '<p>Dated from GitHub releases, merges and repository creation.</p>')}`;
 
 const roles = [
-  ['Gainwell Technologies', 'Advisor Application Developer', 'Jun 2023–present', 'Backend, data, and platform engineering.'],
+  ['Gainwell Technologies', 'Advisor Application Developer', 'Jun 2023–present', 'Backend, platform, distributed automation, and AI-agent engineering.'],
   ['Gainwell Technologies', 'Senior Data Engineer / Software Engineer', 'Jun 2022–Mar 2023', 'Data engineering and software development.'],
-  ['Lambent Spaces', 'Implementations Specialist', 'Mar 2021–Oct 2022', 'SQL and Python automation for implementations.'],
-  ['CVS Health', 'Data Analyst (Desktop Support)', 'May 2019–Mar 2021', 'Deployment reporting and Dash/Plotly reports.'],
-  ['Spencer Technologies', 'Client Onboarding Specialist', 'Jan 2017–Apr 2019', 'Client onboarding.'],
+  ['Lambent Spaces / Armored Things', 'Implementations Specialist', 'Mar 2021–Oct 2022', 'SQL and Python automation for implementations.'],
+  ['CVS Health', 'Data Analyst (Desktop Support)', 'May 2019–Mar 2021', 'Desktop deployment reporting, Python automation, and Dash/Plotly reports.'],
+  ['Spencer Technologies', 'Customer Service Representative, then Client Onboarding', 'Jan 2017–Apr 2019', 'Started in customer service and moved into client onboarding.'],
+  ['Healthcare', 'Certified Nursing Assistant', 'Seven years, before 2017', 'After high school.'],
 ];
 
 const pages = [
-  ['', 'Josh Yorko', 'Software engineer working on automation, reproducible environments, and developer tools.', home],
+  ['', 'Josh Yorko', 'Josh Yorko builds backend, data and AI systems for healthcare, and open-source tools for portable, reproducible computing.', homeContent, '/home.mjs'],
   ['projects/', 'Projects', 'Open-source software I maintain, build, and contribute to.',
     `<ul class="entries section">${projects.map(([id, name, description, sources]) => entry(name, description, sources, id)).join('\n')}</ul>`],
   ['systems/', 'Systems', 'Workstation images, devcontainers, distributed packages, and deployment tools.',
@@ -153,23 +221,19 @@ ${catalog.plugins.map(({name, version, skills}) => `<section class="section skil
 <p class="description">${esc(skill.description)}</p></li>`).join('\n')}</ul></section>`).join('\n')}
 <p class="section small">Snapshot from ${link(catalog.revision.slice(0, 12), source + '/commit/' + catalog.revision)}. ${link('Installation documentation', pinned + 'docs/codex-bootstrap.md')}.</p>`,
     '/search.mjs'],
-  ['notes/', 'Field Notes', 'Source links and small reproducible checks for selected public work.',
-    `<ul class="entries section">
-${entry('Nov 17, 2026 · Hauler', 'The upstream project merged a fix to honor the selected Docker context for local image imports.', [['Merged change #928', 'https://github.com/hauler-dev/hauler/pull/928']])}
-${entry('Oct 9, 2026 · Luna Factory 0.2.1', 'The corrective release packages the local control plane and MCP Apps workbench. Live host acceptance is tracked separately.', [['Release evidence', source + '/releases/tag/v0.2.1']])}
-${entry('Sep 13, 2026 · Bluefin Review', 'Bluefin merged an explicit admission check for OMP queue implementation.', [['Merged change #489', 'https://github.com/projectbluefin/contribute/pull/489']])}
-${entry('Inspect a public fixture', 'Check manifest counts with a small WASM kernel or verify the integrity of a synthetic native MemoryD export. Both checks run on your device.', [['Open Agent Lab', '/lab/']])}
-${entry('Review a specific revision', 'Bluefin’s public changes show how revision-bound plans and review deltas feed the mutation admission check.', [['Review evidence', '/projects/#review']])}
-${entry('Trace the Harvester handoff', 'The upstream provider documents authorship, supported builds, and the transfer to Devsy.', [['Provider and upstream attribution', '/systems/']])}
-${entry('Earlier portfolio experiments', 'The archived Machine Room candidate contains the original synthetic SQLite/WASM, artifact, and browser test evidence at the rollback revision.', [['Archive and harness', archive], ['Archived checks', archive.replace('/tree/', '/blob/') + '/proof/checks.json']])}
-</ul>`],
-  ['resume/', 'Résumé', 'Josh Yorko · Software engineer working on automation and developer tools.',
+  ['notes/', 'Notes', 'Dated changes from GitHub: releases, merged pull requests, and new repositories.',
+    `<ol class="entries section log-page">
+${notes.map(([iso, kind, text, ref, url]) => `<li><p class="small"><time datetime="${iso}">${date(iso)}</time> · ${esc(kind)}</p><h2>${esc(text)}</h2>${links([[ref, url]])}</li>`).join('\n')}
+</ol>
+<section class="section" aria-labelledby="earlier"><h2 id="earlier">Earlier portfolio experiments</h2>
+<p>The archived Machine Room candidate contains the original synthetic SQLite/WASM, artifact, and browser test evidence at the rollback revision.</p>
+${links([['Archive and harness', archive], ['Archived checks', archive.replace('/tree/', '/blob/') + '/proof/checks.json']])}</section>`],
+  ['resume/', 'Résumé', 'Josh Yorko · Software engineer working on backend, data, automation and AI systems.',
     `<section class="section"><h2>Experience</h2><ul class="entries">
 ${roles.map(([company, role, dates, description]) => `<li><h3>${esc(role)}</h3><p>${esc(company)} <span class="description">· ${esc(dates)}</span></p><p class="description">${esc(description)}</p></li>`).join('\n')}
 </ul></section>
-<section class="section"><h2>Education</h2><p>B.A. in English · Indiana State University</p></section>
 <section class="section"><h2>Technical skills</h2><p>Go, Python, SQL, Kubernetes, MCP and HTTP, test infrastructure, and developer environments.</p>
-${links([['Public projects', '/projects/'], ['GitHub profile', 'https://github.com/joshyorko']])}</section>`],
+${links([['Public projects', '/projects/'], ['GitHub profile', site.github]])}</section>`],
 ];
 
 for (const [route, name, intro, body, script] of pages) {
@@ -177,52 +241,40 @@ for (const [route, name, intro, body, script] of pages) {
     title: name, description: intro, route, script, content: route === '' ? body : title(name, intro) + body,
   }));
 }
-await write('site.css', css);
-for (const image of ['orbit.webp', 'orbit-small.webp']) {
-  await write(`media/${image}`, await readFile(join(root, 'media', image)));
-}
 await write('404.html', page({
   title: 'Page unavailable', description: 'The requested page was not found.', route: '404.html',
   content: title('Page unavailable', 'The requested page was not found.') + '<p class="section"><a href="/">Return to the homepage</a></p>',
 }));
-await write('search.mjs', await read('search.mjs'));
-await write('jump.mjs', await read('jump.mjs'));
+await write('site.css', css);
+for (const file of ['search.mjs', 'jump.mjs', 'home.mjs']) await write(file, await read(file));
 await write('jump-index.mjs', 'export default ' + JSON.stringify(jumpEntries) + ';\n');
+for (const font of ['literata-normal', 'schibsted-normal', 'jetbrains-normal']) await copy(`fonts/${font}.woff2`);
+for (const license of ['Literata', 'SchibstedGrotesk', 'JetBrainsMono']) await copy(`fonts/OFL-${license}.txt`);
+for (const file of ['sql-wasm.js', 'sql-wasm.wasm', 'LICENSE']) await copy(`vendor/sql.js/${file}`);
 
-const lab = await read('lab/content.html');
-const labBody = lab.replace('<!--offline-->', '<p class="section"><a href="/lab/offline.html" download="josh-yorko-agent-lab-v1.html">Download Agent Lab v1 for offline use</a> · <a href="/lab/SHA256SUMS">SHA-256 checksum</a></p>');
-const labIntro = 'Inspect a manifest or verify a synthetic MemoryD bundle on your own device.';
-await write('lab/index.html', page({
-  title: 'Agent Lab', route: 'lab/', description: labIntro, content: title('Agent Lab', labIntro) + labBody,
-  script: '/lab/ui.mjs',
-}));
-for (const file of ['ui', 'demo', 'core', 'assets']) await write(`lab/${file}.mjs`, await read(`lab/${file}.mjs`));
+// The computer's sample tables come from the same public facts as the pages.
+const csv = rows => rows.map(row => row.map(value => /[",\n]/.test(String(value)) ? `"${String(value).replace(/"/g, '""')}"` : value).join(',')).join('\n') + '\n';
+const sample = {
+  'projects.csv': csv([['name', 'kind', 'relation', 'what', 'url'],
+    ...projects.map(([id, name, description, sources]) => [name, 'project', relations[id], description, sources[0][1]]),
+    ...systems.map(([name, description, sources]) => [name, 'system', relations[name], description, sources[0][1]])]),
+  'notes.csv': csv([['date', 'kind', 'title', 'ref', 'url'], ...notes]),
+  'skills.csv': csv([['plugin', 'version', 'skill', 'description'],
+    ...catalog.plugins.flatMap(({name, version, skills}) => skills.map(skill => [name, version, skill.name, skill.description]))]),
+};
+await write('computer/sample.mjs', 'export default ' + JSON.stringify(sample) + ';\n');
+await write('computer/index.html', (await read('computer/index.html')).replaceAll('{{github}}', esc(site.github)));
+for (const file of ['app.mjs', 'computer.css']) await copy(`computer/${file}`);
 
-// Package the same lab logic in one file for explicit save-and-open offline use.
-const offlineModules = await Promise.all(['assets', 'core', 'demo', 'ui'].map(file => read(`lab/${file}.mjs`)));
-const offlineScript = offlineModules.map((code) => code
-  .replace(/^import .*\n/gm, '').replace(/^export /gm, '')
-  .replace(/import\('\.\/demo\.mjs'\)/g, 'Promise.resolve({createDemo, downloadChronology})')).join('\n');
-const offline = `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-${hash(offlineScript)}' 'wasm-unsafe-eval'; style-src 'sha256-${hash(css)}'; form-action 'none'; base-uri 'none'">
-<title>Agent Lab v1 · Josh Yorko</title>
-<style>${css}</style>
-</head><body><main class="shell">${title('Agent Lab v1', labIntro)}${lab.replace('<!--offline-->', '')}
-<script>${offlineScript}</script></main></body></html>
-`;
-await write('lab/offline.html', offline);
-await write('lab/SHA256SUMS', createHash('sha256').update(offline).digest('hex') + '  josh-yorko-agent-lab-v1.html\n');
 await write('_headers', `/*
-  Content-Security-Policy: default-src 'none'; img-src 'self'; style-src 'self' 'sha256-${hash(css)}'; script-src 'self' 'sha256-${hash(offlineScript)}' 'wasm-unsafe-eval'; connect-src 'none'; form-action 'none'; base-uri 'none'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'none'; img-src 'self'; font-src 'self'; style-src 'self'; script-src 'self' 'wasm-unsafe-eval'; connect-src 'self'; form-action 'none'; base-uri 'none'; frame-ancestors 'none'
   X-Robots-Tag: noindex, nofollow
   Referrer-Policy: no-referrer
   X-Content-Type-Options: nosniff
 /site.css
   Cache-Control: public, max-age=300
-/media/*
-  Cache-Control: public, max-age=3600
+/fonts/*
+  Cache-Control: public, max-age=86400
+/vendor/*
+  Cache-Control: public, max-age=86400
 `);

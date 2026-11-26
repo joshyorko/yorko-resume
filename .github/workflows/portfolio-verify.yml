@@ -1,4 +1,4 @@
-name: Verify orbital portfolio
+name: Verify portfolio
 
 on:
   push:

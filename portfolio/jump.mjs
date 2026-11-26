@@ -113,15 +113,16 @@ function installJumpMenu() {
     }
   });
   document.addEventListener('keydown', event => {
-    if (event.defaultPrevented || event.isComposing || event.repeat || event.altKey || event.shiftKey ||
-        !(event.ctrlKey || event.metaKey) || event.key.toLowerCase() !== 'k' ||
+    const slash = event.key === '/' && !event.ctrlKey && !event.metaKey;
+    if (event.defaultPrevented || event.isComposing || event.repeat || event.altKey || (event.shiftKey && !slash) ||
+        !(slash || ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k')) ||
         event.target.closest?.('input, textarea, select, [contenteditable]:not([contenteditable="false"])')) return;
     event.preventDefault();
     open();
   });
   window.addEventListener('resize', () => { if (dialog.open) position(); });
   viewport?.addEventListener('resize', () => { if (dialog.open) position(); });
-  opener.querySelector('kbd').textContent = /^Mac/.test(navigator.platform) ? '⌘ K' : 'Ctrl K';
+  opener.querySelector('kbd').textContent = '/';
   opener.parentElement.hidden = false;
   document.documentElement.classList.add('jump-ready');
 }

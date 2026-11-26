@@ -7,21 +7,38 @@
     1440
   ],
   "axeViolations": {
-    "/": [],
-    "/plugins/": [],
-    "/skills/": [],
-    "/projects/": [],
-    "/systems/": [],
-    "/notes/": [],
-    "/resume/": [],
-    "/lab/": []
+    "/ @390": [],
+    "/computer/ @390": [],
+    "/plugins/ @390": [],
+    "/skills/ @390": [],
+    "/projects/ @390": [],
+    "/systems/ @390": [],
+    "/notes/ @390": [],
+    "/resume/ @390": [],
+    "/computer/?sample=1 @390": [],
+    "/computer/ Files tab @390": [],
+    "/computer/ Inspect tab @390": [],
+    "/computer/ Snapshots tab @390": [],
+    "/ @1440": [],
+    "/computer/ @1440": [],
+    "/plugins/ @1440": [],
+    "/skills/ @1440": [],
+    "/projects/ @1440": [],
+    "/systems/ @1440": [],
+    "/notes/ @1440": [],
+    "/resume/ @1440": [],
+    "/computer/?sample=1 @1440": [],
+    "search dialog @360": [],
+    "search dialog @390": [],
+    "search dialog @411": [],
+    "search dialog @1440": []
   },
   "navigation": [
-    "Plugins & Skills",
+    "Computer",
     "Projects",
     "Systems",
-    "Field Notes",
-    "Agent Lab",
+    "Plugins & Skills",
+    "Notes",
     "Résumé"
   ],
   "transfer": {
@@ -29,45 +46,60 @@
       "cold": [
         {
           "path": "/",
-          "transferSize": 3332,
-          "encodedBodySize": 3032
+          "transferSize": 15650,
+          "encodedBodySize": 15350
         },
         {
           "path": "/site.css",
-          "transferSize": 11495,
-          "encodedBodySize": 11195
+          "transferSize": 16139,
+          "encodedBodySize": 15839
         },
         {
-          "path": "/media/orbit-small.webp",
-          "transferSize": 7948,
-          "encodedBodySize": 7648
+          "path": "/home.mjs",
+          "transferSize": 759,
+          "encodedBodySize": 459
         },
         {
           "path": "/jump.mjs",
-          "transferSize": 5846,
-          "encodedBodySize": 5546
+          "transferSize": 5895,
+          "encodedBodySize": 5595
+        },
+        {
+          "path": "/fonts/literata-normal.woff2",
+          "transferSize": 110380,
+          "encodedBodySize": 110080
+        },
+        {
+          "path": "/fonts/schibsted-normal.woff2",
+          "transferSize": 47052,
+          "encodedBodySize": 46752
+        },
+        {
+          "path": "/fonts/jetbrains-normal.woff2",
+          "transferSize": 31732,
+          "encodedBodySize": 31432
         },
         {
           "path": "/jump-index.mjs",
-          "transferSize": 6932,
-          "encodedBodySize": 6632
+          "transferSize": 7251,
+          "encodedBodySize": 6951
         }
       ],
       "warm": [
         {
           "path": "/",
           "transferSize": 300,
-          "encodedBodySize": 3032
+          "encodedBodySize": 15350
         },
         {
           "path": "/site.css",
           "transferSize": 0,
-          "encodedBodySize": 11195
+          "encodedBodySize": 15839
         },
         {
-          "path": "/media/orbit-small.webp",
-          "transferSize": 0,
-          "encodedBodySize": 7648
+          "path": "/home.mjs",
+          "transferSize": 300,
+          "encodedBodySize": 0
         },
         {
           "path": "/jump.mjs",
@@ -75,55 +107,86 @@
           "encodedBodySize": 0
         },
         {
+          "path": "/fonts/literata-normal.woff2",
+          "transferSize": 0,
+          "encodedBodySize": 110080
+        },
+        {
+          "path": "/fonts/schibsted-normal.woff2",
+          "transferSize": 0,
+          "encodedBodySize": 46752
+        },
+        {
+          "path": "/fonts/jetbrains-normal.woff2",
+          "transferSize": 0,
+          "encodedBodySize": 31432
+        },
+        {
           "path": "/jump-index.mjs",
           "transferSize": 300,
           "encodedBodySize": 0
         }
-      ]
+      ],
+      "coldBytes": 234858
     },
     "desktop": {
       "cold": [
         {
           "path": "/",
-          "transferSize": 3332,
-          "encodedBodySize": 3032
+          "transferSize": 15650,
+          "encodedBodySize": 15350
         },
         {
           "path": "/site.css",
-          "transferSize": 11495,
-          "encodedBodySize": 11195
+          "transferSize": 16139,
+          "encodedBodySize": 15839
         },
         {
-          "path": "/media/orbit.webp",
-          "transferSize": 27140,
-          "encodedBodySize": 26840
+          "path": "/home.mjs",
+          "transferSize": 759,
+          "encodedBodySize": 459
         },
         {
           "path": "/jump.mjs",
-          "transferSize": 5846,
-          "encodedBodySize": 5546
+          "transferSize": 5895,
+          "encodedBodySize": 5595
+        },
+        {
+          "path": "/fonts/literata-normal.woff2",
+          "transferSize": 110380,
+          "encodedBodySize": 110080
+        },
+        {
+          "path": "/fonts/schibsted-normal.woff2",
+          "transferSize": 47052,
+          "encodedBodySize": 46752
+        },
+        {
+          "path": "/fonts/jetbrains-normal.woff2",
+          "transferSize": 31732,
+          "encodedBodySize": 31432
         },
         {
           "path": "/jump-index.mjs",
-          "transferSize": 6932,
-          "encodedBodySize": 6632
+          "transferSize": 7251,
+          "encodedBodySize": 6951
         }
       ],
       "warm": [
         {
           "path": "/",
           "transferSize": 300,
-          "encodedBodySize": 3032
+          "encodedBodySize": 15350
         },
         {
           "path": "/site.css",
           "transferSize": 0,
-          "encodedBodySize": 11195
+          "encodedBodySize": 15839
         },
         {
-          "path": "/media/orbit.webp",
-          "transferSize": 0,
-          "encodedBodySize": 26840
+          "path": "/home.mjs",
+          "transferSize": 300,
+          "encodedBodySize": 0
         },
         {
           "path": "/jump.mjs",
@@ -131,42 +194,58 @@
           "encodedBodySize": 0
         },
         {
+          "path": "/fonts/literata-normal.woff2",
+          "transferSize": 0,
+          "encodedBodySize": 110080
+        },
+        {
+          "path": "/fonts/schibsted-normal.woff2",
+          "transferSize": 0,
+          "encodedBodySize": 46752
+        },
+        {
+          "path": "/fonts/jetbrains-normal.woff2",
+          "transferSize": 0,
+          "encodedBodySize": 31432
+        },
+        {
           "path": "/jump-index.mjs",
           "transferSize": 300,
           "encodedBodySize": 0
         }
-      ]
+      ],
+      "coldBytes": 234858
     }
   },
-  "jump": [
-    {
-      "width": 360,
-      "simulatedKeyboardViewport": false
-    },
-    {
-      "width": 390,
-      "simulatedKeyboardViewport": true
-    },
-    {
-      "width": 411,
-      "simulatedKeyboardViewport": false
-    },
-    {
-      "width": 1440,
-      "simulatedKeyboardViewport": false
-    }
+  "search": [
+    360,
+    390,
+    411,
+    1440
   ],
-  "browser": "158.0.8127.88",
-  "samePageSkillJump": "different-and-same-fragment",
-  "offline": {
-    "runs": 2,
-    "reloadClearedReceipts": true,
-    "sha256": "42d3d32786adefc53af14f0a6bffa5cf7fd16245a2b3b9e14b643d066266bcce"
+  "computer": {
+    "online": {
+      "sampleSkills": 22,
+      "imported": [
+        "visits.csv",
+        "tools.json"
+      ],
+      "savedBytes": 57344,
+      "savedSha256": "3b06890487ba3c31e7c0e0aa49a0c7f963e6162c4a4e717d2d1ed54e680837ab",
+      "restoredSkills": 22,
+      "internalTablesHidden": true
+    },
+    "offline": {
+      "sampleSkills": 22,
+      "imported": [
+        "visits.csv",
+        "tools.json"
+      ],
+      "savedBytes": 57344,
+      "savedSha256": "dbd59b2bd46b6b0569d7ce5bd8f86ce491dae3a03a6752d2be409b14e234c787",
+      "restoredSkills": 22,
+      "internalTablesHidden": true
+    }
   },
-  "constrainedFallback": {
-    "width": 390,
-    "cpuSlowdown": 4,
-    "latencyMs": 150,
-    "artBlocked": true
-  }
+  "browser": "158.0.8127.88"
 }
