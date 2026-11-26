@@ -29,24 +29,43 @@ def require_ordered(text, expected, parser):
 
 
 content = json.loads(Path(__file__).with_name("content.json").read_text())
-expected = [content["name"], content["title"], content["contactText"],
-            *(label for label, _ in content["contactLinks"]), content["summary"],
-            "EXPERIENCE"]
-for job in content["jobs"]:
-    expected.extend([job["heading"], job["dates"]])
-    if job["role"]:
-        expected.append(job["role"])
-    expected.extend(job["bullets"])
-expected.append("OPEN-SOURCE ENGINEERING")
+header = [content["name"], content["title"], content["contactText"],
+          *(label for label, _ in content["contactLinks"]), content["summary"]]
+projects = []
 links = list(content["contactLinks"])
 for project in content["projects"]:
-    expected.extend([project["name"], project["description"]])
-    expected.extend(label for label, _ in project["links"])
+    projects.append([project["name"], project["description"],
+                     *(label for label, _ in project["links"])])
     links.extend(project["links"])
-expected.extend(["TECHNICAL SKILLS", *content["skills"]])
+skills = ["TECHNICAL SKILLS", *(group for line in content["skills"] for group in line.split(" · "))]
 assert len(links) == len({url for _, url in links}) == 24
 
-for name in ("editorial", "modern", "classic"):
+
+def experience(design):
+    result = ["EXPERIENCE"]
+    for index, job in enumerate(content["jobs"]):
+        if index == 0:
+            result.append(job["heading"])
+            result.extend([job["dates"], job["role"]] if design == "B" else [job["role"], job["dates"]])
+        else:
+            result.extend([*job["heading"].split(" | "), job["dates"]])
+        bullets = job["bullets"]
+        if index == 0 and design == "A":
+            bullets = [bullets[i] for i in (4, 1, 5, 6, 0, 2, 3)]
+        if index == 0 and design == "C":
+            bullets = [bullets[4], *bullets[:4], *bullets[5:]]
+        result.extend(bullets)
+    return result
+
+
+for name in ("A", "B", "C"):
+    work = experience(name)
+    featured = ["OPEN-SOURCE ENGINEERING", *sum(projects[:2], [])]
+    more = sum(projects[2:], [])
+    if name == "C":
+        expected = header + featured + work + ["MORE OPEN-SOURCE ENGINEERING"] + more + skills
+    else:
+        expected = header + work + featured + more + skills
     pdf = Path(sys.argv[1]) / f"{name}.pdf"
     reader = PdfReader(pdf)
     assert len(reader.pages) == 1, f"{name}: expected one page"
@@ -70,10 +89,12 @@ for name in ("editorial", "modern", "classic"):
     boxes = ET.fromstring(run("pdftotext", "-bbox", str(pdf), "-"))
     words = boxes.findall(".//{*}word")
     assert words
+    bottom = max(float(word.attrib["yMax"]) for word in words)
     for word in words:
         x1, y1, x2, y2 = (float(word.attrib[k]) for k in ("xMin", "yMin", "xMax", "yMax"))
         assert 20 < x1 < x2 < 592 and 20 < y1 < y2 < 772
     tagged = bool(reader.trailer["/Root"].get("/StructTreeRoot"))
     checksum = hashlib.sha256(pdf.read_bytes()).hexdigest()
     print(f"{name}: Letter, one page; 24 exact URI annotations; both text parsers passed; "
-          f"embedded Unicode fonts; no text or link bounds violations; tagged={tagged}; SHA-256 {checksum}")
+          f"embedded Unicode fonts; bottom text margin {(792-bottom)/72:.2f} in; "
+          f"no text or link bounds violations; tagged={tagged}; SHA-256 {checksum}")

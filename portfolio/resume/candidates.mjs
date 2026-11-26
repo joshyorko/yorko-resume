@@ -1,65 +1,82 @@
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import content from './content.json' with { type: 'json' };
 
 const engine = process.env.TECTONIC || 'tectonic';
 const output = resolve(process.argv[2] || 'resume-candidates');
-const toolVersion = execFileSync(engine, ['--version'], { encoding: 'utf8' }).trim();
-if (toolVersion !== 'Tectonic 0.17.0') throw new Error('Use Tectonic 0.17.0');
+if (execFileSync(engine, ['--version'], { encoding: 'utf8' }).trim() !== 'Tectonic 0.17.0')
+  throw new Error('Use Tectonic 0.17.0');
 mkdirSync(output, { recursive: true });
 
-const special = {
-  '\\': String.raw`\textbackslash{}`, '~': String.raw`\textasciitilde{}`,
-  '^': String.raw`\textasciicircum{}`, '|': String.raw`\textbar{}`,
-};
-const tex = text => text.replace(/[\\{}$&#_%~^|]/g, c => special[c] || '\\' + c);
+const tex = text => text.replace(/[\\{}$&#_%~^|]/g, c =>
+  ({ '\\': '\\textbackslash{}', '~': '\\textasciitilde{}', '^': '\\textasciicircum{}', '|': '\\textbar{}' })[c] || '\\' + c);
+const command = (name, ...args) => '\\' + name + args.map(value => '{' + value + '}').join('');
+const emphasize = (text, phrase) => phrase ? tex(text).replace(tex(phrase), command('textbf', tex(phrase))) : tex(text);
 const links = items => items.map(([label, url]) =>
-  String.raw`\href{${url.replace(/[%#]/g, '\\$&')}}{${tex(label)}}`).join(' · ');
+  command('prooflink', url.replace(/[%#]/g, '\\$&'), tex(label))).join(' \\separator ');
 
-const variants = [
-  { id: 'editorial', body: 'pagella', color: '214942', size: '10.5', leading: '12.7', rule: true, margin: '0.52in' },
-  { id: 'modern', body: 'heros', color: '254670', size: '10.4', leading: '12.7', rule: false, margin: '0.61in' },
-  { id: 'classic', body: 'termes', color: '303030', size: '10.7', leading: '12.9', rule: true, margin: '0.59in' },
-];
+const [current, ...earlier] = content.jobs;
+const currentPhrases = [null, 'MCP/HTTP testing platform', 'daily claims-image API', null,
+  'hourly distributed QA execution platform', 'Go/SOAP API replacement', null];
+const projectPhrases = ['RFCs adopted in Hive v4/v5', '58 merged PRs across eight repositories'];
+const skillLabels = ['Languages', 'Services and data', 'Infrastructure', 'AI and testing', 'Delivery'];
+const skillGroups = content.skills.flatMap(line => line.split(' · ')).map((group, index) =>
+  command('skill', skillLabels[index], tex(group)));
+const stackedSkills = command('skillsbody', skillGroups.join('\\par\n'));
+const compactSkills = command('skillsbody', [
+  skillGroups.slice(0, 2).join(' \\skillseparator '),
+  skillGroups[2],
+  skillGroups.slice(3).join(' \\skillseparator '),
+].join('\\par\n'));
 
-for (const { id, body, color, size, leading, rule, margin } of variants) {
-  const source = String.raw`\documentclass[letterpaper]{article}
-\usepackage[top=0.45in,bottom=0.44in,left=${margin},right=${margin}]{geometry}
-\usepackage{fontspec}
-\setmainfont{texgyre${body}-regular.otf}[BoldFont=texgyre${body}-bold.otf]
-\usepackage{xcolor}
-\definecolor{accent}{HTML}{${color}}
-\usepackage[unicode,colorlinks,urlcolor=accent]{hyperref}
-\hypersetup{pdftitle={${tex(content.name)} — Résumé},pdfauthor={${tex(content.name)}}}
-\pagestyle{empty}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0pt}
-\newcommand{\sectiontitle}[1]{\par\vspace{8pt}{\bfseries\color{accent}\fontsize{10.5}{12}\selectfont #1\par}${rule ? String.raw`{\color{accent}\hrule height 0.35pt}\vspace{2pt}` : String.raw`\vspace{1.5pt}`}}
-\newcommand{\job}[2]{\par\vspace{4pt}\textbf{#1} · #2\par}
-\newcommand{\workitem}[1]{\par\hangindent=8pt\hangafter=1\makebox[8pt][l]{\textbullet}#1\par}
-\newcommand{\project}[3]{\par\vspace{4pt}\textbf{#1 —} #2\par{\fontsize{9.2}{11}\selectfont #3\par}}
-\begin{document}
-\raggedright
-\fontsize{${size}}{${leading}}\selectfont
-{${id === "classic" ? String.raw`\centering` : ""}
-{\bfseries\color{accent}\fontsize{26}{29}\selectfont ${tex(content.name)}\par}
-{\bfseries ${tex(content.title)}\par}
-${tex(content.contactText)} · ${links(content.contactLinks)}\par}
-\vspace{6pt}
-${tex(content.summary)}\par
-\sectiontitle{EXPERIENCE}
-${content.jobs.map(({ heading, dates, role, bullets }) =>
-  String.raw`\job{${tex(heading)}}{${tex(dates)}}` + '\n' +
-  (role ? tex(role) + String.raw`\par` + '\n' : '') +
-  bullets.map(text => String.raw`\workitem{${tex(text)}}`).join('\n')).join('\n')}
-\sectiontitle{OPEN-SOURCE ENGINEERING}
-${content.projects.map(project =>
-  String.raw`\project{${tex(project.name)}}{${tex(project.description)}}{${links(project.links)}}`).join('\n')}
-\sectiontitle{TECHNICAL SKILLS}
-${content.skills.map(text => tex(text) + String.raw`\par`).join('\n')}
-\end{document}
-`;
+function job(job, style) {
+  const [employer, previousRole] = job.heading.split(' | ');
+  return command(style, tex(employer), tex(job.role || previousRole), tex(job.dates));
+}
+
+function work(order, block) {
+  return order.map(index => command(block, emphasize(current.bullets[index], currentPhrases[index]))).join('\n');
+}
+
+function projects(style, start = 0, end = content.projects.length) {
+  return content.projects.map((project, index) =>
+    command(index < 2 && style === 'evidenceproject' ? 'featuredproject' : style, tex(project.name), emphasize(project.description, projectPhrases[index]), links(project.links))).slice(start, end).join('\n');
+}
+
+const conventional = [0, 1, 2, 3, 4, 5, 6];
+const focused = [4, 0, 1, 2, 3, 5, 6];
+const sections = {
+  experience: command('sectiontitle', 'EXPERIENCE'),
+  projects: command('sectiontitle', 'OPEN-SOURCE ENGINEERING'),
+  skills: command('sectiontitle', 'TECHNICAL SKILLS'),
+};
+const earlierJobs = style => earlier.map(item =>
+  job(item, style) + '\n' + command('earlier', tex(item.bullets[0]))).join('\n');
+
+const compositions = {
+  A: [sections.experience, job(current, 'row'), command('workgroup', 'QA and integration'),
+    work([4, 1, 5, 6], 'achievement'), command('workgroup', 'Healthcare systems'), work([0, 2, 3], 'achievement'),
+    earlierJobs('row'), sections.projects, projects('inlineproject'), sections.skills, compactSkills],
+  B: [sections.experience, job(current, 'stacked'), '\\begin{workbody}',
+    work(conventional.slice(0, 4), 'paragraphitem'), '\\vspace{3pt}',
+    work(conventional.slice(4), 'paragraphitem'), '\\end{workbody}', earlierJobs('row'),
+    sections.projects, projects('namedproject'), sections.skills, stackedSkills],
+  C: [sections.projects, projects('evidenceproject', 0, 2), sections.experience,
+    job(current, 'row'), work(focused.slice(0, 1), 'lead'), work(focused.slice(1), 'achievement'),
+    earlierJobs('row'), command('sectiontitle', 'MORE OPEN-SOURCE ENGINEERING'),
+    projects('evidenceproject', 2), sections.skills, stackedSkills],
+};
+
+const template = readFileSync(new URL('./layout.tex', import.meta.url), 'utf8');
+for (const [id, composition] of Object.entries(compositions)) {
+  const style = readFileSync(new URL('./layout-' + id + '.tex', import.meta.url), 'utf8');
+  const source = template.replace('%%STYLE%%', () => style)
+    .replace('%%NAME%%', () => tex(content.name))
+    .replace('%%TITLE%%', () => tex(content.title))
+    .replace('%%CONTACT%%', () => tex(content.contactText) + ' \\separator ' + links(content.contactLinks))
+    .replace('%%SUMMARY%%', () => tex(content.summary))
+    .replace('%%BODY%%', () => composition.join('\n'));
   writeFileSync(resolve(output, id + '.tex'), source);
   execFileSync(engine, ['--untrusted', '--bundle', 'https://relay.fullyjustified.net/default_bundle_v33.tar', '--keep-logs', id + '.tex'], {
     cwd: output,

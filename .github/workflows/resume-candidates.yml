@@ -27,7 +27,7 @@ jobs:
           curl -fsSL 'https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%400.17.0/tectonic-0.17.0-x86_64-unknown-linux-musl.tar.gz' -o tectonic.tar.gz
           echo '8533d07f9ccbd7a65824b9e0459041bca34af1eb33daba48f59215593753a3b7  tectonic.tar.gz' | sha256sum -c
           tar xzf tectonic.tar.gz tectonic
-          python -m pip install pypdf==6.4.2 pdfminer.six==20250506
+          python -m pip install pypdf==6.4.2 pdfminer.six==20250506 Pillow==12.2.0
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends poppler-utils
       - name: Render and verify
@@ -39,9 +39,8 @@ jobs:
           mkdir -p "$out"
           node portfolio/resume/candidates.mjs "$out" > "$out/latex-build.log" 2>&1
           python portfolio/resume/verify-candidates.py "$out" | tee "$out/verification.txt"
-          for variant in editorial modern classic; do
-            pdftoppm -singlefile -r 120 -png "$out/$variant.pdf" "$out/$variant"
-          done
+          python portfolio/resume/render-review.py "$out"
+          cp portfolio/resume/DESIGN-REVIEW.md "$out/"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -51,3 +50,4 @@ jobs:
             ${{ runner.temp }}/resume-review/*.png
             ${{ runner.temp }}/resume-review/latex-build.log
             ${{ runner.temp }}/resume-review/verification.txt
+            ${{ runner.temp }}/resume-review/DESIGN-REVIEW.md
