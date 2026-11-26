@@ -1,0 +1,1397 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Josh Yorko, software engineer building reproducible automation runtimes, portable agent plugins, and local developer infrastructure.">
+<title>Josh Yorko</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: dark;
+  --canvas: #101114;
+  --plate: #17191E;
+  --plate-hover: #1D2027;
+  --well: #0C0D10;
+  --ink: #F2EFE9;
+  --ink-link: #CFCAC0;
+  --ink-muted: #989790;
+  --ink-faint: #6F6E69;
+  --accent: #D4B475;
+  --accent-bg: rgba(212, 180, 117, 0.11);
+  --accent-border: rgba(212, 180, 117, 0.52);
+  --line: #252830;
+  --tick: #4B5160;
+  --ok: #78BFA0;
+  --font-display: 'Bricolage Grotesque', 'Adwaita Sans', 'Liberation Sans', sans-serif;
+  --font-body: 'IBM Plex Sans', 'Adwaita Sans', 'Liberation Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'BlexMono Nerd Font', 'JetBrainsMono NF', ui-monospace, monospace;
+  --measure: 56rem;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--canvas);
+  background-image: radial-gradient(760px 340px at 14% 0%, rgba(212, 180, 117, 0.055), transparent 72%);
+  color: var(--ink);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 150ms ease, border-color 150ms ease, background-color 150ms ease;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.skip {
+  position: fixed;
+  top: 0.75rem;
+  left: 1rem;
+  padding: 0.5rem 0.9rem;
+  background: var(--ink);
+  color: var(--canvas);
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: 4px;
+  z-index: 100;
+  transform: translateY(-200%);
+}
+.skip:focus { transform: translateY(0); }
+
+.shell {
+  width: min(var(--measure), 100% - clamp(2rem, 6vw, 3.5rem));
+  margin-inline: auto;
+}
+
+/* Header */
+.site-header {
+  padding-block: 0.85rem 0.8rem;
+  border-bottom: 1px solid rgba(37, 40, 48, 0.65);
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem 1rem;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.98rem;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.brand svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 0.95rem;
+}
+
+.site-nav a {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+  padding-block: 0.2rem;
+  white-space: nowrap;
+  position: relative;
+}
+
+.site-nav a:hover,
+.site-nav a[aria-current="page"] {
+  color: var(--ink);
+}
+
+.site-nav a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.15rem;
+  height: 1.5px;
+  background: var(--accent);
+}
+
+/* Opening Identity Band */
+.opening {
+  padding-block: clamp(1.25rem, 3.8vw, 2.75rem) clamp(1.15rem, 3vw, 2rem);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  align-items: end;
+}
+
+.opening h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.1rem, 5.8vw, 3.25rem);
+  line-height: 1.03;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+}
+
+.lead {
+  margin: 0.55rem 0 0;
+  font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+  line-height: 1.52;
+  color: var(--ink-muted);
+  max-width: 54ch;
+}
+
+.opening-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 1.2rem;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.2rem;
+  padding: 0.38rem 0.92rem;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  color: var(--ink);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border-radius: 5px;
+}
+
+.btn-primary:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--canvas);
+}
+
+.action-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.2rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ink-link);
+  border-bottom: 1px solid transparent;
+}
+
+.action-link:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* Focal Instrument: Portable Plugin Bench */
+.bench {
+  position: relative;
+  background: var(--plate);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.bench::before,
+.bench::after,
+.bench-inner::before,
+.bench-inner::after {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  pointer-events: none;
+  z-index: 2;
+}
+.bench::before { top: -1px; left: -1px; border-top: 1.5px solid var(--tick); border-left: 1.5px solid var(--tick); }
+.bench::after { top: -1px; right: -1px; border-top: 1.5px solid var(--tick); border-right: 1.5px solid var(--tick); }
+.bench-inner::before { bottom: -1px; left: -1px; border-bottom: 1.5px solid var(--tick); border-left: 1.5px solid var(--tick); }
+.bench-inner::after { bottom: -1px; right: -1px; border-bottom: 1.5px solid var(--tick); border-right: 1.5px solid var(--tick); }
+
+.bench-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 0.85rem;
+  padding: 0.78rem 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.bench-title-group {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+  min-width: 0;
+}
+
+.bench-head h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.bench-repo {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--ink-faint);
+}
+
+.bench-all {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.bench-all:hover {
+  color: var(--ink);
+}
+
+.bench-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+/* Plugin Tabs */
+.plugin-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-bottom: 1px solid var(--line);
+  background: rgba(16, 17, 20, 0.35);
+}
+
+.plugin-tab {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--ink-muted);
+  font-family: var(--font-body);
+  text-align: left;
+  padding: 0.64rem 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.45rem;
+  position: relative;
+  transition: background-color 140ms ease, color 140ms ease;
+}
+
+.plugin-tab:nth-child(odd) {
+  border-right: 1px solid rgba(37, 40, 48, 0.7);
+}
+.plugin-tab:nth-child(-n+2) {
+  border-bottom: 1px solid rgba(37, 40, 48, 0.7);
+}
+
+.plugin-tab:hover {
+  background: var(--plate-hover);
+  color: var(--ink);
+}
+
+.plugin-tab[aria-selected="true"] {
+  background: var(--plate);
+  color: var(--ink);
+}
+
+.plugin-tab[aria-selected="true"]::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: var(--accent);
+}
+
+.tab-name {
+  font-weight: 600;
+  font-size: 0.87rem;
+  letter-spacing: -0.01em;
+}
+
+.tab-count {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--ink-faint);
+}
+
+.plugin-tab[aria-selected="true"] .tab-count {
+  color: var(--accent);
+}
+
+/* Active Plugin Panel */
+.plugin-panel {
+  padding: 0.95rem 1rem 1.05rem;
+  min-width: 0;
+}
+
+.plugin-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.65rem;
+}
+
+.plugin-meta h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.version-pill {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+}
+
+.client-note {
+  font-size: 0.8rem;
+  color: var(--ink-faint);
+}
+
+.plugin-desc {
+  margin: 0.45rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.52;
+  color: var(--ink-muted);
+  max-width: 60ch;
+}
+
+.skill-list {
+  margin: 0.78rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.skill-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.24rem 0.55rem;
+  background: var(--well);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--ink-link);
+}
+
+.skill-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.install-box {
+  margin-top: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.55rem;
+  padding: 0.5rem 0.55rem 0.5rem 0.75rem;
+  background: var(--well);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  min-width: 0;
+}
+
+.install-code {
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+  line-height: 1.45;
+  color: var(--ink);
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(to right, #000 90%, transparent 100%);
+  mask-image: linear-gradient(to right, #000 90%, transparent 100%);
+}
+.install-code::-webkit-scrollbar { display: none; }
+
+.install-prompt {
+  color: var(--ink-faint);
+  user-select: none;
+  margin-right: 0.4rem;
+}
+
+.copy-btn {
+  appearance: none;
+  flex-shrink: 0;
+  border: 1px solid var(--line);
+  background: var(--plate);
+  color: var(--ink-link);
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 500;
+  padding: 0.28rem 0.58rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color 140ms ease, border-color 140ms ease;
+}
+
+.copy-btn:hover {
+  color: var(--ink);
+  border-color: var(--tick);
+}
+
+.copy-btn.copied {
+  color: var(--ok);
+  border-color: rgba(120, 191, 160, 0.45);
+}
+
+.panel-links {
+  margin-top: 0.82rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 1.15rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.panel-links a {
+  color: var(--ink-link);
+}
+
+.panel-links a:first-child {
+  color: var(--accent);
+}
+
+.panel-links a:hover {
+  color: var(--ink);
+}
+
+/* Open Editorial Sections */
+.band {
+  padding-top: clamp(2.25rem, 5.5vw, 3.75rem);
+}
+
+.band-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.band-head h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.28rem, 2.8vw, 1.52rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+
+.band-sub {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--ink-faint);
+}
+
+/* Unboxed 2-column Software Ledger */
+.work-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.4rem;
+}
+
+.work-item {
+  position: relative;
+  padding-left: 0.95rem;
+  border-left: 1.5px solid rgba(37, 40, 48, 0.95);
+  transition: border-color 160ms ease;
+}
+
+.work-item:hover {
+  border-left-color: var(--accent);
+}
+
+.work-item h3 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.work-item p {
+  margin: 0.28rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.54;
+  color: var(--ink-muted);
+  max-width: 48ch;
+}
+
+.item-links {
+  margin-top: 0.48rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.05rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.item-links a {
+  color: var(--ink-link);
+}
+
+.item-links a:hover {
+  color: var(--accent);
+}
+
+.work-more {
+  margin-top: 1.5rem;
+  padding-top: 0.95rem;
+  border-top: 1px solid rgba(37, 40, 48, 0.55);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.6rem 2rem;
+  font-size: 0.86rem;
+  color: var(--ink-muted);
+}
+
+.work-more a {
+  display: block;
+}
+
+.work-more strong {
+  color: var(--ink);
+  font-weight: 600;
+  margin-right: 0.45rem;
+}
+
+.work-more a:hover strong {
+  color: var(--accent);
+}
+
+/* Systems Grid */
+.systems-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.2rem;
+}
+
+.system-row {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.system-row a {
+  font-weight: 600;
+  font-size: 0.97rem;
+  color: var(--ink);
+  width: fit-content;
+}
+
+.system-row a:hover {
+  color: var(--accent);
+}
+
+.system-row p {
+  margin: 0;
+  font-size: 0.89rem;
+  line-height: 1.54;
+  color: var(--ink-muted);
+  max-width: 52ch;
+}
+
+.systems-extra {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 1.25rem;
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--ink-link);
+}
+
+.systems-extra a:hover {
+  color: var(--accent);
+}
+
+/* Experience & Resume Band */
+.resume-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.7rem;
+}
+
+.role-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.1rem;
+}
+
+.role-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.14rem;
+}
+
+.role-dates {
+  font-family: var(--font-mono);
+  font-size: 0.77rem;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.role-title {
+  margin: 0;
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.role-org {
+  color: var(--ink-muted);
+  font-weight: 400;
+}
+
+.role-scope {
+  margin: 0.16rem 0 0;
+  font-size: 0.88rem;
+  color: var(--ink-muted);
+}
+
+.resume-aside {
+  display: grid;
+  gap: 1.1rem;
+  align-content: start;
+}
+
+.aside-block h3 {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.aside-block p {
+  margin: 0.28rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+.aside-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.15rem;
+  margin-top: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.aside-links a {
+  color: var(--accent);
+}
+
+.aside-links a:hover {
+  color: var(--ink);
+}
+
+/* Notes & Optional Agent Lab Band */
+.notes-split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+.note-block h3 {
+  margin: 0;
+  font-size: 0.97rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.note-block p {
+  margin: 0.28rem 0 0;
+  font-size: 0.89rem;
+  line-height: 1.54;
+  color: var(--ink-muted);
+  max-width: 50ch;
+}
+
+.note-block .item-links {
+  margin-top: 0.48rem;
+}
+
+.lab-callout {
+  padding: 1rem 1.1rem;
+  background: var(--plate);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.lab-callout h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.lab-callout p {
+  margin: 0.32rem 0 0;
+  font-size: 0.87rem;
+  line-height: 1.54;
+  color: var(--ink-muted);
+}
+
+.lab-callout .item-links a {
+  color: var(--accent);
+}
+
+.lab-callout .item-links a:hover {
+  color: var(--ink);
+}
+
+/* Footer */
+.site-footer {
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+  padding-block: 1.25rem 2rem;
+  border-top: 1px solid rgba(37, 40, 48, 0.7);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.84rem;
+  color: var(--ink-muted);
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+}
+
+.footer-links a:hover {
+  color: var(--ink);
+}
+
+/* Desktop upgrades */
+@media (min-width: 45rem) {
+  .site-header {
+    padding-block: 1.05rem 0.95rem;
+  }
+
+  .site-nav {
+    gap: 1.35rem;
+  }
+
+  .site-nav a {
+    font-size: 0.875rem;
+  }
+
+  .opening {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1.5rem 2rem;
+  }
+
+  .opening-actions {
+    justify-content: flex-end;
+    padding-bottom: 0.15rem;
+  }
+
+  .bench-head {
+    padding: 0.9rem 1.15rem;
+  }
+
+  .bench-repo {
+    display: inline;
+  }
+
+  .bench-grid {
+    grid-template-columns: 12.25rem minmax(0, 1fr);
+  }
+
+  .plugin-tabs {
+    grid-template-columns: 1fr;
+    border-bottom: 0;
+    border-right: 1px solid var(--line);
+    align-content: start;
+  }
+
+  .plugin-tab {
+    padding: 0.88rem 1rem;
+    border-right: 0 !important;
+    border-bottom: 1px solid rgba(37, 40, 48, 0.65) !important;
+  }
+
+  .plugin-tab:last-child {
+    border-bottom: 0 !important;
+  }
+
+  .plugin-tab[aria-selected="true"]::before {
+    left: 0;
+    right: auto;
+    top: 0;
+    bottom: 0;
+    width: 2.5px;
+    height: auto;
+  }
+
+  .plugin-panel {
+    padding: 1.25rem 1.35rem 1.3rem;
+  }
+
+  .install-code {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .work-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.8rem 2.5rem;
+  }
+
+  .work-more {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .systems-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.4rem 2.5rem;
+  }
+
+  .resume-layout {
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    gap: 2.5rem;
+  }
+
+  .role-row {
+    grid-template-columns: 9.25rem minmax(0, 1fr);
+    gap: 0.25rem 1rem;
+    align-items: baseline;
+  }
+
+  .notes-split {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: 2rem;
+    align-items: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="shell header-row">
+    <a class="brand" href="./index.html" aria-label="Josh Yorko home">
+      <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="1.25" y="1.25" width="25.5" height="25.5" rx="4.5" stroke="#2D313B" stroke-width="1.25"/>
+        <path d="M11.5 7.5V16.25C11.5 18.6 9.95 20 7.75 20H6.5" stroke="#F2EFE9" stroke-width="2" stroke-linecap="square"/>
+        <path d="M15.5 7.5L19 13.5L22.5 7.5" stroke="#F2EFE9" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+        <path d="M19 13.5V20" stroke="#F2EFE9" stroke-width="2" stroke-linecap="square"/>
+        <rect x="10.25" y="12.25" width="2.5" height="2.5" fill="#D4B475"/>
+      </svg>
+      <span>Josh Yorko</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="./plugins.html">Plugins</a>
+      <a href="#work">Software</a>
+      <a href="#systems">Systems</a>
+      <a href="#notes">Notes</a>
+      <a href="#resume">Résumé</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="shell" tabindex="-1">
+  <section class="opening" aria-labelledby="identity-heading">
+    <div>
+      <h1 id="identity-heading">Josh Yorko</h1>
+      <p class="lead">Software engineer building reproducible automation runtimes, portable agent skills, and local-first developer tools.</p>
+    </div>
+    <div class="opening-actions">
+      <a class="btn-primary" href="#resume">Read résumé</a>
+      <a class="action-link" href="./plugins.html">All 22 skills</a>
+      <a class="action-link" href="https://github.com/joshyorko">GitHub</a>
+    </div>
+  </section>
+
+  <!-- Signature Focal Instrument: Portable Agent Plugins -->
+  <section class="bench" aria-labelledby="plugins-bench-heading">
+    <div class="bench-inner">
+      <div class="bench-head">
+        <div class="bench-title-group">
+          <h2 id="plugins-bench-heading">Portable agent plugins</h2>
+          <span class="bench-repo">joshyorko/plugins</span>
+        </div>
+        <a class="bench-all" href="./plugins.html">Browse 22 skills</a>
+      </div>
+
+      <div class="bench-grid">
+        <div class="plugin-tabs" role="tablist" aria-label="Published plugins">
+          <button class="plugin-tab" type="button" role="tab" id="tab-37signals" aria-selected="true" aria-controls="panel-plugin" data-plugin="37signals">
+            <span class="tab-name">37signals</span>
+            <span class="tab-count">10</span>
+          </button>
+          <button class="plugin-tab" type="button" role="tab" id="tab-rcc" aria-selected="false" aria-controls="panel-plugin" data-plugin="rcc">
+            <span class="tab-name">RCC</span>
+            <span class="tab-count">9</span>
+          </button>
+          <button class="plugin-tab" type="button" role="tab" id="tab-fizzy" aria-selected="false" aria-controls="panel-plugin" data-plugin="fizzy">
+            <span class="tab-name">Fizzy</span>
+            <span class="tab-count">1</span>
+          </button>
+          <button class="plugin-tab" type="button" role="tab" id="tab-luna-factory" aria-selected="false" aria-controls="panel-plugin" data-plugin="luna-factory">
+            <span class="tab-name">Luna Factory</span>
+            <span class="tab-count">2</span>
+          </button>
+        </div>
+
+        <div class="plugin-panel" id="panel-plugin" role="tabpanel" aria-labelledby="tab-37signals" tabindex="0">
+          <div class="plugin-meta">
+            <h3 id="p-title">37signals</h3>
+            <span class="version-pill" id="p-version">v0.1.0</span>
+            <span class="client-note" id="p-clients">Codex, Claude Code, Hermes</span>
+          </div>
+          <p class="plugin-desc" id="p-desc">Community-maintained, 37signals-inspired guidance for Rails, Hotwire, product design, shaping, and scope judgment. Independent of 37signals and Basecamp.</p>
+          <ul class="skill-list" id="p-skills">
+            <li><a class="skill-chip" href="./plugins.html#skill-37signals-product-design">37signals-product-design</a></li>
+            <li><a class="skill-chip" href="./plugins.html#skill-37signals-rails-implement">37signals-rails-implement</a></li>
+            <li><a class="skill-chip" href="./plugins.html#skill-37signals-hotwire">37signals-hotwire</a></li>
+          </ul>
+          <div class="install-box">
+            <code class="install-code"><span class="install-prompt" aria-hidden="true">$</span><span id="p-cmd">curl -fsSL https://raw.githubusercontent.com/joshyorko/plugins/main/install.sh | bash</span></code>
+            <button class="copy-btn" type="button" id="copy-cmd">Copy</button>
+          </div>
+          <div class="panel-links" id="p-links">
+            <a href="./plugins.html#37signals">Browse 10 skills</a>
+            <a href="https://github.com/joshyorko/plugins/blob/e24cd596ef41e9294ad770d2b613bf77b42a8a68/plugins/37signals/plugin.json">Manifest</a>
+            <a href="https://github.com/joshyorko/plugins">Marketplace source</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Selected Software -->
+  <section class="band" id="work" aria-labelledby="work-heading">
+    <div class="band-head">
+      <h2 id="work-heading">Selected software</h2>
+      <p class="band-sub">Open-source runtimes, portable workspaces, and upstream contributions.</p>
+    </div>
+
+    <ul class="work-grid">
+      <li class="work-item" id="rcc">
+        <h3>RCC</h3>
+        <p>Reproducible software environments and environment artifact tooling for automation projects. Community distribution and releases.</p>
+        <div class="item-links">
+          <a href="https://github.com/joshyorko/rcc">Source</a>
+          <a href="https://github.com/joshyorko/rcc/releases/tag/v18.19.11">v18.19.11 release</a>
+        </div>
+      </li>
+
+      <li class="work-item" id="actions">
+        <h3>Actions Runtime</h3>
+        <p>Expose Python actions over HTTP or MCP in a maintained fork of Robocorp Actions, with packaged runtime releases.</p>
+        <div class="item-links">
+          <a href="https://github.com/joshyorko/actions">Fork</a>
+          <a href="https://github.com/joshyorko/actions/releases/tag/actions-runtime-1.1.1">Runtime 1.1.1</a>
+        </div>
+      </li>
+
+      <li class="work-item" id="josh-room">
+        <h3>Josh Room and JAT</h3>
+        <p>Save and restore encrypted workspace snapshots. Josh All The Things provides the capture identity and restore tooling.</p>
+        <div class="item-links">
+          <a href="https://github.com/joshyorko/josh-room">Josh Room</a>
+          <a href="https://github.com/joshyorko/josh-all-the-things">JAT</a>
+          <a href="https://github.com/joshyorko/josh-all-the-things/pull/43">Capture identity PR #43</a>
+        </div>
+      </li>
+
+      <li class="work-item" id="memoryd">
+        <h3>MemoryD</h3>
+        <p>Durable local recall for coding agents with canonical, exportable memory bundles and integrity evidence.</p>
+        <div class="item-links">
+          <a href="https://github.com/joshyorko/codex-memoryd">Source</a>
+          <a href="https://github.com/joshyorko/codex-memoryd/releases/tag/v0.1.0">v0.1.0 release</a>
+        </div>
+      </li>
+
+      <li class="work-item" id="review">
+        <h3>Bluefin Review</h3>
+        <p>Upstream contributions adding revision-bound mutation plans, re-review deltas, and fresh admission checks to Bluefin review tooling.</p>
+        <div class="item-links">
+          <a href="https://github.com/projectbluefin/contribute/pull/191">PR #191</a>
+          <a href="https://github.com/projectbluefin/contribute/pull/350">PR #350</a>
+          <a href="https://github.com/projectbluefin/contribute/pull/489">PR #489</a>
+        </div>
+      </li>
+
+      <li class="work-item" id="cas">
+        <h3>Codex Action Server</h3>
+        <p>Connect Codex workflows to the Actions stack with bounded integration tooling and explicit schema contracts.</p>
+        <div class="item-links">
+          <a href="https://github.com/joshyorko/codex-action-server">Source</a>
+          <a href="https://github.com/joshyorko/codex-action-server/pull/30">Integration PR #30</a>
+        </div>
+      </li>
+    </ul>
+
+    <div class="work-more" aria-label="Additional public repositories">
+      <a href="https://github.com/joshyorko/mcp-tunnel-kit"><strong>MCP Tunnel Kit</strong>Self-hosted tunnel control plane for MCP integrations.</a>
+      <a href="https://github.com/hauler-dev/hauler/pull/928"><strong>Hauler</strong>Upstream Docker context selection fix in PR #928.</a>
+    </div>
+  </section>
+
+  <!-- Systems -->
+  <section class="band" id="systems" aria-labelledby="systems-heading">
+    <div class="band-head">
+      <h2 id="systems-heading">Systems</h2>
+      <p class="band-sub">Bootc Linux images, VM providers, devcontainers, and packaging.</p>
+    </div>
+
+    <ul class="systems-grid">
+      <li class="system-row">
+        <a href="https://github.com/joshyorko/dudley-os">Dudley OS</a>
+        <p>Personal bootc workstation distribution built on Project Bluefin, with documented stream conventions.</p>
+      </li>
+      <li class="system-row">
+        <a href="https://github.com/joshyorko/omarchy-bootc">Omarchy Bootc</a>
+        <p>Image assembly project packaging upstream Omarchy userspace as an Arch bootc image with acceptance checks.</p>
+      </li>
+      <li class="system-row">
+        <a href="https://github.com/devsy-org/devsy-provider-harvester#license-and-attribution">Devsy Harvester provider</a>
+        <p>Created the Harvester VM provider for devcontainers. Maintained upstream by Devsy, with the original repository archived.</p>
+      </li>
+      <li class="system-row">
+        <a href="https://github.com/joshyorko/room-of-requirement">Room of Requirement</a>
+        <p>Homebrew-first devcontainer image variants built for Ubuntu, Debian, and Wolfi environments.</p>
+      </li>
+    </ul>
+
+    <div class="systems-extra" aria-label="Additional systems repositories">
+      <a href="https://github.com/joshyorko/homebrew-tools">Homebrew Tools tap</a>
+      <a href="https://github.com/joshyorko/webtop-os">Webtop OS</a>
+      <a href="https://github.com/joshyorko/dsb-common">DSB Common payload</a>
+      <a href="https://github.com/joshyorko/dudley-iso">Dudley ISO</a>
+    </div>
+  </section>
+
+  <!-- Experience & Resume -->
+  <section class="band" id="resume" aria-labelledby="resume-heading">
+    <div class="band-head">
+      <h2 id="resume-heading">Résumé</h2>
+      <p class="band-sub">Career timeline and technical focus.</p>
+    </div>
+
+    <div class="resume-layout">
+      <ol class="role-list">
+        <li class="role-row">
+          <span class="role-dates">Jun 2023 to present</span>
+          <div>
+            <h3 class="role-title">Advisor Application Developer <span class="role-org">at Gainwell Technologies</span></h3>
+            <p class="role-scope">Backend, data, and platform engineering.</p>
+          </div>
+        </li>
+        <li class="role-row">
+          <span class="role-dates">Jun 2022 to Mar 2023</span>
+          <div>
+            <h3 class="role-title">Senior Data Engineer / Software Engineer <span class="role-org">at Gainwell Technologies</span></h3>
+            <p class="role-scope">Data engineering and software development.</p>
+          </div>
+        </li>
+        <li class="role-row">
+          <span class="role-dates">Mar 2021 to Oct 2022</span>
+          <div>
+            <h3 class="role-title">Implementations Specialist <span class="role-org">at Lambent Spaces</span></h3>
+            <p class="role-scope">SQL and Python automation for customer implementations.</p>
+          </div>
+        </li>
+        <li class="role-row">
+          <span class="role-dates">May 2019 to Mar 2021</span>
+          <div>
+            <h3 class="role-title">Data Analyst (Desktop Support) <span class="role-org">at CVS Health</span></h3>
+            <p class="role-scope">Deployment reporting and Dash/Plotly operational reports.</p>
+          </div>
+        </li>
+        <li class="role-row">
+          <span class="role-dates">Jan 2017 to Apr 2019</span>
+          <div>
+            <h3 class="role-title">Client Onboarding Specialist <span class="role-org">at Spencer Technologies</span></h3>
+            <p class="role-scope">Client onboarding and technical delivery coordination.</p>
+          </div>
+        </li>
+      </ol>
+
+      <aside class="resume-aside" aria-label="Technical focus and credentials">
+        <div class="aside-block">
+          <h3>Technical focus</h3>
+          <p>Go, Python, Rust, Ruby on Rails, SQL, Kubernetes, MCP and HTTP services, bootc Linux images, test infrastructure, and reproducible developer environments.</p>
+        </div>
+        <div class="aside-block">
+          <h3>Education</h3>
+          <p>B.A. in English, Indiana State University.</p>
+        </div>
+        <div class="aside-block">
+          <h3>Public documents</h3>
+          <div class="aside-links">
+            <a href="https://github.com/joshyorko/yorko-resume/blob/main/docs/assets/JoshYorkoResume.pdf">Download PDF résumé</a>
+            <a href="https://github.com/joshyorko">GitHub profile</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Engineering Notes & Optional Agent Lab -->
+  <section class="band" id="notes" aria-labelledby="notes-heading">
+    <div class="band-head">
+      <h2 id="notes-heading">Engineering notes</h2>
+      <p class="band-sub">Public revision trails and optional browser-local verification tools.</p>
+    </div>
+
+    <div class="notes-split">
+      <div class="note-block">
+        <h3>Public revision and handoff trails</h3>
+        <p>Bluefin upstream pull requests document how revision-bound mutation plans and review deltas feed admission checks. Devsy's Harvester repository documents original authorship and the upstream transfer.</p>
+        <div class="item-links">
+          <a href="https://github.com/projectbluefin/contribute/pull/489">Bluefin admission checks</a>
+          <a href="https://github.com/devsy-org/devsy-provider-harvester#license-and-attribution">Harvester attribution</a>
+          <a href="https://github.com/joshyorko/plugins/blob/e24cd596ef41e9294ad770d2b613bf77b42a8a68/marketplaces/catalog.json">Plugin catalog manifest</a>
+        </div>
+      </div>
+
+      <div class="lab-callout">
+        <h3>Optional Agent Lab</h3>
+        <p>Local-first checks live inside the standalone lab rather than on the landing page. Run the 96-byte WASM Actions manifest boundary check or verify SHA-256 digests on a synthetic MemoryD 0.1.0 bundle directly in your browser.</p>
+        <div class="item-links">
+          <a href="https://github.com/joshyorko/yorko-resume/tree/631481871d22d7b053c1aae23a84cc7d14d04b09/portfolio/lab">Inspect Agent Lab source</a>
+          <a href="./plugins.html">Open Plugins &amp; Skills</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="shell site-footer">
+  <span>Josh Yorko</span>
+  <div class="footer-links">
+    <a href="./plugins.html">Plugins &amp; Skills</a>
+    <a href="#work">Software</a>
+    <a href="#systems">Systems</a>
+    <a href="#resume">Résumé</a>
+    <a href="https://github.com/joshyorko">GitHub</a>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const PINNED = "https://github.com/joshyorko/plugins/blob/e24cd596ef41e9294ad770d2b613bf77b42a8a68/";
+  const PLUGINS = {
+    "37signals": {
+      title: "37signals",
+      version: "v0.1.0",
+      clients: "Codex, Claude Code, Hermes",
+      desc: "Community-maintained, 37signals-inspired guidance for Rails, Hotwire, product design, shaping, and scope judgment. Independent of 37signals and Basecamp.",
+      skills: [
+        "37signals-product-design",
+        "37signals-rails-implement",
+        "37signals-hotwire"
+      ],
+      cmd: "curl -fsSL https://raw.githubusercontent.com/joshyorko/plugins/main/install.sh | bash",
+      browseLabel: "Browse 10 skills",
+      browseHref: "./plugins.html#37signals",
+      manifest: PINNED + "plugins/37signals/plugin.json",
+      extra: null
+    },
+    "rcc": {
+      title: "RCC",
+      version: "v0.6.1",
+      clients: "Codex, Claude Code, Hermes",
+      desc: "Guidance for reproducible automation, Holotree environment artifacts, Robot Framework, work items, and Actions packaging. The Actions and Robot Bootstrapper MCP is opt-in.",
+      skills: [
+        "rcc",
+        "rcc-core",
+        "action-server",
+        "rcc-workitems"
+      ],
+      cmd: "hermes plugins install joshyorko/plugins/plugins/rcc --enable",
+      browseLabel: "Browse 9 skills",
+      browseHref: "./plugins.html#rcc",
+      manifest: PINNED + "plugins/rcc/plugin.json",
+      extra: null
+    },
+    "fizzy": {
+      title: "Fizzy",
+      version: "v0.1.2",
+      clients: "Codex, Claude Code, Hermes",
+      desc: "Work with self-hosted Fizzy boards, cards, and comments through the upstream CLI or portable MCP connector. The connector requires your own account and authorization.",
+      skills: ["fizzy"],
+      cmd: "brew install joshyorko/tools/fizzy-cli-master",
+      browseLabel: "Inspect Fizzy skill",
+      browseHref: "./plugins.html#fizzy",
+      manifest: PINNED + "plugins/fizzy/plugin.json",
+      extra: null
+    },
+    "luna-factory": {
+      title: "Luna Factory",
+      version: "v0.2.1",
+      clients: "Codex native runtime",
+      desc: "Authored orchestration skill, local Rust MCP control plane, and MCP Apps workbench. Published as an engineering project, not an operational dependency of this site; live native execution and host acceptance remain separate operator qualification gates.",
+      skills: ["luna-factory", "setup"],
+      cmd: "cargo build --locked --manifest-path plugins/luna-factory/server/Cargo.toml",
+      browseLabel: "Browse 2 skills",
+      browseHref: "./plugins.html#luna-factory",
+      manifest: PINNED + "plugins/luna-factory/plugin.json",
+      extra: {
+        label: "v0.2.1 release",
+        href: "https://github.com/joshyorko/plugins/releases/tag/v0.2.1"
+      }
+    }
+  };
+
+  const tabs = Array.from(document.querySelectorAll(".plugin-tab"));
+  const panel = document.getElementById("panel-plugin");
+  const titleEl = document.getElementById("p-title");
+  const versionEl = document.getElementById("p-version");
+  const clientsEl = document.getElementById("p-clients");
+  const descEl = document.getElementById("p-desc");
+  const skillsEl = document.getElementById("p-skills");
+  const cmdEl = document.getElementById("p-cmd");
+  const linksEl = document.getElementById("p-links");
+  const copyBtn = document.getElementById("copy-cmd");
+  let copyTimer = null;
+
+  function selectPlugin(key) {
+    const data = PLUGINS[key];
+    if (!data) return;
+    tabs.forEach((tab) => {
+      const active = tab.dataset.plugin === key;
+      tab.setAttribute("aria-selected", active ? "true" : "false");
+      if (active) panel.setAttribute("aria-labelledby", tab.id);
+    });
+    titleEl.textContent = data.title;
+    versionEl.textContent = data.version;
+    clientsEl.textContent = data.clients;
+    descEl.textContent = data.desc;
+    cmdEl.textContent = data.cmd;
+    skillsEl.innerHTML = "";
+    data.skills.forEach((skill) => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.className = "skill-chip";
+      a.href = "./plugins.html#skill-" + skill;
+      a.textContent = skill;
+      li.appendChild(a);
+      skillsEl.appendChild(li);
+    });
+    linksEl.innerHTML = "";
+    const items = [
+      { label: data.browseLabel, href: data.browseHref },
+      { label: "Manifest", href: data.manifest },
+      data.extra || { label: "Marketplace source", href: "https://github.com/joshyorko/plugins" }
+    ];
+    items.forEach((item) => {
+      const a = document.createElement("a");
+      a.href = item.href;
+      a.textContent = item.label;
+      linksEl.appendChild(a);
+    });
+    copyBtn.textContent = "Copy";
+    copyBtn.classList.remove("copied");
+  }
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => selectPlugin(tab.dataset.plugin));
+    tab.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+        event.preventDefault();
+        const next = tabs[(index + 1) % tabs.length];
+        next.focus();
+        selectPlugin(next.dataset.plugin);
+      } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+        event.preventDefault();
+        const prev = tabs[(index - 1 + tabs.length) % tabs.length];
+        prev.focus();
+        selectPlugin(prev.dataset.plugin);
+      }
+    });
+  });
+
+  copyBtn.addEventListener("click", async () => {
+    const text = cmdEl.textContent;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
+      }
+    } catch (_) {}
+    copyBtn.textContent = "Copied";
+    copyBtn.classList.add("copied");
+    clearTimeout(copyTimer);
+    copyTimer = setTimeout(() => {
+      copyBtn.textContent = "Copy";
+      copyBtn.classList.remove("copied");
+    }, 1600);
+  });
+})();
+</script>
+</body>
+</html>
