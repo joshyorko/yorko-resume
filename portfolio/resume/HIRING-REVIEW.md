@@ -6,6 +6,9 @@ The candidate uses 15 annotations, including three approved contact links. Earli
 
 ## Representative evidence
 
+- Hive maintainers recorded all 16 scoped issues merged in [v4](https://github.com/hivecommons/hive/issues/3845#issuecomment-5364514540) and closed the [v5 RFC](https://github.com/hivecommons/hive/issues/8201#issuecomment-5803401289), with Gate 2 publication deferred. Résumé attribution covers RFC authorship and scoping.
+- Bluefin [PR #347](https://github.com/projectbluefin/contribute/pull/347) merged the backend-neutral review-run state machine and stale-revision protection. Goose and Codex adapter re-entry remained unavailable. [PR #191](https://github.com/projectbluefin/contribute/pull/191) merged the immutable ActionPlan contract and tests for revalidation and confirmation. Complete TUI integration was outside that PR.
+
 - [MemoryD manifest](https://github.com/joshyorko/codex-memoryd/blob/master/Cargo.toml), [evidence ledger](https://github.com/joshyorko/codex-memoryd/blob/master/tests/evidence_ledger.rs), [temporal recall](https://github.com/joshyorko/codex-memoryd/blob/master/tests/temporal_recall.rs), [MCP implementation](https://github.com/joshyorko/codex-memoryd/blob/master/src/mcp.rs) and [v0.1.0 packages](https://github.com/joshyorko/codex-memoryd/releases/tag/v0.1.0).
 - [RCC uv support](https://github.com/joshyorko/rcc/pull/81), [environment artifacts](https://github.com/joshyorko/rcc/pull/119) and [Actions recovery](https://github.com/joshyorko/actions/pull/317).
 - [RCC verification skill](https://github.com/joshyorko/plugins/tree/main/plugins/rcc/skills/verify-rcc), [bootstrapper source](https://github.com/joshyorko/plugins/tree/main/plugins/rcc/bootstrapper) and [distribution tests](https://github.com/joshyorko/plugins/blob/main/tests/test_rcc_distribution.py).

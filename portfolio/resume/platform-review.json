@@ -15,8 +15,8 @@
       "Linux systems — Build immutable OS images, reusable filesystem payloads and portable graphical workspaces across Dudley OS, Omarchy bootc, DSB Common and Webtop OS."
     ]],
     ["Upstream contributions", [
-      "[Hive Commons|3] — Authored reconciliation and external software-factory RFCs adopted in Hive v4/v5. Scoped a 16-issue epic that separated admission, verification and publication.",
-      "[Project Bluefin|5] — Contributed 58 merged PRs across eight repositories, spanning agent execution and review, container composition, native ARM64 qualification and CI reliability. Proposed desktop testing and validation approaches.",
+      "[Hive Commons|3] — Authored reconciliation and external software-factory RFCs adopted in Hive v4/v5. Scoped the 16-issue v4 epic and proposed separate admission, verification and publication steps.",
+      "[Project Bluefin|5] — Contributed 58 merged PRs across eight repositories, including review-run state machines and stale-revision protection, plus container composition, native ARM64 qualification and CI reliability. Proposed desktop testing and validation approaches.",
       "[Hauler|20] — Fixed local image imports to honor the selected Docker CLI context and connect to the intended daemon. Added regression tests and verified a real image import.",
       "[Devsy Harvester provider|27] — Originally built the Go provider that provisions Linux development VMs on Harvester. Devsy credits the original work upstream."
     ]]
