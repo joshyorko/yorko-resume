@@ -39,6 +39,11 @@ jobs:
           mkdir -p "$out"
           node portfolio/resume/candidates.mjs "$out" > "$out/latex-build.log" 2>&1
           python portfolio/resume/verify-candidates.py "$out" | tee "$out/verification.txt"
+          node portfolio/resume/candidates.mjs "$RUNNER_TEMP/resume-repeat" > "$RUNNER_TEMP/resume-repeat.log" 2>&1
+          for candidate in A B C H; do
+            cmp "$out/$candidate.pdf" "$RUNNER_TEMP/resume-repeat/$candidate.pdf"
+          done
+          echo 'Four byte-identical repeat builds' | tee -a "$out/verification.txt"
           python portfolio/resume/render-review.py "$out"
           cp portfolio/resume/DESIGN-REVIEW.md "$out/"
       - uses: actions/upload-artifact@v4

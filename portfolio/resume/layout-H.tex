@@ -1,0 +1,24 @@
+\geometry{top=0.42in,bottom=0.34in,left=0.50in,right=0.50in}
+\setmainfont{texgyreheros-regular.otf}[BoldFont=texgyreheros-bold.otf]
+\definecolor{accent}{HTML}{213F64}
+\definecolor{muted}{HTML}{414141}
+\newcommand{\bodyface}{\fontsize{10.8}{12.8}\selectfont}
+\newcommand{\masthead}[4]{%
+  {\bfseries\fontsize{24}{27}\selectfont#1\par}
+  {\fontsize{11}{13}\selectfont#2\par}
+  \proof{#3}\vspace{4pt}{\fontsize{10.35}{12.03}\selectfont #4\par}}
+\newcommand{\sectiontitle}[1]{\par\vspace{7pt}%
+  {\color{accent}\hrule height 0.55pt}\vspace{2pt}%
+  {\bfseries\color{accent}\fontsize{9.9}{12}\selectfont #1\par}}
+\newcommand{\evidenceproject}[3]{\par\vspace{3pt}\textbf{#1}\enspace{\color{muted}—}\enspace #2\par
+  {\leftskip=12pt\proof{#3}}}
+\newcommand{\skill}[2]{\textbf{#1}\enspace{\color{muted}—}\enspace #2}
+
+\newcommand{\featuredproject}[3]{\par\vspace{3pt}
+  {\bfseries\fontsize{11.6}{13}\selectfont #1\par}
+  #2\par\proof{#3}}
+\newcommand{\skillsbody}[1]{{\fontsize{10.1}{11.1}\selectfont #1\par}}
+
+\newcommand{\datedrow}[3]{\par\vspace{4pt}\jobtitle{#1}{#2}\hfill{\color{muted}#3}\par}
+\newcommand{\workgroup}[1]{\par\vspace{4pt}%
+  {\bfseries\color{accent}\fontsize{9.5}{11}\selectfont #1\par}}

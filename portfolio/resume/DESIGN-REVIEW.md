@@ -21,3 +21,11 @@ The layouts use restrained emphasis, typographic hierarchy, and link underlines 
 ## Independent render critique
 
 The blind review rated the revised compositions C 8/10, A 7/10 and B 6/10. C led on evidence discovery. A's grouping made the work history easiest to navigate, but its overall silhouette remained conventional. B's prose made it the hardest to skim. The final visual recheck recommended C for owner review after the summary, Gainwell lead and skills adjustments. The short rule beside the lead is slightly detached from its bottom line, and the approved baseline remains stronger on aligned date placement.
+
+## Final hybrid
+
+H combines C’s evidence-first typography with A’s two current-role groups. A single open-source section places the two strongest projects first, with each evidence row directly below the claim it supports. All five projects precede Experience, so employment starts lower than in C. The current role leads with distributed QA, followed by healthcare systems. Each employer, job title and right-aligned date shares one row. The lead rule is gone.
+
+The hybrid uses 10.8 pt body type, 12.8 pt leading and 9.8 pt evidence links. The bottom text margin is 0.43 in. The A/C/H contact sheet includes color and grayscale. A, B and C retain their earlier PDF bytes.
+
+The hybrid’s PDF content stream reads in order in Poppler raw mode, and the visible rows read in order in pypdf layout mode and row-configured pdfminer. Default geometric extraction can detach the right-aligned dates. The document is untagged.

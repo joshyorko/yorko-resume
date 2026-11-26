@@ -4,7 +4,7 @@
 
 ## Review choices
 
-See [the A/B/C design comparison](DESIGN-REVIEW.md) for typography, measured margins and tradeoffs.
+Review the final hybrid in H.pdf. A, B and C remain available as earlier design evidence. See [the design comparison](DESIGN-REVIEW.md) for typography, fit and tradeoffs.
 
 All three use a single US Letter page, clickable descriptive evidence links, and the same approved text. TeX Gyre fonts come from the pinned bundle and are distributed under the GUST Font License. [TeX Gyre font project](https://www.gust.org.pl/projects/e-foundry/tex-gyre).
 
@@ -21,6 +21,6 @@ python portfolio/resume/verify-candidates.py "$out"
 python portfolio/resume/render-review.py "$out"
 ```
 
-CI uploads the three PDFs, 150 dpi color and grayscale PNGs, side-by-side sheet, critique, render log and verification report as `resume-review-only`. Checks cover US Letter size, one page, metadata, Unicode font embedding, ordered text blocks in Poppler and pdfminer, all 21 OSS and three existing contact URIs, and text and annotation bounds. Extractor checks establish text-layer behavior in those tools. PDF SHA-256 values are part of the report. If hashes differ across environments, rerun the semantic verifications and inspect the page render before approving a candidate.
+CI uploads the final PDF and three earlier candidates, 150 dpi color and grayscale PNGs, side-by-side sheet, critique, render log and verification report as `resume-review-only`. Checks cover US Letter size, one page, metadata, Unicode font embedding, ordered text blocks in Poppler and pdfminer, all 21 OSS and three existing contact URIs, and text and annotation bounds. Extractor checks establish text-layer behavior in those tools. PDF SHA-256 values are part of the report. If hashes differ across environments, rerun the semantic verifications and inspect the page render before approving a candidate.
 
 After owner approval, verify the selected build, update the single approved PDF source in a reviewed commit, and rebuild both public targets from that commit. The legacy Pages path uses a copy made at build time. The retained MkDocs path resolves to the same source.
