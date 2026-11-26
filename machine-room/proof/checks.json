@@ -1,0 +1,34 @@
+[
+  {
+    "width": 1440,
+    "coldRequests": 9,
+    "warmReloadRequests": 9,
+    "geometryHit": "Foundry",
+    "keyboardToFocusMs": [
+      113.37434699999994,
+      52.253647,
+      52.53182400000014,
+      28.817711000000145,
+      20.58505299999979,
+      25.455369999999675
+    ],
+    "axe": [],
+    "errors": []
+  },
+  {
+    "width": 390,
+    "coldRequests": 9,
+    "warmReloadRequests": 9,
+    "geometryHit": "Memory core",
+    "keyboardToFocusMs": [
+      25.150964999999815,
+      12.087860999999975,
+      29.6342539999996,
+      28.66164800000024,
+      22.260545000000093,
+      25.613752000000204
+    ],
+    "axe": [],
+    "errors": []
+  }
+]

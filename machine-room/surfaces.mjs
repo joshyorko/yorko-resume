@@ -1,0 +1,8 @@
+export function home(p){
+ const options=p.stations.map(s=>`<option value="${s.id}">${s.name} / ${s.installation}</option>`).join('');
+ return `<main id="main"><section class="hall" aria-label="Assembly hall"><div id="scene"></div><div class="legend"><span id="plate">Assembly hall</span><button id="enter-scene" hidden>Explore in 3D</button><button id="back" hidden>← Return to hall</button></div></section>
+ <div class="workstrip"><p>I maintain <a href="stations/rcc.html">RCC</a> and build tools for portable workspaces and automation.</p><a class="lead" href="#review">Open workbench ↗</a></div>
+ <section id="inspection" hidden><div class="benchhead"><label>Workbench <select id="bay">${options}</select></label><span id="role"></span></div><div class="benchbody"><div><h2 tabindex="-1" id="station"></h2><p id="claim"></p><a id="record">Project and evidence ↗</a></div><div><h3 id="scenario"></h3><div id="experiment"></div></div></div></section>
+ <nav id="directory" aria-label="Installation index">${p.stations.map(s=>`<a data-id="${s.id}" href="stations/${s.id}.html">${s.name}<small>${s.installation}</small></a>`).join('')}</nav> <footer><div class="footline"><span id="connection">Device runtime</span><button id="prepare" aria-label="Prepare offline">Unplug the internet ↓</button><details id="inspect-runtime"><summary>Inspector</summary><pre id="runtime"></pre><button id="refresh-runtime">Refresh observations</button></details></div><p id="offline-status" role="status">Prepare once while connected. Source links need internet.</p></footer>
+</main><script type="module" src="assets/offline.mjs"></script><script type="module" src="assets/app.mjs"></script>`;
+}
