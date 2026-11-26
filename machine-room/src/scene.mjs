@@ -57,11 +57,12 @@ export function mountScene(host,pick){
   const mobile=host.clientWidth<600;if(!key)return mobile?[v(1.1,6.8,25),v(-2,2.8,-5)]:[v(3.7,6.4,22),v(-1,3,-8)];
   const [x,z]=positions[key];return [v(x+ (x<0?5:-5),5.2,z+(mobile?12:9)),v(x,3,z)]
  }
- function draw(){cam.lookAt(look);r.render(s,cam)}
+ function draw(){if(document.hidden)return;cam.lookAt(look);r.render(s,cam)}
  function focus(key,instant=false){active=key;cancelAnimationFrame(raf);const [to,at]=view(key);
  if(instant||matchMedia('(prefers-reduced-motion: reduce)').matches){cam.position.copy(to);look.copy(at);draw();return}
  const from=cam.position.clone(),was=look.clone(),start=performance.now();function frame(now){let t=Math.min(1,(now-start)/850);t=t*t*(3-2*t);cam.position.lerpVectors(from,to,t);look.lerpVectors(was,at,t);draw();if(t<1)raf=requestAnimationFrame(frame)}raf=requestAnimationFrame(frame)}
  function size(){const w=host.clientWidth,h=host.clientHeight;cam.aspect=w/h;cam.updateProjectionMatrix();r.setSize(w,h,false);if(!active)focus(null,true);else draw()}
+ document.addEventListener('visibilitychange',()=>{cancelAnimationFrame(raf);if(!document.hidden)focus(active,true)});
  size();new ResizeObserver(size).observe(host);
  const ray=new T.Raycaster();r.domElement.onclick=e=>{const b=r.domElement.getBoundingClientRect();ray.setFromCamera(new T.Vector2(2*(e.clientX-b.left)/b.width-1,1-2*(e.clientY-b.top)/b.height),cam);const hit=ray.intersectObjects(meshes)[0],key=hit?.object.userData.ids[hit.instanceId];if(key)pick(key)};
  return {focus};

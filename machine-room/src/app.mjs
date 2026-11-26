@@ -1,7 +1,8 @@
+import {decide} from './decision.mjs';
 const $=id=>document.getElementById(id),profile=await fetch('profile.json').then(r=>r.json());let scene,selected=null;
 function navigate(id){location.hash=id||'directory'}
 async function choose(id,move=true){
- const station=profile.stations.find(s=>s.id===id);selected=station?.id||null;scene?.focus(selected);
+ const decision=decide({kind:"choice",candidates:[id]},profile.stations);const station=decision.selected && profile.stations.find(s=>s.id===decision.selected.id);selected=station?.id||null;scene?.focus(selected);
  $('inspection').hidden=!station;$('back').hidden=!station;$('plate').textContent=station?station.installation:'Assembly hall';
  document.querySelectorAll('[data-id]').forEach(a=>a.toggleAttribute('aria-current',a.dataset.id===id));
  if(!station)return;
@@ -12,4 +13,5 @@ async function choose(id,move=true){
 document.querySelectorAll('[data-id]').forEach(a=>a.onclick=e=>{if(e.ctrlKey||e.metaKey)return;e.preventDefault();navigate(a.dataset.id)});
 $('back').onclick=()=>{document.querySelector('[data-id="'+selected+'"]')?.focus({preventScroll:true});navigate('')};
 window.addEventListener('hashchange',()=>choose(location.hash.slice(1)));choose(location.hash.slice(1),false);
-try{const {mountScene}=await import('./scene.mjs');scene=mountScene($('scene'),navigate);if(selected)scene.focus(selected,true)}catch{$('plate').textContent='Assembly hall · use the installation index'}
+const enter=$('enter-scene');enter.hidden=false;enter.onclick=async()=>{enter.hidden=true;try{const {mountScene}=await import('./scene.mjs');scene=mountScene($('scene'),navigate);if(selected)scene.focus(selected,true)}catch{$('plate').textContent='Assembly hall · use the installation index'}
+};

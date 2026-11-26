@@ -1,16 +1,16 @@
 [
   {
     "width": 1440,
-    "coldRequests": 7,
-    "warmReloadRequests": 7,
-    "geometryHit": "Memory core",
+    "coldRequests": 9,
+    "warmReloadRequests": 9,
+    "geometryHit": "Foundry",
     "axe": [],
     "errors": []
   },
   {
     "width": 390,
-    "coldRequests": 7,
-    "warmReloadRequests": 7,
+    "coldRequests": 9,
+    "warmReloadRequests": 9,
     "geometryHit": "Foundry",
     "axe": [],
     "errors": []

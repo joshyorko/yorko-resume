@@ -5,7 +5,7 @@ const el=(tag,text)=>Object.assign(document.createElement(tag),{textContent:text
 export async function inspect(id,host,profile){
  const out=el('pre',''), controls=el('div','');controls.className='controls';out.setAttribute('aria-live','polite');host.replaceChildren(controls,out);
  const show=data=>out.textContent=typeof data==='string'?data:JSON.stringify(data,null,2);
- function button(label,run){const b=el('button',label);controls.append(b);b.onclick=async()=>{b.disabled=true;try{await run()}catch(e){show('Unable to complete this experiment. '+e.message)}finally{b.disabled=false}};return b}
+ function button(label,run){const b=el('button',label);controls.append(b);b.onclick=async()=>{b.disabled=true;try{const start=performance.now();await run();dispatchEvent(new CustomEvent("machine-receipt",{detail:id+" · "+label+" · "+(performance.now()-start).toFixed(1)+" ms · "+out.textContent.slice(0,240)}))}catch(e){show('Unable to complete this experiment. '+e.message)}finally{b.disabled=false}};return b}
  function field(label,tag,value){const l=el('label',label),i=el(tag,'');l.append(i);controls.append(l);i.value=value;return i}
  function select(label,options){const i=field(label,'select','');for(const v of options)i.append(new Option(v,v));return i}
  if(id==='review'){
