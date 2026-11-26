@@ -1,0 +1,139 @@
+{
+  "revision": "e24cd596ef41e9294ad770d2b613bf77b42a8a68",
+  "plugins": [
+    {
+      "name": "37signals",
+      "version": "0.1.0",
+      "skills": [
+        {
+          "name": "37signals-communication",
+          "description": "Use when drafting or reviewing async updates, decision memos, tradeoffs, or status.",
+          "source": "plugins/37signals/skills/37signals-communication/SKILL.md"
+        },
+        {
+          "name": "37signals-hotwire",
+          "description": "Use when designing, implementing, or reviewing Rails UI with Hotwire, Turbo, Stimulus, or server rendering.",
+          "source": "plugins/37signals/skills/37signals-hotwire/SKILL.md"
+        },
+        {
+          "name": "37signals-product-design",
+          "description": "Use when designing or reviewing product UI, flows, onboarding, settings, empty states, copy, or screens.",
+          "source": "plugins/37signals/skills/37signals-product-design/SKILL.md"
+        },
+        {
+          "name": "37signals-product-refresh",
+          "description": "Use when improving an existing product, screen, workflow, onboarding, settings, or stale feature.",
+          "source": "plugins/37signals/skills/37signals-product-refresh/SKILL.md"
+        },
+        {
+          "name": "37signals-rails-implement",
+          "description": "Use when implementing or extending Rails features across models, REST, Hotwire, jobs, tenancy, and tests.",
+          "source": "plugins/37signals/skills/37signals-rails-implement/SKILL.md"
+        },
+        {
+          "name": "37signals-rails-refactor",
+          "description": "Use when simplifying Rails code without behavior change, especially indirection, verbs, or scattered domain logic.",
+          "source": "plugins/37signals/skills/37signals-rails-refactor/SKILL.md"
+        },
+        {
+          "name": "37signals-rails-review",
+          "description": "Use when reviewing Rails code, PRs, or architecture for conventions, Hotwire defaults, and correctness risks.",
+          "source": "plugins/37signals/skills/37signals-rails-review/SKILL.md"
+        },
+        {
+          "name": "37signals-scope-judgment",
+          "description": "Use when simplifying product plans, roadmaps, feature sets, process, meetings, AI workflows, or strategy.",
+          "source": "plugins/37signals/skills/37signals-scope-judgment/SKILL.md"
+        },
+        {
+          "name": "37signals-shape-up",
+          "description": "Use when shaping a raw product idea, request, spike, project, or bet into a bounded Shape Up pitch.",
+          "source": "plugins/37signals/skills/37signals-shape-up/SKILL.md"
+        },
+        {
+          "name": "dhh-rails-judgment",
+          "description": "Use when evaluating Rails architecture through DHH or Rails Doctrine judgment.",
+          "source": "plugins/37signals/skills/dhh-rails-judgment/SKILL.md"
+        }
+      ]
+    },
+    {
+      "name": "fizzy",
+      "version": "0.1.2",
+      "skills": [
+        {
+          "name": "fizzy",
+          "description": "Use for Fizzy boards, cards, comments, setup, self-hosting, CLI, MCP, connectors, and workflows.",
+          "source": "plugins/fizzy/skills/fizzy/SKILL.md"
+        }
+      ]
+    },
+    {
+      "name": "luna-factory",
+      "version": "0.2.1",
+      "skills": [
+        {
+          "name": "luna-factory",
+          "description": "Use when a substantial objective has potentially independent workstreams and the user wants Luna-first cost control, native Codex subagents, evidence-backed completion, or bounded Sol escalation.",
+          "source": "plugins/luna-factory/skills/luna-factory/SKILL.md"
+        },
+        {
+          "name": "setup",
+          "description": "Guide a user through safe, operator-approved Luna Factory plugin setup.",
+          "source": "plugins/luna-factory/skills/setup/SKILL.md"
+        }
+      ]
+    },
+    {
+      "name": "rcc",
+      "version": "0.6.1",
+      "skills": [
+        {
+          "name": "action-server",
+          "description": "Use when authoring or debugging ACTIONS packages, package.yaml, actions-core, actions-runtime, MCP, secrets, tests, or Docker/Compose builds and deployments.",
+          "source": "plugins/rcc/skills/action-server/SKILL.md"
+        },
+        {
+          "name": "rcc",
+          "description": "Route RCC-family work across core, Environment Artifacts, providers, robots, work items, Action Server, CI/cache, and maintenance automation.",
+          "source": "plugins/rcc/skills/rcc/SKILL.md"
+        },
+        {
+          "name": "rcc-ci-maintenance",
+          "description": "Use for RCC in GitHub Actions, Environment Artifact promotion/prewarm, ROBOCORP_HOME cache, pinned installs, maintenance, bot PRs, and cache hygiene.",
+          "source": "plugins/rcc/skills/rcc-ci-maintenance/SKILL.md"
+        },
+        {
+          "name": "rcc-core",
+          "description": "Use for RCC itself: commands, install, source, Holotree/cache, Environment Artifacts, providers, trust, coordination, endpoints, templates, and bundles.",
+          "source": "plugins/rcc/skills/rcc-core/SKILL.md"
+        },
+        {
+          "name": "rcc-robot-framework",
+          "description": "Use when authoring, reviewing, running, or debugging Robot Framework .robot suites, resources, custom Python libraries, Robot CLI or Rebot results, or RCC's robot_tests acceptance harness.",
+          "source": "plugins/rcc/skills/rcc-robot-framework/SKILL.md"
+        },
+        {
+          "name": "rcc-robots",
+          "description": "Use for RCC automation projects, robot.yaml, conda.yaml, Holotree, Environment Artifact use, freezes, bundles, templates, envs, and tasks.",
+          "source": "plugins/rcc/skills/rcc-robots/SKILL.md"
+        },
+        {
+          "name": "rcc-rpaframework",
+          "description": "Use when selecting, authoring, reviewing, or debugging RPA Framework libraries and RPA.* keywords in RCC-managed Robot Framework or Python automation projects.",
+          "source": "plugins/rcc/skills/rcc-rpaframework/SKILL.md"
+        },
+        {
+          "name": "rcc-workitems",
+          "description": "Use for RCC work item queues, robocorp.workitems, actions-work-items, producer/consumer flows, envs, and adapters.",
+          "source": "plugins/rcc/skills/rcc-workitems/SKILL.md"
+        },
+        {
+          "name": "verify-rcc",
+          "description": "Verify the RCC plugin from its source checkout on Linux: drive real RCC CLI health, onboarding and local SDK fixtures, offline Tealdeer, and packaged skill discovery with retained evidence. Use after RCC guidance, helper, or distribution changes.",
+          "source": "plugins/rcc/skills/verify-rcc/SKILL.md"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+<!--offline-->
+<noscript><p class="section">This lab needs JavaScript and WebAssembly. The source links below explain the checks.</p></noscript>
+<p id="lab-error" class="section" role="status"></p>
+<section class="section" aria-labelledby="actions-check">
+<h2 id="actions-check">Check an Actions manifest</h2>
+<p>Change the number of root memories and check it against the manifest rule. The sample fixes the format at v1, with five descriptors and zero dependency objects. Try 5,000 and 5,001 to check the boundary.</p>
+<form id="manifest" hidden>
+<label for="roots">Root memories</label>
+<input id="roots" type="number" min="0" max="4294967295" step="1" value="1" required>
+<button>Check manifest</button>
+</form>
+<output id="manifest-result" for="roots"></output>
+<p class="small"><a href="https://github.com/joshyorko/actions/tree/7efb58eb1d28dc9ad66c46591f6d1710b6c84f0d">Actions Core source</a> · <a href="https://github.com/joshyorko/yorko-resume/tree/a535909574cb94b169040e05b54ae198fe77673a/machine-room">Original comparison evidence</a></p>
+</section>
+<section class="section" aria-labelledby="memory-check">
+<h2 id="memory-check">Inspect a MemoryD export</h2>
+<p>Verify one pinned synthetic bundle from native MemoryD 0.1.0. The check verifies integrity. Authorship is unverified. Results stay in memory until you reload, unless you download a receipt.</p>
+<div id="fixture-controls" hidden><div class="lab-controls">
+<button id="inspect">Inspect sample bundle</button>
+<button id="export" disabled>Download session receipt</button>
+</div></div>
+<output id="fixture-result"></output>
+<p class="small"><a href="https://github.com/joshyorko/codex-memoryd/tree/79a279d5f730162ad34be9b6410e666ba878a05c">MemoryD source</a></p>
+</section>
