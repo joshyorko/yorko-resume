@@ -33,3 +33,9 @@ The hybrid’s PDF content stream reads in order in Poppler raw mode, and the vi
 ## Owner-requested content revision
 
 R keeps the hybrid’s layout and groups the two original tools at the top, followed by the RCC and Actions continuations and the existing upstream evidence. The project names are the clickable labels. The summary distinguishes building and maintaining tools from upstream code, test and architecture contributions. Body and links retain H’s point sizes. R fits on one Letter page with a measured 0.52 in bottom text margin. It carries 26 unique link targets.
+
+## Experience-first revision
+
+S gives employment and skills the first page and open-source engineering the second. It keeps the approved work history and builder/maintainer/contributor summary. Original tools and maintained continuations appear before upstream work. Proof links sit inside the sentences they support. R is retained byte-for-byte as historical evidence, including its former abbreviation.
+
+S preserves the 26 previous targets and adds five public destinations: Codex MemoryD, Agent Plugins & Skills, the RCC plugin, Review and Devsy Harvester attribution. The second page avoids compressing the expanded project selection into the employment history. The independent first-render review preferred this structure to R and identified the Linux descriptions, attribution and skills wrapping as the remaining polish items.

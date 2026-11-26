@@ -1,0 +1,24 @@
+[
+  [
+    "Built and maintained",
+    [
+      "[Josh Room|21] — Save and restore named, encrypted development workspaces across machines. Find saved workspaces in a catalog and restore them from VS Code.",
+      "[Josh’s All the Things (JATT)|22] — Move or reproduce development setups with Hauler bundles that carry workspaces, optional runtime environments and container images.",
+      "[Codex MemoryD|23] — Built a local-first memory service for coding agents. It stores evidence in SQLite and lets agents recall past work with its sources through MCP and editor adapters.",
+      "[Agent Plugins & Skills|24] — Built a portable marketplace for Codex, Claude and Hermes. The [RCC plugin|25] gives agents skills for automation, robot scaffolding and MCP tools.",
+      "[Review|26] — Built an isolated terminal workbench for inspecting GitHub changes, collecting evidence and making bounded repairs with operator confirmation.",
+      "[RCC|10] — Maintain the community continuation for building and sharing reproducible Python automation environments with [native uv support|12] and [immutable artifacts for online or offline reuse|11].",
+      "[Actions Runtime|13] — Maintain the community continuation that exposes Python functions as HTTP and MCP tools, with execution leases and [retained workload snapshots for recovery|14].",
+      "Linux systems — Build signed, immutable OS images with [Dudley OS|15] and [Omarchy bootc|17], a reusable filesystem payload with [DSB Common|16], and portable graphical workspaces with [Webtop OS|18]."
+    ]
+  ],
+  [
+    "Upstream contributions",
+    [
+      "[Hive Commons|0] — Authored [reconciliation|1] and [external software-factory|2] RFCs [adopted in Hive v4/v5|3]. Scoped a 16-issue epic and separated admission, verification and publication.",
+      "[Project Bluefin|4] — Contributed [58 merged PRs across eight repositories|5], including [revision-bound GitHub changes|6] and [resumable reviews|7], plus OCI composition, native ARM64 qualification and CI reliability. Proposed [desktop testing|8] and [validation|9] approaches.",
+      "[Hauler|19] — [Fixed Docker build-context resolution|20], with regression tests and a real container-image import.",
+      "[Devsy Harvester provider|27] — Originally built the Go provider that provisions Linux development VMs on Harvester. The upstream project credits the original work."
+    ]
+  ]
+]

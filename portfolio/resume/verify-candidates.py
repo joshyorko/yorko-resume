@@ -52,7 +52,7 @@ def experience(design):
         else:
             result.extend([*job["heading"].split(" | "), job["dates"]])
         bullets = job["bullets"]
-        if index == 0 and design in ("A", "H", "R"):
+        if index == 0 and design in ("A", "H", "R", "S"):
             bullets = [bullets[i] for i in (4, 1, 5, 6, 0, 2, 3)]
         if index == 0 and design == "C":
             bullets = [bullets[4], *bullets[:4], *bullets[5:]]
@@ -60,7 +60,7 @@ def experience(design):
     return result
 
 
-for name in ("A", "B", "C", "H", "R"):
+for name in ("A", "B", "C", "H", "R", "S"):
     work = experience(name)
     featured = ["OPEN-SOURCE ENGINEERING", *sum(projects[:2], [])]
     more = sum(projects[2:], [])
@@ -71,6 +71,15 @@ for name in ("A", "B", "C", "H", "R"):
         assert len({url for _, url in expected_links}) == len(expected_links) == 26
         expected = header[:-1] + [review["summary"], featured[0], *originals, *projects[2],
                                   *featured[1:], *sum(projects[3:], [])] + work + skills
+    elif name == "S":
+        groups = json.loads(Path(__file__).with_name("clean-projects.json").read_text())
+        expected_links = links + [(project["name"], project["url"]) for project in review["originalProjects"]]
+        assert len(expected_links) == len({url for _, url in expected_links}) == 26
+        expected_links += [(None, url) for url in json.loads(Path(__file__).with_name("clean-links.json").read_text())]
+        assert len(expected_links) == len({url for _, url in expected_links}) == 31
+        entries = [re.sub(r"\[([^\]]+)\|\d+\]", r"\1", entry)
+                   for heading, group in groups for entry in [heading, *group]]
+        expected = header[:-1] + [review["summary"]] + work + skills + [featured[0], *entries]
     elif name == "C":
         expected = header + featured + work + ["MORE OPEN-SOURCE ENGINEERING"] + more + skills
     elif name == "H":
@@ -79,20 +88,20 @@ for name in ("A", "B", "C", "H", "R"):
         expected = header + work + featured + more + skills
     pdf = Path(sys.argv[1]) / f"{name}.pdf"
     reader = PdfReader(pdf)
-    assert len(reader.pages) == 1, f"{name}: expected one page"
+    assert len(reader.pages) == (2 if name == "S" else 1), name
     page = reader.pages[0]
-    assert (float(page.mediabox.width), float(page.mediabox.height)) == (612, 792)
+    assert all((float(p.mediabox.width), float(p.mediabox.height)) == (612, 792) for p in reader.pages)
     assert reader.metadata.author == content["name"]
     assert reader.metadata.title == f"{content['name']} — Résumé"
 
-    poppler = ("-raw",) if name in ("H", "R") else ()
+    poppler = ("-raw",) if name in ("H", "R", "S") else ()
     require_ordered(run("pdftotext", *poppler, str(pdf), "-"), expected, f"{name}/Poppler")
-    if name in ("H", "R"):
-        require_ordered(page.extract_text(extraction_mode="layout"), expected, f"{name}/pypdf")
-    layout = LAParams(boxes_flow=None, char_margin=55) if name in ("H", "R") else None
+    if name in ("H", "R", "S"):
+        require_ordered("\n".join(p.extract_text(extraction_mode="layout") for p in reader.pages), expected, f"{name}/pypdf")
+    layout = LAParams(boxes_flow=None, char_margin=55) if name in ("H", "R", "S") else None
     require_ordered(extract_text(pdf, laparams=layout), expected, f"{name}/pdfminer")
 
-    annotations = [ref.get_object() for ref in page["/Annots"]]
+    annotations = [ref.get_object() for p in reader.pages for ref in p["/Annots"]]
     assert all(a["/Subtype"] == "/Link" and a["/A"]["/S"] == "/URI" for a in annotations)
     assert sorted(a["/A"]["/URI"] for a in annotations) == sorted(url for _, url in expected_links), name
     for annotation in annotations:
@@ -108,7 +117,7 @@ for name in ("A", "B", "C", "H", "R"):
     for word in words:
         x1, y1, x2, y2 = (float(word.attrib[k]) for k in ("xMin", "yMin", "xMax", "yMax"))
         assert 20 < x1 < x2 < 592 and 20 < y1 < y2 < 772
-    if name in ("H", "R"):
+    if name in ("H", "R", "S"):
         # Each date is on its own employer row, aligned to the same right edge.
         date_edges = []
         for job in content["jobs"]:
@@ -121,6 +130,6 @@ for name in ("A", "B", "C", "H", "R"):
         assert len(date_edges) == 4 and max(date_edges) - min(date_edges) < 1, name
     tagged = bool(reader.trailer["/Root"].get("/StructTreeRoot"))
     checksum = hashlib.sha256(pdf.read_bytes()).hexdigest()
-    print(f"{name}: Letter, one page; {len(expected_links)} exact URI annotations; both text parsers passed; "
+    print(f"{name}: Letter, {len(reader.pages)} page(s); {len(expected_links)} exact URI annotations; both text parsers passed; "
           f"embedded Unicode fonts; bottom text margin {(792-bottom)/72:.2f} in; "
           f"no text or link bounds violations; tagged={tagged}; SHA-256 {checksum}")
