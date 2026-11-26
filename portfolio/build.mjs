@@ -1,6 +1,8 @@
 import { copyFile, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
+import { artifactName, buildRelay } from './relay/build.mjs';
+import { resumeBody } from './resume/resume.mjs';
 import { jumpDialog, jumpTrigger } from './jump-markup.mjs';
 import { projects, systems } from './data/work.mjs';
 import { draft, install, links as site, notes, path, questions, relations, upstream, work } from './data/site.mjs';
@@ -19,6 +21,10 @@ const copy = async (from, to = from) => {
 };
 await rm(output, { recursive: true, force: true });
 
+const relayPath = '/computer/' + artifactName;
+const resumePath = '/resume/JoshuaYorko-Resume.pdf';
+const relay = await buildRelay();
+const relayKB = Math.ceil(Buffer.byteLength(relay.html) / 1024);
 const catalog = JSON.parse(await read('data/catalog.json'));
 const source = 'https://github.com/joshyorko/plugins';
 const pinned = `${source}/blob/${catalog.revision}/`;
@@ -41,7 +47,7 @@ const routes = [
 ];
 const routeWords = {
   '/': 'start homepage about',
-  '/computer/': 'workspace sqlite csv json query sql files offline wasm',
+  '/computer/': 'agents simulation parcel relay repair incident offline wasm',
   '/plugins/': 'extensions marketplace installation automation Codex Claude Hermes',
   '/projects/': 'software source contributions open source',
   '/systems/': 'Linux workstation bootc images devcontainers',
@@ -58,7 +64,7 @@ const sections = [
 const jumpEntries = [
   ...[...routes, ['skills/', 'Skill catalog'], ['', 'Home']].map(([path, label]) =>
     [label.replace('&amp;', '&'), '/' + path, 'Pages', routeWords['/' + path], path !== 'skills/' && path !== 'systems/']),
-  ['Computer with the sample workspace', '/computer/?sample=1', 'Pages', 'demo example tables', false],
+  ['Open Parcel Relay', relayPath, 'Pages', 'offline agent demo simulation', false],
   ...sections.map(([label, href, words]) => [label, href, 'On the homepage', words, false]),
   ...projects.map(([id, name, description]) =>
     [name, '/projects/#' + id, 'Projects', description, ['rcc', 'josh-room', 'memoryd'].includes(id)]),
@@ -72,7 +78,7 @@ const link = (label, url) => `<a href="${esc(url)}">${esc(label)}</a>`;
 const links = entries => `<p class="links">${entries.map(([label, url]) => link(label, url)).join(' ')}</p>`;
 const draftText = (text, tag = 'p', cls = '') => `<${tag} class="draft${cls ? ' ' + cls : ''}">${esc(text)}</${tag}>`;
 const date = iso => new Date(iso + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
-const css = await read('site.css') + '\n' + await read('jump.css');
+const css = await read('site.css') + '\n' + await read('jump.css') + '\n' + await read('resume/resume.css');
 const draftLegend = '<p class="draft-legend"><span class="draft-key">Draft</span> marks first-person copy that Josh has not approved yet.</p>';
 
 function page({ title, description, route = '', content, script = '' }) {
@@ -125,21 +131,19 @@ ${draftText(draft.role, 'p', 'role')}
 <ol class="path" aria-label="Career path">
 ${path.map(([years, what, where]) => `<li><span class="years">${esc(years)}</span><span class="what">${esc(what)}${where ? `<span class="where">${esc(where)}</span>` : ''}</span></li>`).join('\n')}
 </ol>
-<p class="actions"><a class="button" href="/resume/">Résumé</a> <a class="button quiet" href="${esc(site.github)}">GitHub</a> <a class="button quiet" href="#story">How I got here <span aria-hidden="true">↓</span></a></p>
+<p class="actions"><a class="button" href="${resumePath}" download>Download Résumé</a> <a class="button quiet" href="/resume/">Read Résumé</a> <a class="button quiet" href="${esc(site.github)}">GitHub</a> <a class="button quiet" href="#story">How I got here <span aria-hidden="true">↓</span></a></p>
 </section>
 <section class="machine" aria-labelledby="machine-title">
 <p class="label">The computer</p>
-<h2 id="machine-title">Open a portable workspace.</h2>
-<p class="machine-intro">Open a CSV, SQLite or JSON file, ask it questions with SQL, and save the whole session as one SQLite file you can reopen here later. Files are read in this tab and never uploaded.</p>
+<h2 id="machine-title">Get the parcel there once.</h2>
+<p class="machine-intro">Replay a broken delivery. A local agent proposes a repair and a verifier tests it before any change sticks.</p>
 <div class="slots">
-<a class="slot primary" href="/computer/"><b>Open your own files</b><span>CSV, TSV, SQLite, or a JSON array of objects.</span></a>
-<a class="slot" href="/computer/?sample=1"><b>Try the sample workspace</b><span>Three tables from this site: projects, notes and skills.</span></a>
+<a class="slot primary" href="${relayPath}"><b>Open Parcel Relay</b><span>Pick a dispatch incident and watch the repair.</span></a>
+<a class="slot" href="${relayPath}" download><b>Download offline computer</b><span>One HTML file with the model and runtime · ${relayKB} KiB</span></a>
 </div>
-<ul class="works" aria-label="Works today">
-<li>A SHA-256 digest for every file</li>
-<li>SQLite compiled to WebAssembly</li>
-<li>Save and restore one <code>.sqlite</code> file</li>
-<li>Keeps working offline once loaded</li>
+<ul class="works" aria-label="Parcel Relay features">
+<li>CPU inference in WebAssembly</li>
+<li>Save the running simulation as HTML</li>
 </ul>
 </section>
 </div>
@@ -181,15 +185,6 @@ ${chapter('recent', '06', 'Recently', `<ol class="log">${notes.slice(0, 7).map((
 ${links([['All notes', '/notes/']])}`,
   '<p>Dated from GitHub releases, merges and repository creation.</p>')}`;
 
-const roles = [
-  ['Gainwell Technologies', 'Advisor Application Developer', 'Jun 2023–present', 'Backend, platform, distributed automation, and AI-agent engineering.'],
-  ['Gainwell Technologies', 'Senior Data Engineer / Software Engineer', 'Jun 2022–Mar 2023', 'Data engineering and software development.'],
-  ['Lambent Spaces / Armored Things', 'Implementations Specialist', 'Mar 2021–Oct 2022', 'SQL and Python automation for implementations.'],
-  ['CVS Health', 'Data Analyst (Desktop Support)', 'May 2019–Mar 2021', 'Desktop deployment reporting, Python automation, and Dash/Plotly reports.'],
-  ['Spencer Technologies', 'Customer Service Representative, then Client Onboarding', 'Jan 2017–Apr 2019', 'Started in customer service and moved into client onboarding.'],
-  ['Healthcare', 'Certified Nursing Assistant', 'Seven years, before 2017', 'After high school.'],
-];
-
 const pages = [
   ['', 'Josh Yorko', 'Josh Yorko builds backend, data and AI systems for healthcare, and open-source tools for portable, reproducible computing.', homeContent, '/home.mjs'],
   ['projects/', 'Projects', 'Open-source software I maintain, build, and contribute to.',
@@ -228,17 +223,21 @@ ${notes.map(([iso, kind, text, ref, url]) => `<li><p class="small"><time datetim
 <section class="section" aria-labelledby="earlier"><h2 id="earlier">Earlier portfolio experiments</h2>
 <p>The archived Machine Room candidate contains the original synthetic SQLite/WASM, artifact, and browser test evidence at the rollback revision.</p>
 ${links([['Archive and harness', archive], ['Archived checks', archive.replace('/tree/', '/blob/') + '/proof/checks.json']])}</section>`],
-  ['resume/', 'Résumé', 'Josh Yorko · Software engineer working on backend, data, automation and AI systems.',
-    `<section class="section"><h2>Experience</h2><ul class="entries">
-${roles.map(([company, role, dates, description]) => `<li><h3>${esc(role)}</h3><p>${esc(company)} <span class="description">· ${esc(dates)}</span></p><p class="description">${esc(description)}</p></li>`).join('\n')}
-</ul></section>
-<section class="section"><h2>Technical skills</h2><p>Go, Python, SQL, Kubernetes, MCP and HTTP, test infrastructure, and developer environments.</p>
-${links([['Public projects', '/projects/'], ['GitHub profile', site.github]])}</section>`],
+  ['computer/', 'Computer', 'An offline agent simulation you can run and keep as one HTML file.',
+    `<section class="section" aria-labelledby="relay-title">
+<h2 id="relay-title">Parcel Relay</h2>
+<p>A parcel arrived twice, got stuck in dispatch, or went missing. Replay the incident, watch a local model select a proposed repair, and see what an independent verifier finds.</p>
+<p class="actions"><a class="button" href="${relayPath}">Open Parcel Relay</a> <a class="button quiet" href="${relayPath}" download>Download offline HTML · ${relayKB} KiB</a></p>
+<p class="small">The download opens directly from disk. Its CPU model, tools and simulation are embedded. Save a run to carry its state with you.</p>
+</section>
+<section class="section"><h2>Earlier experiments</h2>${links([['Archived SQL workspace', '/archive/sql-workspace/'], ['Machine Room archive', archive]])}</section>`],
+  ['resume/', 'Résumé', 'Joshua Yorko · Software Engineer | Distributed Systems & Agentic AI', resumeBody],
+
 ];
 
 for (const [route, name, intro, body, script] of pages) {
   await write(route + 'index.html', page({
-    title: name, description: intro, route, script, content: route === '' ? body : title(name, intro) + body,
+    title: name, description: intro, route, script, content: route === '' || route === 'resume/' ? body : title(name, intro) + body,
   }));
 }
 await write('404.html', page({
@@ -246,6 +245,8 @@ await write('404.html', page({
   content: title('Page unavailable', 'The requested page was not found.') + '<p class="section"><a href="/">Return to the homepage</a></p>',
 }));
 await write('site.css', css);
+await write(relayPath.slice(1), relay.html);
+await copy(resumePath.slice(1));
 for (const file of ['search.mjs', 'jump.mjs', 'home.mjs']) await write(file, await read(file));
 await write('jump-index.mjs', 'export default ' + JSON.stringify(jumpEntries) + ';\n');
 for (const font of ['literata-normal', 'schibsted-normal', 'jetbrains-normal']) await copy(`fonts/${font}.woff2`);
@@ -262,12 +263,13 @@ const sample = {
   'skills.csv': csv([['plugin', 'version', 'skill', 'description'],
     ...catalog.plugins.flatMap(({name, version, skills}) => skills.map(skill => [name, version, skill.name, skill.description]))]),
 };
-await write('computer/sample.mjs', 'export default ' + JSON.stringify(sample) + ';\n');
-await write('computer/index.html', (await read('computer/index.html')).replaceAll('{{github}}', esc(site.github)));
-for (const file of ['app.mjs', 'computer.css']) await copy(`computer/${file}`);
+await write('archive/sql-workspace/sample.mjs', 'export default ' + JSON.stringify(sample) + ';\n');
+await write('archive/sql-workspace/index.html', (await read('computer/index.html'))
+  .replaceAll('{{github}}', esc(site.github)).replaceAll('/computer/', '/archive/sql-workspace/'));
+for (const file of ['app.mjs', 'computer.css']) await copy(`computer/${file}`, `archive/sql-workspace/${file}`);
 
 await write('_headers', `/*
-  Content-Security-Policy: default-src 'none'; img-src 'self'; font-src 'self'; style-src 'self'; script-src 'self' 'wasm-unsafe-eval'; connect-src 'self'; form-action 'none'; base-uri 'none'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'none'; img-src 'self'; font-src 'self'; style-src 'self' 'sha256-${relay.styleHash}'; script-src 'self' 'sha256-${relay.scriptHash}' 'wasm-unsafe-eval'; connect-src 'self'; form-action 'none'; base-uri 'none'; frame-ancestors 'none'
   X-Robots-Tag: noindex, nofollow
   Referrer-Policy: no-referrer
   X-Content-Type-Options: nosniff

@@ -69,7 +69,7 @@ export const relations = {
 // Honest statuses only. Evidence links point at things that exist.
 export const questions = [
   ['Can a working session be saved and reopened as one file?', 'works here',
-    'The computer on this site saves imported files, tables and query history into a single SQLite file you can open again later.',
+    'Parcel Relay saves the runtime, model and replay position in one HTML file you can open offline.',
     [['Open the computer', '/computer/']]],
   ['Can a development workspace be snapshotted, encrypted and rolled back?', 'built',
     'Josh Room does this from the command line and a VS Code picker. Josh All The Things packs a workspace and its tools into one portable capsule.',

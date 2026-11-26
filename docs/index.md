@@ -12,7 +12,7 @@
 | --- | --- | --- |
 | [![LinkedIn](https://img.shields.io/badge/LinkedIn-View%20Profile-blue)](https://www.linkedin.com/in/joshua-yorko-560103a9/) | [![GitHub](https://img.shields.io/badge/GitHub-View%20Profile-blue)](https://github.com/joshyorko) | ![GitHub Followers](https://img.shields.io/github/followers/joshyorko?style=social) |
 
-[Download my resume](assets/JoshYorkoResume.pdf)
+[Download Résumé](assets/JoshYorkoResume.pdf)
 
 ## Skills
 
@@ -92,11 +92,3 @@ Advisor-level application developer and senior backend/platform engineer special
 - Implemented the Smartsheet Request Management System, resulting in annual cost savings of $16k.
 - Successfully onboarded new business ventures worth over $15 million, enhancing company growth and market presence.
 - Developed and executed project plans for multiple IT projects, leading teams to successful and timely client launches.
-
----
-
-## Education
-
-**B.A. in English**  
-**Indiana State University**  
-*Aug 2006 – June 2008, Terre Haute, IN*

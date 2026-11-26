@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="{{policy}}">
+<meta name="color-scheme" content="light">
+<title>Parcel Relay · Josh Yorko</title>
+<style>{{style}}</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="kicker">OFFLINE DISPATCH SIMULATION</p>
+    <h1>Parcel Relay</h1>
+    <p class="intro">Get a parcel to its depot exactly once. Choose an incident, then let a repair agent diagnose it and a verifier decide whether the repair holds.</p>
+  </header>
+  <noscript><p>Enable JavaScript and WebAssembly to run the simulation.</p></noscript>
+  <section class="controls" aria-label="Simulation controls">
+    <label for="incident">Dispatch incident</label>
+    <select id="incident" disabled></select>
+    <div class="buttons">
+      <button type="button" id="run" disabled>Run repair</button>
+      <button type="button" id="step" disabled>Step</button>
+      <button type="button" id="stop" disabled>Stop</button>
+      <button type="button" id="reset" disabled>Reset</button>
+    </div>
+  </section>
+  <div class="workbench">
+    <section class="dispatch" aria-labelledby="dispatch-heading">
+      <h2 id="dispatch-heading">Dispatch sheet</h2>
+      <div class="ticket">
+        <dl>
+          <div><dt>Parcel</dt><dd id="parcel">—</dd></div>
+          <div><dt>Destination</dt><dd id="destination">—</dd></div>
+          <div><dt>Deliveries</dt><dd id="count">—</dd></div>
+        </dl>
+        <p id="clue"></p>
+        <div class="rail" aria-hidden="true">
+          <span>Intake</span><span>Dispatch</span><span>Courier</span>
+        </div>
+      </div>
+      <p id="status" role="status">Opening the local model…</p>
+      <p class="save"><button type="button" id="save" disabled>Save runnable HTML</button></p>
+      <p class="small">Reopen the saved file to replay to this step, even offline. Timings are measured again.</p>
+    </section>
+    <section aria-labelledby="activity-heading">
+      <h2 id="activity-heading">Activity</h2>
+      <p id="empty">Receipts appear here as the agents work.</p>
+      <ol id="activity"></ol>
+    </section>
+  </div>
+  <details class="provenance">
+    <summary>Model, simulation and license</summary>
+    <p>The repair agent ranks three allowed changes with a synthetic Naive Bayes model running on CPU in WebAssembly. Its scores are relative log scores. The verifier reruns the incident and four independent delivery checks before accepting the change.</p>
+    <p>Training uses 18 authored incident notes. The runtime embeds {{kernelBytes}} bytes of WebAssembly and {{weightBytes}} bytes of learned weights. All parcels and tools are simulated in memory. No network, account or browser storage is needed.</p>
+    <pre>{{license}}</pre>
+  </details>
+</main>
+<script type="application/json" id="snapshot">{}</script>
+<script>{{script}}</script>
+</body>
+</html>

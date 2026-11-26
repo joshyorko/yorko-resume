@@ -4,6 +4,7 @@ import { createServer } from 'node:http';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { verifyRelay } from './relay/verify.mjs';
 import { chromium } from 'playwright-core';
 
 const require = createRequire(import.meta.url);
@@ -16,7 +17,7 @@ const headers = Object.fromEntries((await readFile(here + 'dist/_headers', 'utf8
   .map(line => line.trim().split(/: (.*)/s).slice(0, 2)));
 const mime = {
   html: 'text/html; charset=utf-8', mjs: 'text/javascript', js: 'text/javascript', css: 'text/css',
-  wasm: 'application/wasm', woff2: 'font/woff2', txt: 'text/plain; charset=utf-8',
+  pdf: 'application/pdf', wasm: 'application/wasm', woff2: 'font/woff2', txt: 'text/plain; charset=utf-8',
 };
 const server = createServer(async (req, res) => {
   const pathname = new URL(req.url, 'http://localhost').pathname;
@@ -94,15 +95,18 @@ try {
     await noJS.goto(base);
     await noJS.getByRole('navigation').getByRole('link', { name: label, exact: true }).click();
     assert.equal(new URL(noJS.url()).pathname, path);
-    assert.equal(await noJS.getByRole('heading', { level: 1 }).textContent(), label);
+    assert.equal(await noJS.getByRole('heading', { level: 1 }).textContent(), label === 'Résumé' ? 'Joshua Yorko' : label);
     report.navigation.push(label);
   }
   await noJS.goto(base + '/computer/');
-  // Playwright's text engine ignores <noscript>, so read the rendered element directly.
-  assert(await noJS.evaluate(() => {
-    const note = document.querySelector('noscript ~ *, .empty .err');
-    return note?.textContent.startsWith('The computer needs JavaScript and WebAssembly.') && note.getBoundingClientRect().height > 0;
-  }));
+  assert(await noJS.getByRole('link', { name: /Download offline HTML/ }).isVisible());
+  await noJS.goto(base + '/resume/');
+  const [resume] = await Promise.all([
+    noJS.waitForEvent('download'), noJS.getByRole('link', { name: 'Download Résumé' }).click(),
+  ]);
+  const pdf = await readFile(await resume.path());
+  assert.equal(createHash('sha256').update(pdf).digest('hex'), '6021e8d0bdd3fd18c5b628dfba981de5c685c7f536404b5fb88f4e00f441f614');
+  assert.equal(await noJS.locator('.resume .resume-evidence a').count(), 21);
   await noJS.goto(base + '/plugins/');
   await noJS.getByRole('link', { name: 'Browse and search skills' }).click();
   assert.equal(await noJS.locator('.skill:visible').count(), 22);
@@ -122,18 +126,18 @@ try {
   const routes = ['/', '/computer/', '/plugins/', '/skills/', '/projects/', '/systems/', '/notes/', '/resume/'];
   for (const [width, height] of [[360, 800], [390, 844], [411, 891], [850, 900], [1440, 900]]) {
     await page.setViewportSize({ width, height });
-    for (const route of [...routes, '/computer/?sample=1']) {
+    for (const route of [...routes, '/archive/sql-workspace/?sample=1']) {
       const response = await page.goto(base + route);
       assert.equal(response.status(), 200);
-      if (route.startsWith('/computer/')) await ready(page);
+      if (route.startsWith('/archive/sql-workspace/')) await ready(page);
       assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), width + ' ' + route);
       if (width === 360 || width === 390 || width === 1440) {
         if (route === '/') {
           await page.screenshot({ path: shot(`home-${width}.png`) });
           await page.screenshot({ path: shot(`home-${width}-full.png`), fullPage: true });
         }
-        if (route === '/computer/?sample=1') await page.screenshot({ path: shot(`computer-sample-${width}.png`) });
-        if (route === '/computer/' && width !== 360) await page.screenshot({ path: shot(`computer-empty-${width}.png`) });
+        if (route === '/archive/sql-workspace/?sample=1') await page.screenshot({ path: shot(`computer-sample-${width}.png`) });
+        if (route === '/computer/' && width !== 360) await page.screenshot({ path: shot(`computer-entry-${width}.png`) });
       }
     }
     report.viewports.push(width);
@@ -143,16 +147,16 @@ try {
     await page.setViewportSize({ width, height: 844 });
     for (const path of routes) {
       await page.goto(base + path);
-      if (path === '/computer/') await ready(page);
+
       await axe(page, `${path} @${width}`);
     }
-    await page.goto(base + '/computer/?sample=1');
+    await page.goto(base + '/archive/sql-workspace/?sample=1');
     await ready(page);
-    await axe(page, `/computer/?sample=1 @${width}`);
+    await axe(page, `/archive/sql-workspace/?sample=1 @${width}`);
     if (width === 390) {
       for (const tab of ['Files', 'Inspect', 'Snapshots']) {
         await page.getByRole('navigation', { name: 'Workspace panels' }).getByRole('button', { name: tab }).click();
-        await axe(page, `/computer/ ${tab} tab @390`);
+        await axe(page, `/archive/sql-workspace/ ${tab} tab @390`);
         assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'computer tab ' + tab);
       }
     }
@@ -222,10 +226,10 @@ try {
       await opener.click();
       await menu.setViewportSize({ width, height: 420 });
       await menu.waitForFunction(() => document.querySelector('#jump-dialog').getBoundingClientRect().bottom < 420);
-      await query.fill('sample workspace');
+      await query.fill('Open Parcel Relay');
       await query.press('Enter');
-      await menu.waitForURL('**/computer/?sample=1');
-      await ready(menu);
+      await menu.waitForURL('**/computer/parcel-relay.html');
+      await menu.waitForFunction(() => document.documentElement.dataset.wasmMemoryBytes === '65536');
     }
     report.search.push(width);
   }
@@ -248,7 +252,7 @@ try {
   const csv = Buffer.from('city,visits\nAkron,3\n"Columbus, OH",5\nToledo,\n');
   const json = Buffer.from(JSON.stringify([{ tool: 'rcc', stars: 1 }, { tool: 'sql.js', stars: 2, tags: ['wasm'] }]));
   async function roundTrip(tab, label) {
-    await tab.goto(base + '/computer/');
+    await tab.goto(base + '/archive/sql-workspace/');
     await ready(tab);
     if (label === 'offline') await tab.context().setOffline(true);
     await tab.getByRole('button', { name: 'Use the sample workspace' }).click();
@@ -310,6 +314,8 @@ try {
   await offline.screenshot({ path: shot('computer-offline-1440.png') });
   await offline.context().close();
 
+  report.relay = await verifyRelay({ browser, base, proof, watch, axe });
+
   assert.deepEqual(errors, []);
   assert.deepEqual(external, []);
 
@@ -325,7 +331,7 @@ try {
         performance.getEntriesByType('navigation').concat(performance.getEntriesByType('resource'))
           .map(({ name, transferSize, encodedBodySize }) => ({ path: new URL(name).pathname, transferSize, encodedBodySize })));
       report.transfer[profile][state] = requests;
-      assert(!requests.some(({ path }) => /vendor|computer/.test(path)), 'homepage loads computer code');
+      assert(!requests.some(({ path }) => /vendor|computer|archive/.test(path)), 'homepage loads computer code');
     }
     const coldBytes = report.transfer[profile].cold.reduce((total, item) => total + item.transferSize, 0);
     report.transfer[profile].coldBytes = coldBytes;

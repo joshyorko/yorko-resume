@@ -6,75 +6,47 @@ node build.mjs
 python3 -m http.server --bind 127.0.0.1 --directory dist 8791
 ```
 
-Open http://127.0.0.1:8791/. The build needs Node 22 or newer and has no runtime dependencies. The simple server is for browsing. The verifier applies the generated headers and 404 page.
+Open http://127.0.0.1:8791/ for the local candidate. The build needs Node 22 or newer. Its output is static. The simple server is for browsing. The verifier applies the generated headers and 404 page.
 
-## Design
+## Portfolio and résumé
 
-The home page puts the person and the computer side by side. The left half has Josh’s path from nursing assistant to backend and AI engineering. The right half opens the workspace. Below them come the full story, his work, open source, plugins and skills, open questions and recent notes. On a phone the two halves stack.
+The C-hybrid home pairs Josh’s path from nursing assistant to backend and AI engineering with an entry to Parcel Relay. The portfolio has the full story, work, open-source projects, plugin and skill catalog, open questions, and notes.
 
-[1440 px](proof/home-1440.png) · [390 px](proof/home-390.png) · [360 px](proof/home-360.png) · [Full page, 390 px](proof/home-390-full.png) · [Search](proof/search-390-open.png)
+Text marked **Draft** is first-person copy awaiting Josh’s approval. The career path came from Josh on 2026-11-26. Project facts link to releases, merged pull requests and repositories.
 
-Text marked **Draft** is first-person copy in Josh’s voice that he has not yet approved. The career path came from Josh on 2026-11-26. Project facts link to releases, merged pull requests and repositories.
+The résumé page and its one-page, text-selectable PDF use the approved copy from Canva design `DAHb9y11dDU`. The PDF was generated from the saved text. The authorized Canva connector provided the design content without a PDF export. The two legacy PDF paths use the same approved bytes. The legacy Markdown and TeX source corrections remove the inaccurate degree claim.
 
-Type is Literata, Schibsted Grotesk and JetBrains Mono, self-hosted under the SIL Open Font License (`fonts/`). The pages need no JavaScript to read or navigate. Two small scripts enable search and the copy button.
+The catalog is pinned to [e24cd59](https://github.com/joshyorko/plugins/commit/e24cd596ef41e9294ad770d2b613bf77b42a8a68). Refresh with `python3 snapshot-catalog.py /path/to/plugins > data/catalog.json`.
 
-## The computer
+## Parcel Relay
 
-`/computer/` opens CSV, TSV, SQLite and JSON-array files in the browser tab. It runs SQL with [sql.js 1.12.0](vendor/sql.js/) and computes a SHA-256 digest for each file. It saves the whole session as one `.sqlite` file and restores it later. Nothing is uploaded. Once loaded, it works offline.
+Open `/computer/` or download `dist/computer/parcel-relay.html` and open it directly from disk. Pick a dispatch incident, then run or step through the repair. The initial replay records what the simulator actually delivered. The repair agent ranks three allowlisted changes with its embedded CPU WASM model. The verifier tests a proposed change against the original incident and four additional fixtures before committing it to the simulation. Missing addresses require a human correction.
 
-[Empty](proof/computer-empty-1440.png) · [Sample](proof/computer-sample-1440.png) · [Phone](proof/computer-sample-390.png) · [Restored](proof/computer-restored-390.png) · [Offline](proof/computer-offline-1440.png) · [Bad file](proof/computer-error-390.png)
+The single file includes all code, styles, weights, and license. The app uses no browser storage. **Save runnable HTML** downloads the app with its incident and step count. Opening a saved file recomputes receipts to that step and measures their timing again. A snapshot cannot supply its own commands, patches, or receipts. The simulation models delivery behavior in memory.
 
-The saved file is ordinary SQLite with the `josh-computer-workspace/0` format. User tables keep their names. `_workspace_meta`, `_workspace_files` and `_workspace_queries` hold file names, digests and saved queries.
+The former SQL workspace runs at `/archive/sql-workspace/` with its original import, querying, and SQLite restore tools. The [Machine Room archive](https://github.com/joshyorko/yorko-resume/tree/a535909574cb94b169040e05b54ae198fe77673a/machine-room) retains its own artifacts and checks.
 
-This release is only the workspace. Guest operating systems, a nested browser, agents and state visualization are research interests, not features.
+### Model provenance
+
+- The [118-byte WASM kernel](relay/decision.wasm) is byte-identical to Terra’s decision lab, SHA-256 `019618f3b197e49d21a2427e2cd07ed6033f87d558aa1cd819866d13ea2f2921`. The lab’s original rule-gated classifier matched 30 of 35 synthetic cases versus 31 for the rule. This demo reuses the arithmetic kernel and trains new Bernoulli Naive Bayes weights on 18 dispatch notes in [model.mjs](relay/model.mjs). [MIT license](relay/LICENSE).
+- Sol’s native Actions/MemoryD portability work informs the bounded tool contract and explicit receipts. Parcel Relay supplies its own synthetic dispatch tools and replay state. The native-schema `inspect_manifest` and pinned MemoryD fixture remain in Sol’s Machine Room portability handoff.
+- [Blink](https://github.com/sqliteai/blink) reports 452 KiB of synthetic weights and Apache-2.0 terms. The earlier connector trial could read the notices and binary metadata but could not retrieve the weight binary. [Jev-web](https://github.com/warsang/jev-web) runs several decision model families whose weights have separate terms. Neither supplies the model in this demo.
+- The prepared [SmolLM2-135M-Instruct Q4_0](https://huggingface.co/bartowski/SmolLM2-135M-Instruct-GGUF/tree/main) is an Apache-2.0 generative option. Its 91,893,088 bytes alone take about 117 MiB in an ordinary base64 HTML embedding, with SHA-256 `bcc3af2849ad6095af57e9b5cd43775256efdc66e306acb529172f92d0c04b03`. The prepared [Julia-1](https://huggingface.co/SupersonicLabs/Julia-1) Q8_0 is a decision model. Its 168,166,400 bytes take about 214 MiB under the same encoding, with SHA-256 `ff6cbbe856f1810a8b171528ea908d3b43b5742e73f0698689467559078f347d`. The existing wllama WASM is 10,838,652 bytes before embedding. The size figures use local files. These models were screened by size and were not browser-qualified here.
+- [Stories260K](https://huggingface.co/karpathy/tinyllamas/tree/main/stories260K) is a materially smaller MIT generative option. Its [training notes](https://github.com/karpathy/llama2.c/blob/master/doc/stories260K.md) describe a test checkpoint trained to complete TinyStories, so repair selection and instruction following would need their own evidence. It was not downloaded or run in this pass.
 
 ## Verify
 
 ```sh
 cd portfolio
-npm ci
 npm run verify
 ```
 
-Set `CHROME` if Chrome is outside `/usr/bin/google-chrome`. Set `PROOF_DIR` to an absolute path to keep captures out of the checkout. The verifier covers these checks:
+Use `npm ci` to prepare the pinned browser test dependencies in a fresh checkout. Set `CHROME` if Chrome is outside `/usr/bin/google-chrome`. Set `PROOF_DIR` to an absolute scratch path for captures and browser results. Tests cover static routes, the résumé download, five viewport widths, axe-core, keyboard and catalog search, and the archived SQL workspace.
 
-- Pages work without JavaScript, and each heading matches its nav label.
-- No horizontal overflow at 360, 390, 411, 850 and 1440 px.
-- axe-core finds no violations.
-- The search menu works.
-- Two real workspace round trips, one online and one offline. Each imports, queries, saves and restores.
-- No external requests or console errors.
-- The cold home page stays under the `HOME_BUDGET_KB` budget, which defaults to 240 KB.
-
-[Browser results](proof/browser.json)
-
-The catalog is pinned to [e24cd59](https://github.com/joshyorko/plugins/commit/e24cd596ef41e9294ad770d2b613bf77b42a8a68). Refresh with `python3 snapshot-catalog.py /path/to/plugins > data/catalog.json` and review the diff before rebuilding.
-
-## Sources that need correcting
-
-Josh did not complete a degree. These public files still list a B.A. in English and must not be linked or redistributed until he authorizes a correction:
-
-- `docs/assets/JoshYorkoResume.pdf`
-- `docs/index.md`
-- `templates/awesome-resume/cv-sections/education.tex`
-- `templates/developer-resume/main.tex`
-
-This site does not link the PDF. Its résumé page is built from `build.mjs` and has no education section.
+The Parcel Relay browser cases use Chrome DevTools offline mode before opening the file. They cover the three repaired incidents, human handoff, stop, reset, save, fresh reopen, reload, malformed snapshot, and a wrong repair that the verifier rejects. The trace records document requests, initialization time, work per step, JS heap, and WASM linear memory. Step timings exclude the visual pause between steps.
 
 ## Release and rollback
 
-Build and serve only `portfolio/dist/`. It contains no test results, drafts, secrets, third-party scripts or analytics. `node preview-pack.mjs FULL_COMMIT` emits a review Worker from the same bytes. It labels responses with the commit. The generated `_headers` send `X-Robots-Tag: noindex, nofollow` on every route.
+Serve only `portfolio/dist/`. The candidate sends `X-Robots-Tag: noindex, nofollow`. `node preview-pack.mjs FULL_COMMIT` generates a review Worker from the same build bytes and labels responses with the supplied commit.
 
-The production target has to be confirmed before any traffic moves. To release:
-
-1. Record the active version ID.
-2. Upload the candidate without shifting traffic.
-3. Verify the versioned preview.
-4. Promote it. Remove the `noindex` header in `build.mjs` only for that release.
-
-To roll back, restore the recorded version to 100% and check the live routes. Neither step needs a DNS change.
-
-Earlier versions stay available as rollback sources:
-
-- [PR #52 preview](https://github.com/joshyorko/yorko-resume/tree/110a3f51216f5d935f135f6140b082e257aac1eb/portfolio).
-- [Machine Room](https://github.com/joshyorko/yorko-resume/tree/a535909574cb94b169040e05b54ae198fe77673a/machine-room). Its ZIP SHA-256 is `247f69aff3f535a8377d86f4673a284e58165c2521d97ea2ccdcc8c748f30234`.
+Record the active version ID before promoting any reviewed candidate to the confirmed production target. Roll back by restoring that version to 100 percent and checking the live routes. The previous C-hybrid build is recoverable at `18c2e2f8954b508108fd784eb56b06d57b92675e`.
