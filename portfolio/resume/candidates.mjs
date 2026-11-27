@@ -9,6 +9,7 @@ import content from './content.json' with { type: 'json' };
 
 const engine = process.env.TECTONIC || 'tectonic';
 const output = resolve(process.argv[2] || 'resume-candidates');
+const redReview = process.argv[3] === '--red';
 if (execFileSync(engine, ['--version'], { encoding: 'utf8' }).trim() !== 'Tectonic 0.17.0')
   throw new Error('Use Tectonic 0.17.0');
 mkdirSync(output, { recursive: true });
@@ -107,22 +108,42 @@ const compositions = {
     projects('evidenceproject', 2), sections.skills, stackedSkills],
 };
 
-const template = readFileSync(new URL('./layout.tex', import.meta.url), 'utf8');
-for (const [id, composition] of Object.entries(compositions)) {
+const readLayout = name => readFileSync(new URL(`./${name}.tex`, import.meta.url), 'utf8');
+const standardPreamble = String.raw`\documentclass[letterpaper]{article}
+\usepackage{geometry}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage[unicode,colorlinks]{hyperref}`;
+const redPreamble = String.raw`\documentclass[11pt,a4paper]{awesome-cv}`;
+let template = readLayout('layout');
+if (redReview) {
+  const history = '94f5e6ffe0eb8c91b1bfec47710feeed3501ed16';
+  const directory = 'templates/awesome-resume/';
+  const archive = execFileSync('git', ['archive', history,
+    ...['awesome-cv.cls', 'fontawesome.sty', 'fonts'].map(file => directory + file)], {
+    cwd: new URL('../../', import.meta.url), maxBuffer: 8 * 1024 * 1024,
+  });
+  execFileSync('tar', ['-x', '--strip-components=2', '-C', output], { input: archive });
+  template = template.replaceAll('\\enspace', '\\hspace{0.35em}');
+}
+for (const [id, composition] of redReview ? [['T', compositions.T]] : Object.entries(compositions)) {
   const style = readFileSync(new URL('./layout-' + (['R', 'S', 'T'].includes(id) ? 'H' : id) + '.tex', import.meta.url), 'utf8');
   const overrides = id === 'T' ? 'S' : id;
   const additionalStyle = ['R', 'S', 'T'].includes(id)
     ? readFileSync(new URL('./layout-' + overrides + '.tex', import.meta.url), 'utf8')
     : '';
   const styleForPage = id === 'T' ? additionalStyle + '\n' + readFileSync(new URL('./layout-T.tex', import.meta.url), 'utf8') : additionalStyle;
-  const source = template.replace('%%STYLE%%', () => additionalStyle ? style + '\n' + styleForPage : style)
+  const layout = redReview ? readLayout('layout-red') : style + (additionalStyle ? '\n' + styleForPage : '');
+  const source = template.replace('%%PREAMBLE%%', () => redReview ? redPreamble : standardPreamble)
+    .replace('%%STYLE%%', () => layout)
     .replace('%%NAME%%', () => tex(content.name))
     .replace('%%TITLE%%', () => tex(id === 'T' ? platform.title : content.title))
     .replace('%%CONTACT%%', () => tex(content.contactText) + ' \\separator ' + links(content.contactLinks))
     .replace('%%SUMMARY%%', () => tex(id === 'T' ? platform.summary : ['R', 'S'].includes(id) ? review.summary : content.summary))
     .replace('%%BODY%%', () => composition.join('\n'));
-  writeFileSync(resolve(output, id + '.tex'), source);
-  execFileSync(engine, ['--untrusted', '--bundle', 'https://relay.fullyjustified.net/default_bundle_v33.tar', '--keep-logs', id + '.tex'], {
+  const filename = (redReview ? 'red-layout' : id) + '.tex';
+  writeFileSync(resolve(output, filename), source);
+  execFileSync(engine, ['--untrusted', '--bundle', 'https://relay.fullyjustified.net/default_bundle_v33.tar', '--keep-logs', filename], {
     cwd: output,
     env: { ...process.env, SOURCE_DATE_EPOCH: '1795651200', FORCE_SOURCE_DATE: '1' },
     stdio: 'inherit',
