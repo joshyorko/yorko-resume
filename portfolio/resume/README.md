@@ -36,3 +36,22 @@ The current application candidate is T.pdf. See [hiring and evidence notes](HIRI
 ## Approved public copy
 
 The canonical download is the exact T.pdf from artifact 15145118815. The build checks its approved digest. The website uses platform-review.json for the headline, summary and project text, alongside the existing employment and contact data. Keep the approved bytes from the artifact for publication. Candidate regeneration is for review; the earlier A through S renders remain historical.
+
+## Red Awesome-CV review
+
+[Download the two-page review PDF](../../output/pdf/red-review.pdf). It uses the [historical Awesome-CV layout at `94f5e6f`](https://github.com/joshyorko/yorko-resume/blob/94f5e6ffe0eb8c91b1bfec47710feeed3501ed16/templates/awesome-resume/JoshYorkoResume.tex#L27-L34) with the approved T wording and all 15 links. Publishing this candidate requires visual confirmation and the [protected release workflow](../RELEASE.md).
+
+To reproduce the exact review PDF, use Python 3.12, `pypdf==6.4.2`, and Poppler. Run the following commands from the repository root. The script restores word spacing in the text layer of the [confirmed LaTeX render](review/awesome-cv-confirmed.pdf). CI checks the resulting bytes and renders both pages at 150 dpi before uploading `red-resume-review`.
+
+```sh
+out=$(mktemp -d)
+python portfolio/resume/restore-red-text.py \
+  portfolio/resume/review/awesome-cv-confirmed.pdf "$out/red-review.pdf"
+cmp output/pdf/red-review.pdf "$out/red-review.pdf"
+```
+
+To edit the layout, use [layout-red.tex](layout-red.tex) and run the command below with the Tectonic toolchain above. The build reads the T composition and approved text, and takes the Awesome-CV class and fonts from Git history. It writes editable `red-layout.tex` and a fresh `red-layout.pdf` to the output directory. The exact review PDF uses the confirmed render as its input.
+
+```sh
+TECTONIC=/absolute/path/to/tectonic node portfolio/resume/candidates.mjs "$out" --red
+```

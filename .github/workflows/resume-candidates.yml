@@ -10,6 +10,38 @@ permissions:
   contents: read
 
 jobs:
+  red-review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prepare PDF tools
+        run: |
+          python -m pip install pypdf==6.4.2
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends poppler-utils
+      - name: Reproduce the red review PDF
+        run: |
+          source=portfolio/resume/review/awesome-cv-confirmed.pdf
+          out="$RUNNER_TEMP/red-resume-review"
+          mkdir -p "$out"
+          python portfolio/resume/restore-red-text.py "$source" "$out/red-review.pdf"
+          cmp output/pdf/red-review.pdf "$out/red-review.pdf"
+          pdftoppm -r 150 -png "$source" "$RUNNER_TEMP/confirmed"
+          pdftoppm -r 150 -png "$out/red-review.pdf" "$out/red-review"
+          for page in 1 2; do
+            cmp "$RUNNER_TEMP/confirmed-$page.png" "$out/red-review-$page.png"
+          done
+          (cd "$out" && sha256sum red-review.pdf > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: red-resume-review
+          path: ${{ runner.temp }}/red-resume-review/
+          if-no-files-found: error
+
   candidates:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
